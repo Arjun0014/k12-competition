@@ -18,7 +18,7 @@ from sklearn.preprocessing import StandardScaler
 
 from trace_ace.config import load_config
 from trace_ace.io import discover_project_paths
-from trace_ace.metrics import binary_metrics, fold_metric_rows
+from trace_ace.metrics import fold_metric_rows
 
 
 LEGAL_METADATA_COLUMNS = [

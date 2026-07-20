@@ -22,7 +22,6 @@ from trace_ace.hard_validation import (
 from trace_ace.io import discover_project_paths
 from trace_ace.metrics import binary_metrics
 from trace_ace.role_hard_validation import (
-    ROLE_FEATURES,
     _objective_hash,
     _response_rows,
     _row_cosine,

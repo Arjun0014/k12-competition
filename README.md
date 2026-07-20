@@ -60,6 +60,7 @@ uv run python scripts/run_feedback_hash_validation.py --project-root . --quick
 uv run python scripts/run_v04_forensic_audit.py --project-root .
 uv run python scripts/build_validation_environments.py --project-root .
 uv run python scripts/run_environment_component_validation.py --project-root . --stage auto
+.venv\Scripts\python.exe scripts\run_source_robust_validation.py --project-root .
 uv run python scripts/audit_candidate.py --help
 uv run python scripts/run_dense_tree_validation.py --project-root . --quick
 uv run python scripts/run_robust_validation.py --project-root .

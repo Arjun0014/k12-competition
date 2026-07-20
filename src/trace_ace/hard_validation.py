@@ -11,7 +11,7 @@ import pandas as pd
 from scipy import sparse
 from sklearn.feature_extraction.text import HashingVectorizer
 from sklearn.linear_model import LogisticRegression, SGDClassifier
-from sklearn.metrics import log_loss, roc_auc_score
+from sklearn.metrics import log_loss
 from sklearn.model_selection import StratifiedGroupKFold
 from sklearn.preprocessing import StandardScaler
 
