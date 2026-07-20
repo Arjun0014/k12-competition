@@ -1,0 +1,16 @@
+{
+  "cache_version": "1.0.0",
+  "closing_fraction": 0.25,
+  "fold_seed": 20260716,
+  "n_splits": 5,
+  "objective_smoothing": 20.0,
+  "probability_clip": 1e-6,
+  "text_baseline": {
+    "char_max_features": 60000,
+    "char_min_df": 4,
+    "logistic_c": 1.0,
+    "max_iter": 400,
+    "word_max_features": 60000,
+    "word_min_df": 3
+  }
+}

@@ -1,0 +1,68 @@
+# Competition and external raw data (never commit or redistribute)
+/Train transcripts/
+/Datasets/
+/train_features_*.csv
+/train_labels_*.csv
+/submission_format_*.csv
+
+# Local copies of third-party competition reference material
+/Trace_the_Ace_full_overview.md
+/competition_rules.md
+/code_submission_format.md
+/example_documentation_guide.pdf
+
+# Active-competition private research notes and unpublished score history
+/PROJECT_LEARNING_LOG.md
+/TOP_1_EXECUTION_PLAN.md
+/TRACE_THE_ACE_IMPLEMENTATION_PLAN.md
+/V04_FAILURE_ANALYSIS_AND_RECOVERY_PLAN.md
+/information_websites_to_see.md
+/experiments/experiment_ledger.csv
+
+# Generated data and model artifacts
+/assets/pretrained/
+/data_cache/*
+!/data_cache/.gitkeep
+/models/*
+!/models/.gitkeep
+/submission_src/assets/*
+!/submission_src/assets/.gitkeep
+/submission_builds/*
+!/submission_builds/.gitkeep
+/experiments/runs/*
+!/experiments/runs/.gitkeep
+/experiments/checkpoints/
+/experiments/*.parquet
+/reports/generated/
+/tmp/
+*.joblib
+*.pkl
+*.pickle
+*.safetensors
+*.pt
+*.pth
+*.bin
+*.npy
+*.npz
+*.parquet
+*.zip
+*.log
+
+# Python/tooling
+/.venv/
+/.pytest_cache/
+/.ruff_cache/
+**/__pycache__/
+*.py[cod]
+*.egg-info/
+
+# Local/editor files
+.env
+.env.*
+!.env.example
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/
+/.agents/
+/.codex/

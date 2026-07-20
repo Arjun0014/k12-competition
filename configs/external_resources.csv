@@ -1,0 +1,14 @@
+resource_type,name,revision_or_version,license,commercial_use,project_status,source_url,notes
+dataset,GSM8K,main and socratic,MIT,yes,allowlisted_candidate,https://github.com/openai/grade-school-math,Indirectly relevant; require grouped ablation before use
+dataset,FairytaleQA,local platform copy,Apache-2.0,yes,allowlisted_candidate,https://github.com/uci-soe/FairytaleQAData,Low relevance; do not prioritize
+dataset,EssayJudge,local platform copy,Apache-2.0,yes,allowlisted_candidate,https://platform.k12-ai-infrastructure.org/,Platform catalog resolves initial local license uncertainty
+dataset,Bridge,1.0.0,CC BY-NC 4.0,no,excluded,https://platform.k12-ai-infrastructure.org/datasets/7/bridge/version/7/versions/,NC license prohibited by competition
+dataset,DrawEduMath,local platform copy,CC BY-NC-SA 4.0,no,excluded,https://platform.k12-ai-infrastructure.org/,NC license prohibited by competition
+dataset,SciQ,local platform copy,CC BY-NC 3.0,no,excluded,https://platform.k12-ai-infrastructure.org/,NC license prohibited by competition
+dataset,TalkMoves,local folder appears named SemEval,CC BY-NC-SA 4.0,no,excluded,https://github.com/SumnerLab/TalkMoves,Local SemEval and TalkMoves folders appear semantically swapped
+dataset,SemEval 2013 Task 7,local folder appears named TalkMoves,CC BY-SA 3.0,yes,quarantined,https://platform.k12-ai-infrastructure.org/,Await organizer confirmation on share-alike compatibility
+dataset,MRBench,local platform copy,CC BY-SA 4.0 with Bridge ancestry,unclear,quarantined,https://platform.k12-ai-infrastructure.org/,Bridge ancestry creates an upstream NC conflict
+model,ModernBERT-base,revision not frozen,Apache-2.0,yes,candidate,https://huggingface.co/answerdotai/ModernBERT-base,Freeze exact revision and files before use
+model,Qwen3-Embedding-0.6B,revision not frozen,Apache-2.0,yes,candidate,https://huggingface.co/Qwen/Qwen3-Embedding-0.6B,Freeze exact revision and files before use
+model,all-MiniLM-L6-v2,revision not frozen,Apache-2.0,yes,candidate,https://huggingface.co/sentence-transformers/all-MiniLM-L6-v2,Fast short-chunk baseline
+model,Qwen2.5-7B-Instruct,revision not frozen,Apache-2.0,yes,optional_candidate,https://huggingface.co/Qwen/Qwen2.5-7B-Instruct,Only for a justified annotation or scoring experiment
