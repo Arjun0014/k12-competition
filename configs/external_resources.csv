@@ -6,7 +6,7 @@ dataset,Bridge,1.0.0,CC BY-NC 4.0,no,excluded,https://platform.k12-ai-infrastruc
 dataset,DrawEduMath,local platform copy,CC BY-NC-SA 4.0,no,excluded,https://platform.k12-ai-infrastructure.org/,NC license prohibited by competition
 dataset,SciQ,local platform copy,CC BY-NC 3.0,no,excluded,https://platform.k12-ai-infrastructure.org/,NC license prohibited by competition
 dataset,TalkMoves,local folder appears named SemEval,CC BY-NC-SA 4.0,no,excluded,https://github.com/SumnerLab/TalkMoves,Local SemEval and TalkMoves folders appear semantically swapped
-dataset,SemEval 2013 Task 7,local folder appears named TalkMoves,CC BY-SA 3.0,yes,quarantined,https://platform.k12-ai-infrastructure.org/,Await organizer confirmation on share-alike compatibility
+dataset,SemEval 2013 Task 7,local folder appears named TalkMoves,CC BY-SA 3.0,yes,allowlisted_candidate,https://platform.k12-ai-infrastructure.org/,Organizer confirmed CC-BY-SA is sufficiently open; preserve attribution and exact lineage
 dataset,MRBench,local platform copy,CC BY-SA 4.0 with Bridge ancestry,unclear,quarantined,https://platform.k12-ai-infrastructure.org/,Bridge ancestry creates an upstream NC conflict
 model,ModernBERT-base,revision not frozen,Apache-2.0,yes,candidate,https://huggingface.co/answerdotai/ModernBERT-base,Freeze exact revision and files before use
 model,Qwen3-Embedding-0.6B,revision not frozen,Apache-2.0,yes,candidate,https://huggingface.co/Qwen/Qwen3-Embedding-0.6B,Freeze exact revision and files before use

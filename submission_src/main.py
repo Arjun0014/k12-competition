@@ -905,13 +905,18 @@ def main() -> None:
 
     rank_path = root / "assets" / "final_ensemble_v04_rank.joblib"
     feedback_path = root / "assets" / "final_ensemble_v03_feedback.joblib"
+    bge_backup_path = root / "assets" / "final_ensemble_v05_bge_backup.joblib"
     final_path = (
         rank_path
         if rank_path.exists()
         else (
             feedback_path
             if feedback_path.exists()
-            else root / "assets" / "final_ensemble_v02.joblib"
+            else (
+                bge_backup_path
+                if bge_backup_path.exists()
+                else root / "assets" / "final_ensemble_v02.joblib"
+            )
         )
     )
     if final_path.exists():
