@@ -90,6 +90,7 @@ The frozen checkpoint must achieve all of the following on official external hol
 - correct-vs-rest AUROC `>=0.70` on unseen questions;
 - correct-vs-rest AUROC `>=0.68` on unseen domains;
 - three-way macro F1 `>=0.45` on unseen questions; and
+- no correct-vs-rest AUROC regression versus the untouched base NLI checkpoint on either holdout; and
 - no non-finite output or label/schema inconsistency.
 
 Failure stops this external checkpoint. Passing permits competition feature caching, not promotion.
@@ -149,6 +150,26 @@ Raw public projection is `0.6081 - robust_mean_gain`. Reports also show a conser
    E400/E410 features already show stable complementarity.
 3. `E440_external_ensemble`: combine independently validated session and turn evidence only if each is useful alone;
    no rescue stacking of failed components.
+
+## E430 amendment frozen before MathDial modeling
+
+The official MathDial repository was discovered after E400 launch and before any MathDial model was fit. Commit
+`b06c020a0a1f57a87577fec33e657b63e7eb476e` is CC BY-SA 4.0 and contains 2,861 math tutoring dialogues with
+teacher-annotated end-of-dialogue `self-correctness`. This is promoted ahead of the earlier generic internal-transfer
+idea because it supplies a genuinely external tutoring-outcome label.
+
+- `Yes` maps to positive independent correction.
+- `No` maps to negative.
+- `Yes, but I had to reveal the answer` maps to negative because the competition asks whether the student can
+  answer independently after tutoring.
+- Missing labels are excluded and reported.
+- The official test split is immutable and used only for the external continuation gate. A source audit found that
+  the published train/test files share question IDs, so every train row whose `qid` appears in test is purged before
+  fitting. This frozen correction prevents question-text leakage while retaining the complete official test set.
+- Any competition candidate remains a fold-local probe and a preregistered 10/20/30% blend over raw BGE-base
+  replacement. No public result, objective prior, provider ID, or `V_final` row may select it.
+- E430 is evaluated only after E400 completes. It is an independent branch, not a rescue re-fit of E400 after seeing
+  competition outcomes.
 
 The plan stops a branch immediately when its frozen gate fails. It does not stop the overall research program until
 a top-5-ready local candidate exists or a genuine external/compute blocker requires participant action.
