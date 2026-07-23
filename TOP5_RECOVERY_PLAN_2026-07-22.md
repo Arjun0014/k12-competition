@@ -173,3 +173,37 @@ idea because it supplies a genuinely external tutoring-outcome label.
 
 The plan stops a branch immediately when its frozen gate fails. It does not stop the overall research program until
 a top-5-ready local candidate exists or a genuine external/compute blocker requires participant action.
+
+## E420 detailed freeze after E430 rejection and before ModernBERT scoring
+
+E430 completed and failed all three of its frozen external clauses, so it is rejected without a competition cache.
+E420 is now the next bounded branch. The following contract is frozen before downloading or scoring ModernBERT:
+
+- Model: official `answerdotai/ModernBERT-base` revision
+  `8949b909ec900327062f0ebf497f51aef5e6f0c8`, Apache-2.0, loaded as the frozen base encoder.
+- Screen rows: the exact existing 4,096-row fold/label-balanced encoder sample in
+  `qwen3_pilot_indices.npy`, SHA-256 `4e62045be2bd473ef41e8aaf5f4b351b7432760ed6c1bbd7ccd88ca112d1efba`.
+  This sample and its `semantic_k50_s0` fold assignments were fixed before E420 existed.
+- Input: the complete cached role-marked session transcript as the first sequence and the fixed hypothesis
+  `The student demonstrates mastery of this learning objective: <objective>.` as the second sequence.
+  `only_first` truncation preserves the complete objective hypothesis. No target-dependent retrieval, objective ID,
+  provider ID, prior, test aggregate, or external annotation is used.
+- Operational context-length selection is label-free. Benchmark 16 deterministic pilot rows spanning token-length
+  quantiles at 2,048, 4,096, and 8,192 tokens, batch size one, six CPU threads. Freeze the longest length whose
+  measured projection for 4,096 rows is at most eight hours and whose process RSS stays below 8 GB. This benchmark
+  may choose runtime length only; it cannot inspect targets or model-quality metrics.
+- Representation: concatenate the separately L2-normalized final-layer first-token vector and attention-mask mean
+  vector, then divide by `sqrt(2)`. Cache float32 vectors with exact response-order, model-revision, source-hash,
+  token-length, finiteness, and norm audits.
+- Probe: one fold-local logistic regression with fixed `C=0.1`, the existing session purge, and the existing legal
+  dense controls standardized only on each legal outer-training fold. There is no C, pooling, layer, prompt, or
+  blend sweep in the screen.
+- Fair comparator: BGE-base interaction features at the same fixed `C=0.1`, fit on the identical 4,096 rows,
+  folds, purge masks, labels, and dense controls.
+- Continue to a full competition cache only if ModernBERT either improves log loss by at least `0.0015` with
+  non-regression in AUROC, Brier, and ECE-10, or improves AUROC by at least `0.0050` with non-regression in log loss,
+  Brier, and ECE-10. It must also reach at least 90% paired session-bootstrap support for positive log-loss gain.
+  Failure rejects this exact E420 representation without a prompt, layer, pooling, C, or weight rescue.
+- A passing screen earns only full-cache construction and the frozen fold-local `V_seen`, `V_objective`, and
+  `V_style` evaluation. Competition blends remain exactly 10%, 20%, and 30% over raw BGE-base replacement.
+  `V_joint` and `V_final` retain their existing restrictions, and no platform submission is authorized.
