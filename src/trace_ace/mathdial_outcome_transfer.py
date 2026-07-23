@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import argparse
+import hashlib
 import json
 import random
 from collections.abc import Iterable
@@ -32,11 +33,66 @@ HEAD_LEARNING_RATE = 1e-4
 WEIGHT_DECAY = 0.01
 WARMUP_FRACTION = 0.10
 UNFROZEN_LAYERS = 2
+EXPECTED_BINARY_HEAD_WEIGHT_SHA256 = (
+    "ee1cf8a8d8a045fa48245c8cbe1fbbdb78d83672eacefe2d72f0be1bb5dc608f"
+)
+EXPECTED_BINARY_HEAD_BIAS_SHA256 = (
+    "af5570f5a1810b7af78caf4bc70a660f0df51e42baf91d4de5b2328de0e83dfc"
+)
 LABEL_MAP = {
     "Yes": 1,
     "Yes, but I had to reveal the answer": 0,
     "No": 0,
 }
+
+
+def _tensor_sha256(tensor) -> str:
+    values = tensor.detach().cpu().contiguous().numpy()
+    return hashlib.sha256(values.tobytes()).hexdigest()
+
+
+def _validate_binary_head_initialization(model) -> dict[str, object]:
+    import torch
+
+    weight = model.classifier.weight
+    bias = model.classifier.bias
+    audit = {
+        "seed": SEED,
+        "weight_shape": list(weight.shape),
+        "bias_shape": list(bias.shape),
+        "weight_sha256": _tensor_sha256(weight),
+        "bias_sha256": _tensor_sha256(bias),
+        "weight_mean": float(weight.detach().mean()),
+        "weight_std": float(weight.detach().std(unbiased=False)),
+        "bias_values": bias.detach().cpu().tolist(),
+        "initializer_range": float(model.config.initializer_range),
+        "hidden_size": int(model.config.hidden_size),
+        "num_labels": int(model.config.num_labels),
+        "source_head_labels": 3,
+        "replacement_head_labels": 2,
+    }
+    failures: list[str] = []
+    if audit["weight_shape"] != [2, 768]:
+        failures.append(f"weight shape {audit['weight_shape']} != [2, 768]")
+    if audit["bias_shape"] != [2]:
+        failures.append(f"bias shape {audit['bias_shape']} != [2]")
+    if not bool(torch.isfinite(weight).all() and torch.isfinite(bias).all()):
+        failures.append("classifier head contains non-finite values")
+    if audit["weight_sha256"] != EXPECTED_BINARY_HEAD_WEIGHT_SHA256:
+        failures.append(
+            "weight SHA-256 "
+            f"{audit['weight_sha256']} != {EXPECTED_BINARY_HEAD_WEIGHT_SHA256}"
+        )
+    if audit["bias_sha256"] != EXPECTED_BINARY_HEAD_BIAS_SHA256:
+        failures.append(
+            f"bias SHA-256 {audit['bias_sha256']} != {EXPECTED_BINARY_HEAD_BIAS_SHA256}"
+        )
+    if failures:
+        raise RuntimeError(
+            "MathDial binary classifier-head initialization drifted: "
+            + "; ".join(failures)
+        )
+    return audit
 
 
 def parse_mathdial(project_root: str | Path) -> pd.DataFrame:
@@ -260,6 +316,7 @@ def train_mathdial_outcome_transfer(project_root: str | Path) -> dict[str, objec
         num_labels=2,
         ignore_mismatched_sizes=True,
     )
+    binary_head_initialization = _validate_binary_head_initialization(model)
     model.config.id2label = {0: "not_independent", 1: "independent"}
     model.config.label2id = {"not_independent": 0, "independent": 1}
     freeze_summary = _freeze_deberta(model, UNFROZEN_LAYERS)
@@ -392,6 +449,7 @@ def train_mathdial_outcome_transfer(project_root: str | Path) -> dict[str, objec
         "epochs": EPOCHS,
         "batch_size": TRAIN_BATCH_SIZE,
         "class_weights": class_weights.tolist(),
+        "binary_head_initialization": binary_head_initialization,
         "delta_file": delta_path.name,
         "delta_sha256": _sha256(delta_path),
         "delta_bytes": delta_path.stat().st_size,

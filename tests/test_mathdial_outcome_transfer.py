@@ -12,6 +12,13 @@ def test_mathdial_label_contract() -> None:
 def test_canonical_mathdial_rows() -> None:
     frame = parse_mathdial(".")
     assert frame["split"].value_counts().to_dict() == {"train": 2253, "test": 595}
+    assert int(frame["external_train_eligible"].sum()) == 1679
+    assert int(frame["external_test_eligible"].sum()) == 595
+    assert int(
+        frame.loc[
+            frame["split"].eq("train") & ~frame["external_train_eligible"], "qid"
+        ].nunique()
+    ) == 314
     assert frame["example_id"].is_unique
     assert set(frame["outcome_label"]) == {0, 1}
     train_qids = set(frame.loc[frame["external_train_eligible"], "qid"])
