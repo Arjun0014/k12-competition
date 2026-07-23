@@ -207,3 +207,31 @@ E420 is now the next bounded branch. The following contract is frozen before dow
 - A passing screen earns only full-cache construction and the frozen fold-local `V_seen`, `V_objective`, and
   `V_style` evaluation. Competition blends remain exactly 10%, 20%, and 30% over raw BGE-base replacement.
   `V_joint` and `V_final` retain their existing restrictions, and no platform submission is authorized.
+
+## E450 freeze after E420 rejection and before BGE-large scoring
+
+E420's raw ModernBERT representation regressed log loss, AUROC, Brier, and ECE with only 0.06% session-bootstrap
+support. It is rejected without rescue. The surviving positive encoder evidence is the sentence-trained BGE family:
+BGE-base improved every hardened environment over BGE-small. E450 therefore isolates one further capacity step
+without changing text selection, token length, pooling, or probe architecture.
+
+- Model: official `BAAI/bge-large-en-v1.5` revision
+  `d4aa6901d3a41ba39fb536a557fa166f842b0e09`, MIT, 24-layer BERT, 1,024-dimensional
+  SentenceTransformers CLS pooling. Download only exact safetensors/config/tokenizer/module/model-card files.
+- Sample: reuse the exact 4,096-row encoder sample and `semantic_k50_s0` fold assignments with index SHA-256
+  `4e62045be2bd473ef41e8aaf5f4b351b7432760ed6c1bbd7ccd88ca112d1efba`.
+- Text: use the existing compact objective context and objective text exactly as the BGE-base cache did. Encode both
+  separately at maximum length 256, L2 normalize, and construct the identical scaled
+  `[context, objective, product, absolute-difference]` interaction. There is no instruction prefix or new view.
+- Screen: one fixed `C=0.1` fold-local logistic probe with the same session purge and legal dense controls.
+  The fair comparator is BGE-base at fixed `C=0.1` on the identical rows, folds, labels, purge masks, and controls.
+- Operational benchmark: 32 deterministic pilot contexts spanning BGE-large token-length quantiles, batch size one,
+  six CPU threads. Proceed only if 4,096 context rows plus unique objectives project below eight hours and RSS below
+  8 GB. Batch size and token length cannot change after the benchmark.
+- Continuation gate: either at least `0.0015` log-loss gain with AUROC/Brier/ECE non-regression, or at least `0.0050`
+  AUROC gain with log-loss/Brier/ECE non-regression, plus at least 90% paired session-bootstrap support for positive
+  log-loss gain. Failure rejects BGE-large under this exact representation without C, prompt, pooling, context, or
+  blend rescue.
+- Passing earns full 35,072-row context/objective caches and hardened fold-local evaluation only. Blend weights remain
+  exactly 10%, 20%, and 30% over raw BGE-base replacement. `V_joint` and `V_final` restrictions remain unchanged.
+  No platform upload or submission is authorized.
