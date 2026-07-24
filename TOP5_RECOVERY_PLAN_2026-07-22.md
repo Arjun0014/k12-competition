@@ -235,3 +235,32 @@ without changing text selection, token length, pooling, or probe architecture.
 - Passing earns full 35,072-row context/objective caches and hardened fold-local evaluation only. Blend weights remain
   exactly 10%, 20%, and 30% over raw BGE-base replacement. `V_joint` and `V_final` restrictions remain unchanged.
   No platform upload or submission is authorized.
+
+## E460 freeze after E450 rejection and before binary SemEval training
+
+E450 regressed loss, AUROC, and Brier with zero bootstrap support and is rejected without rescue. E400 also remains
+rejected: its three-class checkpoint failed its frozen macro-F1 gate and may not be loaded or reinterpreted. E460 is
+a new checkpoint from the untouched base NLI model and a different, competition-aligned external objective:
+distinguish a fully correct student answer from every response that is not fully correct.
+
+- Data: reuse the canonical SemEval-2013 Task 7 cache with content SHA-256
+  `7a51ebe3b8c6d1537648c511836eb54360831006053eb65980f7736bd6351dfb`. Fit all 8,910 official training
+  answers; evaluate the untouched 1,552 unseen-question and 4,562 unseen-domain answers separately. Label only
+  `correct` as positive; partial, contradictory, irrelevant, and non-domain answers are negative.
+- Model: start from the original `cross-encoder/nli-deberta-v3-small`, never the E400 delta. Replace its three-way
+  classifier with a fresh two-logit head under seed `20260724`. Required initial weight SHA-256 is
+  `696ad4a9b5d7c57ccf4906b3aca4a9e9d85921429b92ca7f096aacd6c4e6c55c`; the zero bias SHA-256 is
+  `af5570f5a1810b7af78caf4bc70a660f0df51e42baf91d4de5b2328de0e83dfc`.
+- Training: the existing fixed `[QUESTION] ... [STUDENT ANSWER] ...` premise and official reference-answer
+  hypothesis, maximum length 256 with premise-only truncation, one epoch, batch size 16, unweighted cross-entropy,
+  top two of six encoder layers plus pooler/head trainable, encoder/head learning rates `2e-5/1e-4`, weight decay
+  `0.01`, 10% linear warmup, gradient clipping at 1.0, and six CPU threads. No E400 weights or soft labels enter.
+- External gate: on both official evaluation splits, binary macro-F1 must be at least `0.65`, ECE-10 at most `0.10`,
+  log loss must beat the fixed training-prior predictor by at least `0.02`, Brier must beat it by at least `0.01`,
+  and question-ID bootstrap support for positive log-loss gain must be at least 95%. Unseen-question AUROC must be
+  at least `0.72`; unseen-domain AUROC must be at least `0.76`. Every clause is required. Failure rejects this exact
+  binary branch without threshold, epoch, class-weight, head, prompt, or checkpoint rescue.
+- Passing earns only a competition cache from this new checkpoint, leakage-safe fold-local probes, and the frozen
+  `V_seen`, `V_objective`, and `V_style` evaluation. The only candidate weights are 10%, 20%, and 30% over raw
+  BGE-base replacement. `V_joint` and `V_final` restrictions, backup/top-five gates, and the manual-only submission
+  boundary remain literal.
