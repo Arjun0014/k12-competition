@@ -54,6 +54,9 @@ YES_ID = 9454
 NO_ID = 2753
 BENCHMARK_ROWS = 16
 CPU_THREADS = 6
+ARTIFACT_STEM = "qwen_outcome_e490"
+CANDIDATE = "E490_qwen_outcome"
+RUN_SUFFIX = "qwen_outcome"
 
 
 def _source_paths(project_root: str | Path) -> dict[str, Path]:
@@ -176,7 +179,7 @@ def _encode_rows(tokenizer, model, objectives: list[str], evidence: list[str]) -
 def benchmark(project_root: str | Path) -> dict[str, object]:
     runtime = assert_e450_runtime()
     paths = discover_project_paths(project_root)
-    output_path = paths.cache_dir / "qwen_outcome_e490_benchmark.json"
+    output_path = paths.cache_dir / f"{ARTIFACT_STEM}_benchmark.json"
     if output_path.exists():
         return json.loads(output_path.read_text())
     frame, _, _, evidence = _load(project_root)
@@ -196,7 +199,7 @@ def benchmark(project_root: str | Path) -> dict[str, object]:
     hours = elapsed / BENCHMARK_ROWS * PILOT_ROWS / 3600
     rss = _current_rss_bytes()
     result = {
-        "candidate": "E490_qwen_outcome",
+        "candidate": CANDIDATE,
         "model": MODEL_NAME,
         "revision": MODEL_REVISION,
         "elapsed_seconds": elapsed,
@@ -221,8 +224,8 @@ def build(project_root: str | Path, flush_every: int = 8) -> dict[str, object]:
     frame, _, _, evidence = _load(project_root)
     objectives = frame.learning_objective.fillna("").astype(str).tolist()
     tokenizer, model = _load_model(project_root)
-    cache_path = paths.cache_dir / "qwen_outcome_e490.npy"
-    progress_path = paths.cache_dir / "qwen_outcome_e490.progress.json"
+    cache_path = paths.cache_dir / f"{ARTIFACT_STEM}.npy"
+    progress_path = paths.cache_dir / f"{ARTIFACT_STEM}.progress.json"
     values = np.lib.format.open_memmap(
         cache_path,
         mode="r+" if cache_path.exists() else "w+",
@@ -250,7 +253,7 @@ def build(project_root: str | Path, flush_every: int = 8) -> dict[str, object]:
     if not np.allclose(np.linalg.norm(cache[:, :HIDDEN], axis=1), 1, atol=2e-5, rtol=0):
         raise ValueError("E490 hidden states are not normalized.")
     metadata = {
-        "candidate": "E490_qwen_outcome",
+        "candidate": CANDIDATE,
         "cache_sha256": _sha256(cache_path),
         "cache_bytes": cache_path.stat().st_size,
         "elapsed_seconds": time.perf_counter() - started,
@@ -261,7 +264,7 @@ def build(project_root: str | Path, flush_every: int = 8) -> dict[str, object]:
         "source_hashes": verify_sources(project_root),
         "V_final_accessed": False,
     }
-    metadata_path = paths.cache_dir / "qwen_outcome_e490.metadata.json"
+    metadata_path = paths.cache_dir / f"{ARTIFACT_STEM}.metadata.json"
     metadata_path.write_text(json.dumps(metadata, indent=2, sort_keys=True) + "\n")
     progress_path.unlink(missing_ok=True)
     return metadata
@@ -273,7 +276,8 @@ def validate(project_root: str | Path) -> dict[str, object]:
     full = pd.read_parquet(paths.cache_dir / "modeling_base.parquet").reset_index(drop=True)
     base_x, base_similarity = prepare_bge_base_features(paths.cache_dir, full)
     _, dense_full, dense_names = prepare_semantic_features(paths.cache_dir, full)
-    cache = np.load(paths.cache_dir / "qwen_outcome_e490.npy")
+    cache_path = paths.cache_dir / f"{ARTIFACT_STEM}.npy"
+    cache = np.load(cache_path)
     dense_base = dense_full[indices].copy()
     dense_base[:, -1:] = base_similarity[indices]
     dense_candidate = np.column_stack([dense_full[indices], cache[:, HIDDEN]])
@@ -293,12 +297,12 @@ def validate(project_root: str | Path) -> dict[str, object]:
         [delta["log_loss"] <= 0, delta["brier_score"] <= 0, delta["ece_10"] <= 0]
     )
     passed = bool((loss_path or auc_path) and boot["support_positive_log_loss_gain"] >= 0.9)
-    run_id = datetime.now(timezone.utc).strftime("%Y%m%dT%H%M%SZ_qwen_outcome")
+    run_id = datetime.now(timezone.utc).strftime(f"%Y%m%dT%H%M%SZ_{RUN_SUFFIX}")
     run_dir = paths.experiments_dir / "runs" / run_id
     run_dir.mkdir(parents=True)
     pd.DataFrame([
         {"model": "bge_base_fair_comparator", **base_metrics},
-        {"model": "E490_qwen_outcome", **candidate_metrics},
+        {"model": CANDIDATE, **candidate_metrics},
     ]).to_csv(run_dir / "metrics.csv", index=False)
     pd.DataFrame(
         {
@@ -315,7 +319,9 @@ def validate(project_root: str | Path) -> dict[str, object]:
     pd.DataFrame([boot]).to_csv(run_dir / "bootstrap.csv", index=False)
     report = {
         "run_id": run_id,
-        "candidate": "E490_qwen_outcome",
+        "candidate": CANDIDATE,
+        "model": MODEL_NAME,
+        "revision": MODEL_REVISION,
         "baseline_metrics": base_metrics,
         "candidate_metrics": candidate_metrics,
         "candidate_minus_baseline": delta,
@@ -323,7 +329,7 @@ def validate(project_root: str | Path) -> dict[str, object]:
         "screen_clauses": {"loss_path": loss_path, "auc_path": auc_path},
         "passes_screen": passed,
         "dense_features": [*dense_names, "qwen_yes_minus_no_logit"],
-        "cache_sha256": _sha256(paths.cache_dir / "qwen_outcome_e490.npy"),
+        "cache_sha256": _sha256(cache_path),
         "source_hashes": verify_sources(project_root),
         "V_final_accessed": False,
     }

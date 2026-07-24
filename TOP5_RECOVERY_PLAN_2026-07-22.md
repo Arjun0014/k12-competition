@@ -316,3 +316,20 @@ independent representation adds explicit outcome reasoning while remaining label
   representation without prompt, token, layer, C, calibration, or blend rescue.
 - Passing earns full-cache and hardened-environment work only; 10/20/30% blends over raw BGE-base, sealed-evaluation
   restrictions, backup/top-five gates, and manual-only submission remain unchanged.
+
+## E500 freeze after E490 rejection and before instruction-scale benchmark
+
+E490 proves the fixed 0.6B instruction representation is inadequate and remains rejected. E500 isolates only model
+scale using official Apache-2.0 `Qwen/Qwen2.5-1.5B-Instruct` revision
+`989aa7980e4cf806f80c7fef2b1adb7bc71aa306`. It inherits E490's exact system/user messages, 384-token
+evidence-only truncation, official non-reasoning chat template, final-token normalized hidden state, Yes-minus-No
+margin, 4,096-row sample/folds, legal controls, fixed `C=0.1`, fair BGE-base comparator, bootstrap, and continuation
+gate. No generated tokens or prompt changes are allowed.
+
+- Run only the same 16-row prompt-length-quantile CPU benchmark first. Batch size one, float32, six threads, less
+  than eight projected hours, and less than 8 GB RSS are mandatory. Failure stops E500 before target scoring.
+- A passing benchmark authorizes one resumable 4,096-row label-free cache and the unchanged fair screen. Failure of
+  that screen rejects instruction-model scaling under this protocol without prompt, length, dtype, token, layer,
+  C, calibration, or blend rescue.
+- Only a passing screen can earn full-cache/hardened evaluation; all sealed-environment, backup/top-five, and
+  manual-submission restrictions remain literal.
