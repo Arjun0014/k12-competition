@@ -617,3 +617,13 @@ weight rescue.
   `V_seen`, `V_objective`, and `V_style` protocol. `V_joint` remains confirmation-only as already opened by the
   recovery plan; `V_final` remains sealed until the literal top-five gate authorizes it. Platform submission
   remains manual-only.
+
+### E550 benchmark authorization
+
+The 64-row dual-forward benchmark plus independent packaged-CLS parity check completed in `35.120` wall-clock
+seconds. Raw-forward normalized CLS differs from the deployed SentenceTransformers result by at most
+`1.0430813e-7`, passing the frozen `2e-6` parity tolerance. The measured raw forward projects `865.293` seconds
+(`0.240359` hours) for all 8,192 pilot encodes; peak RSS was `1,247,465,472` bytes. Both operational gates pass.
+The exact cache build is authorized with one calculated completion checkpoint and no interim polling. Benchmark
+SHA-256 is `8216a509731064e0a20aafae6a260c9aa92cc31d8403eedcc9b1f2e50eccfd75`.
+No outcome score, `V_joint`, or `V_final` was accessed.
