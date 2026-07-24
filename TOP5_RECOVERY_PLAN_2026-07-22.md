@@ -411,3 +411,33 @@ encoder family.
   for positive loss gain. Failure rejects all nine frozen combinations. Passing earns only the selected full cache
   and hardened `V_seen`, `V_objective`, and `V_style` evaluation with weights still limited to 10/20/30% over raw
   BGE-base. Existing `V_joint`, `V_final`, backup/top-five, and manual-only submission restrictions remain literal.
+
+## E530 freeze after E520 rejection and before MathDial tutor-move transfer
+
+E430's dialogue-level self-correction label failed, but this does not test MathDial's dense teacher-annotated move
+taxonomy. Ikram, Scarlatos, and Lan (2025) report that tutor-move annotations complement dialogue text for outcome
+prediction and that MathDial's `generic`, `probing`, `focus`, and `telling` moves have different outcome
+associations. E530 transfers only this taxonomy and never loads the rejected E430 checkpoint.
+
+- Data: official CC BY-SA 4.0 MathDial commit `b06c020a0a1f57a87577fec33e657b63e7eb476e`, local train/test JSONL
+  SHA-256 `96980babee081a3da48ed0f1fb3068ab52f23ddc67e63bfd5ec99ad701fd29cc` and
+  `28d1e537d65a6e6ff7b8bde602a2c7e2493b93d6bc785d1848506a650997f122`. Purge every official-train dialogue
+  whose `qid` appears in official test, exactly as E430. Keep the full official test split immutable. Parse only
+  non-empty `Teacher: (move) text` turns with move in the fixed four-class taxonomy; pair each with the most recent
+  preceding non-teacher utterance. Report every excluded row and class count.
+- Representation: fixed input `[STUDENT] {previous_student}\n[TUTOR] {teacher_text}`. Combine two independently
+  L2-normalized `TfidfVectorizer` blocks with equal `1/sqrt(2)` weights: word 1-2 grams, 50,000 maximum features,
+  and `char_wb` 3-5 grams, 75,000 maximum features; both use lowercase, Unicode accent stripping, `min_df=2`,
+  sublinear TF, and training-only IDF.
+- Classifier: one `LogisticRegression(C=1.0, solver="liblinear", max_iter=1000, random_state=20260724)`, no class
+  weights, threshold change, calibration, vocabulary change, feature sweep, or neural rescue.
+- External gate on all non-empty official-test tutor turns: accuracy at least `0.60`, macro-F1 at least `0.55`,
+  every class F1 at least `0.45`, top-label ECE-10 at most `0.15`, log loss at least `0.20` better and multiclass
+  Brier at least `0.05` better than the fixed leakage-safe training-prior predictor, and at least `95%` test-`qid`
+  bootstrap support for positive log-loss gain. Every clause is required.
+- Failure rejects this exact move-transfer branch without weakening thresholds. Passing permits a target-free
+  competition cache only: apply the fixed external classifier independently to tutor turns, then aggregate fixed
+  move probabilities/fractions, early-late changes, and transitions both over the session and the existing
+  objective-conditioned tutor-evidence view. Competition labels may train only fold-local linear probes; candidate
+  weights remain exactly 10%, 20%, and 30% over raw BGE-base replacement. `V_joint`, `V_final`, backup/top-five,
+  and manual-only submission restrictions remain literal.

@@ -1,5 +1,9 @@
 # Trace the Ace - New Session Handoff
 
+> **Superseded:** The current pause/resume state is in
+> `C:\Competition\K12\NEXT_SESSION_HANDOFF_2026-07-24.md`. Read that file first. This older 2026-07-23 handoff is
+> retained as historical context.
+
 **Handoff date:** 2026-07-23 (Asia/Kolkata)  
 **Project root:** `C:\Competition\K12`  
 **Git branch:** `codex/v04-recovery`  
