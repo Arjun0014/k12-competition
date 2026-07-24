@@ -627,3 +627,20 @@ seconds. Raw-forward normalized CLS differs from the deployed SentenceTransforme
 The exact cache build is authorized with one calculated completion checkpoint and no interim polling. Benchmark
 SHA-256 is `8216a509731064e0a20aafae6a260c9aa92cc31d8403eedcc9b1f2e50eccfd75`.
 No outcome score, `V_joint`, or `V_final` was accessed.
+
+### E550 completed result and rejection
+
+The cache build completed in `805.088` seconds with peak RSS `1,388,027,904` bytes. Context/objective mean-cache
+SHA-256 values are `0ffa5e1092f4a40e745f704fc0f43d5cd178c73ecd35f44db83b6fe8d897ad86` and
+`074641a7cb358e29dfb6212bd4ad730668196e0e3ceeec71140ad979ca13c3ed`.
+
+Frozen run `20260724T183326Z_bge_base_dual_pooling` selected the preregistered `10%` blend, but improved the fair
+BGE comparator by only `0.000000551` log loss and `0.000077843` AUROC. Brier improved by `0.000000599` and
+ECE-10 by `0.000166763`. The 5,000-replicate paired session bootstrap has mean log-loss gain `0.000000253`,
+95% interval `[-0.000028217,+0.000029632]`, and `0.5000` positive-gain support. Both magnitude paths and the
+bootstrap clause fail.
+
+Reject E550 exactly without layer, token, pooling-scale, C, dense-feature, calibration, or blend rescue. No full
+cache, hardened evaluation, ZIP, or public projection is authorized. Report SHA-256 is
+`010505a7b883ebb89fddd1923069bec8206894b6a947e8a5400e51cff5911ad5`.
+`V_joint_accessed=false`; `V_final_accessed=false`.
