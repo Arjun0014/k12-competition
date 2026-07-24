@@ -20,6 +20,7 @@ from scipy import sparse
 from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.linear_model import LogisticRegression
 from sklearn.metrics import accuracy_score, f1_score
+from sklearn.multiclass import OneVsRestClassifier
 
 from trace_ace.io import discover_project_paths
 
@@ -299,6 +300,17 @@ def build_vectorizers() -> tuple[TfidfVectorizer, TfidfVectorizer]:
     return word, char
 
 
+def build_classifier() -> OneVsRestClassifier:
+    return OneVsRestClassifier(
+        LogisticRegression(
+            C=1.0,
+            solver="liblinear",
+            max_iter=1_000,
+            random_state=SEED,
+        )
+    )
+
+
 def _combine_blocks(
     word_block: sparse.spmatrix, char_block: sparse.spmatrix
 ) -> sparse.csr_matrix:
@@ -460,12 +472,7 @@ def run_mathdial_tutor_move_transfer(project_root: str | Path) -> dict[str, obje
     test_char = char.transform(test["model_text"])
     train_matrix = _combine_blocks(train_word, train_char)
     test_matrix = _combine_blocks(test_word, test_char)
-    classifier = LogisticRegression(
-        C=1.0,
-        solver="liblinear",
-        max_iter=1_000,
-        random_state=SEED,
-    )
+    classifier = build_classifier()
     classifier.fit(train_matrix, train["move"])
     if tuple(classifier.classes_) != CLASS_ORDER:
         raise RuntimeError(
@@ -557,6 +564,7 @@ def run_mathdial_tutor_move_transfer(project_root: str | Path) -> dict[str, obje
             },
             "block_scale": 1.0 / np.sqrt(2.0),
             "classifier": {
+                "wrapper": "OneVsRestClassifier",
                 "C": 1.0,
                 "solver": "liblinear",
                 "max_iter": 1_000,
@@ -571,7 +579,9 @@ def run_mathdial_tutor_move_transfer(project_root: str | Path) -> dict[str, obje
         "word_vocabulary_size": len(word.vocabulary_),
         "char_vocabulary_size": len(char.vocabulary_),
         "classifier_classes": classifier.classes_.tolist(),
-        "classifier_iterations": classifier.n_iter_.tolist(),
+        "classifier_iterations": [
+            estimator.n_iter_.tolist() for estimator in classifier.estimators_
+        ],
         "test_metrics": metrics,
         "train_prior": {
             label: float(value) for label, value in zip(CLASS_ORDER, prior)

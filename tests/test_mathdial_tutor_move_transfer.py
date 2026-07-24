@@ -8,6 +8,7 @@ from trace_ace.mathdial_tutor_move_transfer import (
     MOVE_TAXONOMY,
     _multiclass_metrics,
     _qid_bootstrap,
+    build_classifier,
     build_vectorizers,
     external_gate,
     parse_mathdial_tutor_moves,
@@ -49,6 +50,15 @@ def test_e530_vectorizer_contract() -> None:
         assert vectorizer.strip_accents == "unicode"
         assert vectorizer.sublinear_tf is True
         assert vectorizer.norm == "l2"
+
+
+def test_e530_classifier_contract() -> None:
+    classifier = build_classifier()
+    assert classifier.estimator.C == 1.0
+    assert classifier.estimator.solver == "liblinear"
+    assert classifier.estimator.max_iter == 1_000
+    assert classifier.estimator.random_state == 20260724
+    assert classifier.estimator.class_weight is None
 
 
 def test_e530_metrics_bootstrap_and_gate_are_deterministic() -> None:

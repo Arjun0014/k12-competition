@@ -476,3 +476,17 @@ dialogue subset:
 
 These are corrections to preliminary counting, not model or threshold changes. The TF-IDF, classifier, external
 gate, bootstrap, continuation, sealed-evaluation, and manual-submission contracts above remain unchanged.
+
+## E530 scikit-learn 1.8 compatibility correction before scoring
+
+The first E530 launch stopped after 12.3 seconds during classifier construction, before any fitted model,
+prediction, external metric, bootstrap, report, or reusable checkpoint existed. Competition-aligned scikit-learn
+1.8.0 rejects direct multiclass use of the `liblinear` solver instead of applying its historical one-vs-rest
+behavior automatically.
+
+To preserve the frozen solver rather than substitute a different optimizer, E530 now wraps the unchanged
+`LogisticRegression(C=1.0, solver="liblinear", max_iter=1000, random_state=20260724)` in scikit-learn's
+`OneVsRestClassifier`. This fits one fixed liblinear binary estimator per move and normalizes their probabilities
+for the exclusive four-class output. It changes no row, text, vocabulary rule, block weight, base estimator,
+regularization, seed, metric, threshold, bootstrap, or gate. The failed pre-fit launch is not evidence and the
+corrected run must start from zero.
