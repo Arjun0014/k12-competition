@@ -1,9 +1,9 @@
 # Trace the Ace - Paused Session Handoff
 
-**Handoff date:** 2026-07-24 (Asia/Kolkata)  
-**Project root:** `C:\Competition\K12`  
-**Git branch:** `codex/v04-recovery`  
-**Remote:** `Arjun0014/k12-competition`  
+**Handoff date:** 2026-07-24 (Asia/Kolkata)
+**Project root:** `C:\Competition\K12`
+**Git branch:** `codex/v04-recovery`
+**Remote:** `Arjun0014/k12-competition`
 **Platform authority:** Codex must never upload or submit. The participant performs every platform action manually.
 
 ## Stop state
@@ -106,4 +106,3 @@ Frozen external setup:
 7. Append every material result to `PROJECT_LEARNING_LOG.md`, including environment, lineage, metrics, bootstrap
    evidence, failures, corrections, hashes, projection, rank bracket, and literal accept/reject decision.
 8. Never upload or submit. Build and locally verify a new backup ZIP only if a candidate clears the backup gate.
-
