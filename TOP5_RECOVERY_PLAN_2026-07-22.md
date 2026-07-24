@@ -616,6 +616,42 @@ exactly one unattended pilot validation with one calculated completion checkpoin
 Benchmark SHA-256 is `dd91b8e4f908620ce0b7a0dbb8afab182f0291f7cd933eb0b835e3bbe16e21ec`.
 `V_joint_accessed=false`; `V_final_accessed=false`.
 
+### E560 completed result and rejection
+
+Frozen run `20260724T183952Z_residual_head` selected the preregistered `30%` blend. Log loss improved by
+`0.001047773`, Brier by `0.000390984`, and ECE-10 by `0.006621537`, but AUROC regressed by `0.002874485`.
+The 5,000-draw paired session bootstrap has mean gain `0.001044909`, 95% interval
+`[-0.000512153,+0.002581618]`, and `0.9120` positive-gain support. Bootstrap passes, but loss gain is below the
+`0.0015` threshold and AUROC non-regression fails; both continuation paths therefore fail.
+
+Reject E560 exactly without architecture, optimizer, epoch, seed, input, calibration, or blend rescue. No hardened
+evaluation, ZIP, or public projection is authorized. Report SHA-256 is
+`80351ff8af062e37edd9aaf206c15174af79b811c98a6d7f472e7bc1124366a4`.
+`V_joint_accessed=false`; `V_final_accessed=false`.
+
+## E570 freeze after E560 rejection and before pairwise-ranker scoring
+
+E570 returns to a convex linear logit and isolates a new learning objective: transferable within-objective
+ordering of transcript evidence. It does not reuse E560's nonlinear architecture, dropout, minibatch optimizer,
+or checkpoint.
+
+- Inputs and evaluation rows are the exact BGE-base interaction block and 35 fold-local standardized controls on
+  the fixed 4,096-row `semantic_k50_s0` pilot, with the same validation-session purge and fair `C=0.1` logistic
+  comparator.
+- Pair rule: inside each legal outer-training fold, sort by `response_id`. For every `learning_objective_id` with
+  both outcomes, create `max(n_positive,n_negative)` positive-negative pairs, repeating the smaller class
+  cyclically. Never pair across objectives; do not mine, weight, filter, or select pairs by prediction.
+- Model/optimizer: zero weight and legal fold-prior bias linear logit, full-batch PyTorch L-BFGS, maximum 100
+  iterations, history 20, strong-Wolfe line search, `1e-7` gradient tolerance, `1e-9` change tolerance.
+  Minimize exactly `0.5 * mean BCE + 0.5 * mean softplus(-(positive_logit-negative_logit)) +
+  0.0015 * ||w||^2`.
+- Evaluate exactly 10%, 20%, and 30% ranker probability over the fair BGE comparator. Continue only through the
+  unchanged `0.0015` loss path or `0.0050` AUROC path with loss/Brier/ECE non-regression and at least 90%
+  positive-gain support in 5,000 paired session bootstraps.
+- Failure rejects E570 without loss-mixture, pair construction, margin, L2, iteration, optimizer, input,
+  calibration, or blend-weight rescue. Passing earns frozen hardened selection evaluation only; `V_joint` remains
+  confirmation-only and `V_final` sealed until the literal top-five gate. Platform submission remains manual-only.
+
 ## E550 freeze after E540 rejection and before BGE-base masked-mean encoding
 
 E540 shows that selecting more instances with the existing CLS geometry is harmful. E550 tests a different,
