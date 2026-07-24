@@ -300,6 +300,19 @@ def validate(project_root: str | Path) -> dict[str, object]:
         {"model": "bge_base_fair_comparator", **base_metrics},
         {"model": "E490_qwen_outcome", **candidate_metrics},
     ]).to_csv(run_dir / "metrics.csv", index=False)
+    pd.DataFrame(
+        {
+            "response_id": frame.response_id,
+            "session_id": frame.session_id,
+            "learning_objective_id": frame.learning_objective_id,
+            "fold": folds,
+            "target": target,
+            "pred_bge_base": pred_base,
+            "pred_qwen_outcome": pred_candidate,
+            "qwen_yes_minus_no_logit": cache[:, HIDDEN],
+        }
+    ).to_parquet(run_dir / "oof_predictions.parquet", index=False)
+    pd.DataFrame([boot]).to_csv(run_dir / "bootstrap.csv", index=False)
     report = {
         "run_id": run_id,
         "candidate": "E490_qwen_outcome",
@@ -310,6 +323,8 @@ def validate(project_root: str | Path) -> dict[str, object]:
         "screen_clauses": {"loss_path": loss_path, "auc_path": auc_path},
         "passes_screen": passed,
         "dense_features": [*dense_names, "qwen_yes_minus_no_logit"],
+        "cache_sha256": _sha256(paths.cache_dir / "qwen_outcome_e490.npy"),
+        "source_hashes": verify_sources(project_root),
         "V_final_accessed": False,
     }
     (run_dir / "report.json").write_text(json.dumps(report, indent=2, sort_keys=True) + "\n")
