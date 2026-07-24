@@ -264,3 +264,29 @@ distinguish a fully correct student answer from every response that is not fully
   `V_seen`, `V_objective`, and `V_style` evaluation. The only candidate weights are 10%, 20%, and 30% over raw
   BGE-base replacement. `V_joint` and `V_final` restrictions, backup/top-five gates, and the manual-only submission
   boundary remain literal.
+
+## E470 freeze after E460 rejection and before MPNet scoring
+
+E460 created external ranking signal but failed its group-bootstrap, calibration, and unseen-domain AUROC clauses;
+it is rejected without calibration or checkpoint rescue. E470 returns to the only robust positive evidence—the
+sentence-embedding path—but changes the encoder architecture and contrastive pretraining family rather than scale.
+
+- Model: official `sentence-transformers/all-mpnet-base-v2` revision
+  `e8c3b32edf5434bc2275fc9bab85f82640a19130`, Apache-2.0, 768-dimensional normalized mean pooling. Download
+  only the exact safetensors/config/tokenizer/module/model-card files.
+- Sample and text: the exact 4,096-row `qwen3_pilot_indices.npy` sample, `semantic_k50_s0` folds, compact objective
+  contexts, raw objective strings, maximum length 256, no instruction prefix, and separately normalized context and
+  objective embeddings.
+- Probe: the identical scaled `[context, objective, product, absolute-difference]` interaction, identical legal
+  dense controls, fixed `C=0.1`, five fold-local logistic fits, and the existing session purge. The fair comparator
+  is BGE-base on the identical rows, folds, labels, masks, and controls.
+- Operational gate: 32 deterministic context token-length quantiles, batch size one, six CPU threads. Proceed only
+  if 4,096 contexts plus unique objectives project below eight hours and peak RSS remains below 8 GB. Batch size,
+  token length, pooling, and text remain fixed after this label-free benchmark.
+- Continuation gate: either log-loss gain at least `0.0015` with AUROC/Brier/ECE non-regression, or AUROC gain at
+  least `0.0050` with log-loss/Brier/ECE non-regression, plus at least 90% paired session-bootstrap support for
+  positive loss gain. Failure rejects this exact MPNet representation without a C, pooling, prompt, context, token,
+  or blend rescue.
+- Passing earns a full 35,072-row cache and hardened fold-local validation. Competition blend weights remain only
+  10%, 20%, and 30% over raw BGE-base replacement; `V_joint`, `V_final`, backup/top-five gates, and manual-only
+  platform submission remain unchanged.
