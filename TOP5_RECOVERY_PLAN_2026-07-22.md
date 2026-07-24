@@ -583,6 +583,30 @@ No full cache, hardened evaluation, ZIP, or public projection is authorized. Rep
 `5ef6d959574f362c36fb30d24d8a91b65d7b6211d1ad66636d6d6f89aa66ca02`.
 `V_joint_accessed=false`; `V_final_accessed=false`.
 
+## E560 freeze after E550 rejection and before nonlinear-head scoring
+
+E520, E540, and E550 show that new BGE-base views and pooling do not improve the fair pilot. E560 keeps the exact
+publicly confirmed CLS representation and asks one different question: whether the fixed linear outcome boundary
+is the remaining bottleneck. It uses no new text, model, external data, pooling, or target-derived test feature.
+
+- Inputs are the exact deployed BGE-base interaction block
+  `[0.7*context, 0.7*objective, 6.0*product, 0.7*absolute_difference]` and the same 35 legal controls,
+  standardized only inside each legal outer-training fold and scaled by `0.08`. Exact pilot rows, five
+  `semantic_k50_s0` folds, validation-session purge, and fair `C=0.1` logistic comparator remain unchanged.
+- Candidate head: a 32-unit GELU residual MLP with direct linear logit, 15% dropout on the nonlinear path, and one
+  scalar bias initialized to the legal fold-training logit prior. Direct and nonlinear output weights initialize
+  at zero; hidden weights use Xavier uniform. Train exactly 30 epochs with batch 128, deterministic fold shuffle,
+  AdamW learning rate `5e-4`, weight decay `1e-3`, gradient-norm cap `1.0`, unweighted BCE-with-logits, six CPU
+  threads, and seed `20260725 + fold`. No early stopping, checkpoint selection, class weighting, or calibration.
+- Evaluate exactly 10%, 20%, and 30% residual-head probability over the fair raw BGE-base comparator and select
+  the lowest pilot loss. Continue only through the same dual path: at least `0.0015` loss gain with
+  AUROC/Brier/ECE non-regression, or at least `0.0050` AUROC gain with loss/Brier/ECE non-regression, plus at
+  least 90% positive-gain support in 5,000 paired session bootstraps.
+- Failure rejects this exact nonlinear head without hidden-width/depth, activation, dropout, initialization,
+  epoch, batch, optimizer, learning-rate, weight-decay, seed-ensemble, input-scaling, calibration, or blend rescue.
+  Passing earns only frozen `V_seen`, `V_objective`, and `V_style` evaluation; `V_joint` remains confirmation-only
+  and `V_final` sealed until the literal top-five gate. Platform submission remains manual-only.
+
 ## E550 freeze after E540 rejection and before BGE-base masked-mean encoding
 
 E540 shows that selecting more instances with the existing CLS geometry is harmful. E550 tests a different,
