@@ -607,6 +607,15 @@ is the remaining bottleneck. It uses no new text, model, external data, pooling,
   Passing earns only frozen `V_seen`, `V_objective`, and `V_style` evaluation; `V_joint` remains confirmation-only
   and `V_final` sealed until the literal top-five gate. Platform submission remains manual-only.
 
+### E560 benchmark authorization
+
+The deterministic label-free benchmark trained one legal-fold-sized residual head for one epoch in `1.878458`
+seconds using index-parity labels and no outcomes. This projects `281.769` seconds (`0.078269` hours) for the
+frozen five folds and 30 epochs. Peak RSS was `1,647,194,112` bytes. Both operational gates pass, authorizing
+exactly one unattended pilot validation with one calculated completion checkpoint and no interim polling.
+Benchmark SHA-256 is `dd91b8e4f908620ce0b7a0dbb8afab182f0291f7cd933eb0b835e3bbe16e21ec`.
+`V_joint_accessed=false`; `V_final_accessed=false`.
+
 ## E550 freeze after E540 rejection and before BGE-base masked-mean encoding
 
 E540 shows that selecting more instances with the existing CLS geometry is harmful. E550 tests a different,
