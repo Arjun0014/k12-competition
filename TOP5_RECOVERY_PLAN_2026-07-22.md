@@ -652,6 +652,14 @@ or checkpoint.
   calibration, or blend-weight rescue. Passing earns frozen hardened selection evaluation only; `V_joint` remains
   confirmation-only and `V_final` sealed until the literal top-five gate. Platform submission remains manual-only.
 
+### E570 benchmark authorization
+
+The label-free index-parity benchmark completed one full fold fit in `1.754113` seconds with 11 L-BFGS iterations
+and 15 closure evaluations, projecting `8.770566` seconds for five folds. Peak RSS was `1,643,012,096` bytes.
+Both resource gates pass; the frozen validation is authorized directly. Benchmark SHA-256 is
+`ecc439a519bcda6becc718916519edc6eb75842311230cec235ed64846a15c35`.
+No outcome score, `V_joint`, or `V_final` was accessed.
+
 ## E550 freeze after E540 rejection and before BGE-base masked-mean encoding
 
 E540 shows that selecting more instances with the existing CLS geometry is harmful. E550 tests a different,
