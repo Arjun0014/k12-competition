@@ -373,3 +373,41 @@ timing without changing any text encoder or inspecting any new target result.
   artifact. It does not make `V_joint` untouched evidence. Promotion then applies the existing backup and top-five
   gates literally across all four hardened environments. `V_final` remains sealed unless the full top-five gate
   authorizes it. No platform upload or submission is authorized.
+
+## E520 freeze after E510 rejection and before BGE-base multi-view scoring
+
+E510 proves that additional session-style metadata is harmful. The remaining bounded representation gap is that
+the validated BGE-base encoder was used only on the original mixed objective context, while the deterministic
+student-only and ordered answer-feedback evidence views were screened only with weaker BGE-small. E520 isolates
+whether BGE-base capacity makes those already-fixed views useful; it changes neither the view extractor nor the
+encoder family.
+
+- Sources: `response_multiview_texts.parquet` schema `2026-07-17-v2-budgeted`, SHA-256
+  `e7b28d679220672ed379ed0de8f6cef9ece38cbeb7b0473cae11ae80584d4607`; exact 4,096-row pilot index SHA-256
+  `4e62045be2bd473ef41e8aaf5f4b351b7432760ed6c1bbd7ccd88ca112d1efba`; and the existing
+  `semantic_k50_s0` fold assignments. Student and feedback texts are already target-free, response-aligned,
+  non-empty, and capped below 256 words by the frozen extractor.
+- Encoder: the packaged MIT `BAAI/bge-base-en-v1.5` assets already used by the verified backup. Exact local
+  safetensors/config/module/pooling SHA-256 values are
+  `c7c1988aae201f80cf91a5dbbd5866409503b89dcaba877ca6dba7dd0a5167d7`,
+  `bc00af31a4a31b74040d73370aa83b62da34c90b75eb77bfa7db039d90abd591`,
+  `84e40c8e006c9b1d6c122e02cba9b02458120b5fb0c87b746c41e0207cf642cf`, and
+  `c9bef85e8bbf4b2eab4941b3fb62bd33f88686748b478f2e264d256472d9643b`.
+  Use CPU float32, six threads, maximum length 256, packaged CLS pooling, L2 normalization, and batch 16.
+- The label-free benchmark sampled 32 fixed length quantiles per view. Batch 16 was fastest:
+  `0.1912` seconds/row for student evidence and `0.2339` for feedback, projecting about 29 minutes for both
+  4,096-row caches. Proceed only below two projected hours and 8 GB RSS.
+- Candidate representations are exactly: student evidence/objective interaction, feedback evidence/objective
+  interaction, and the L2-normalized arithmetic mean of student and feedback embeddings/objective interaction.
+  Every interaction is the existing fixed `[0.7*context, 0.7*objective, 6.0*product,
+  0.7*absolute_difference]`; every probe uses fixed `C=0.1`, the same legal dense controls, training-fold-only
+  standardization, and session purge. No alternate view, pooling, prompt, token length, layer, or C is allowed.
+- Fair comparator: BGE-base original-context interaction at fixed `C=0.1` on the identical 4,096 rows, frozen
+  folds, labels, purge masks, and controls. Each of the three candidate probes is evaluated only at preregistered
+  10%, 20%, and 30% blends over that comparator. The lowest pilot log loss selects one representation/weight;
+  there is no interpolation or post-hoc rescue.
+- Continuation requires either at least `0.0015` log-loss gain with AUROC/Brier/ECE non-regression or at least
+  `0.0050` AUROC gain with log-loss/Brier/ECE non-regression, plus at least `90%` paired session-bootstrap support
+  for positive loss gain. Failure rejects all nine frozen combinations. Passing earns only the selected full cache
+  and hardened `V_seen`, `V_objective`, and `V_style` evaluation with weights still limited to 10/20/30% over raw
+  BGE-base. Existing `V_joint`, `V_final`, backup/top-five, and manual-only submission restrictions remain literal.
