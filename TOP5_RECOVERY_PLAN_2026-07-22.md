@@ -582,3 +582,38 @@ Reject E540 exactly without post-hoc attention, segmentation, compaction, C, poo
 No full cache, hardened evaluation, ZIP, or public projection is authorized. Report SHA-256 is
 `5ef6d959574f362c36fb30d24d8a91b65d7b6211d1ad66636d6d6f89aa66ca02`.
 `V_joint_accessed=false`; `V_final_accessed=false`.
+
+## E550 freeze after E540 rejection and before BGE-base masked-mean encoding
+
+E540 shows that selecting more instances with the existing CLS geometry is harmful. E550 tests a different,
+label-free encoder readout while retaining the only model family with confirmed public transfer. The exact
+packaged BGE-base forward pass supplies both its deployed normalized final-layer CLS vector and a separately
+normalized attention-mask mean of the same final hidden states. This is not an E540 attention, segmentation, or
+weight rescue.
+
+- Immutable sources: exact 4,096-row `qwen3_pilot_indices.npy`; `response_objective_context.parquet`;
+  `modeling_base.parquet`; baseline `20260716T183434Z_robust_validation/oof_predictions.parquet`; deployed
+  BGE-base CLS context/objective caches; and packaged `BAAI/bge-base-en-v1.5` model/config/modules/pooling files.
+  Their hashes remain exactly those bound by E540.
+- Text and encoder: use the unchanged compact `objective_context` and raw `learning_objective`, maximum 256
+  tokens, CPU float32, six threads, batch 16, and the exact packaged MIT BGE-base weights. Mean pooling is
+  `sum(last_hidden_state * attention_mask) / sum(attention_mask)`, including every non-padding special token,
+  followed by row L2 normalization. No layer mix, token exclusion, prompt, prefix, context change, or alternate
+  pooling is scored.
+- Parity/resource preflight: on 32 fixed token-length quantiles from contexts and 32 from objectives, the
+  normalized first-token output from the raw forward pass must match packaged SentenceTransformers CLS output
+  within `2e-6` maximum absolute error. Project all 8,192 pilot mean embeddings from the measured forward-pass
+  time; proceed only below two hours and 8 GB peak RSS.
+- Fair pilot: reconstruct the exact original BGE-base `C=0.1` session-purged five-fold probe on
+  `semantic_k50_s0`. The dual candidate concatenates the existing CLS interaction block and the masked-mean
+  interaction block, each divided by `sqrt(2)`, and adds only masked-mean context/objective cosine to the same
+  fold-local standardized dense controls. Regularization remains `C=0.1`.
+- Evaluate exactly `10%`, `20%`, and `30%` dual-pooling probe over the fair raw BGE-base comparator and select
+  the lowest pilot loss. Continue only if either loss improves by at least `0.0015` with AUROC/Brier/ECE
+  non-regression, or AUROC improves by at least `0.0050` with loss/Brier/ECE non-regression, and the 5,000-draw
+  paired session bootstrap gives at least 90% support for positive loss gain.
+- Failure rejects this exact dual-pooling representation without a layer, token, CLS/mean scale, C, dense-feature,
+  calibration, or blend-weight sweep. Passing earns full target-free cache construction followed by the frozen
+  `V_seen`, `V_objective`, and `V_style` protocol. `V_joint` remains confirmation-only as already opened by the
+  recovery plan; `V_final` remains sealed until the literal top-five gate authorizes it. Platform submission
+  remains manual-only.
