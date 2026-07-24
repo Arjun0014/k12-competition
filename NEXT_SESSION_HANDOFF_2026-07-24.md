@@ -15,6 +15,18 @@
 - `V_final` remains sealed and must not be inspected until an exact frozen protocol authorizes it.
 - Preserve all datasets, caches, logs, reports, ZIPs, and unrelated working files.
 
+## Resume and public-result amendment
+
+- The participant explicitly resumed development on 2026-07-24 after manually submitting the unchanged BGE-base
+  backup.
+- Full submission `id-2518`, platform note `ensemble_v05_bge_backup`, completed with public log loss `0.6054`.
+- The participant observed rank `#8`. The supplied run log does not include public AUROC, so it remains unreported.
+- Official execution completed with exit code `0` in approximately 242.6 seconds and wrote `submission.csv`.
+- This is a public log-loss gain of `0.0027` over v0.2 (`0.6081`) and leaves `0.0016` to the frozen conservative
+  top-five target of `0.6038`.
+- The result validates the BGE-base replacement as the new public champion. It does not authorize a weight sweep,
+  calibration change, or repeated public tuning. E530's frozen external and competition gates remain unchanged.
+
 ## Manual submission recommendation
 
 If the participant chooses to use one full submission, the only recommended artifact is the unchanged BGE-base
@@ -39,10 +51,12 @@ first full submission; confirm the countdown/reset shown by the platform before 
 
 ## Public and promotion state
 
-- Public champion: v0.2, log loss `0.6081`, AUROC `0.6147`.
-- Last observed rank: approximately `#20`; this may be stale.
+- Public champion: v0.5 BGE-base backup, log loss `0.6054`; public AUROC was not supplied.
+- Participant-observed rank: `#8` after full submission `id-2518`.
+- Prior champion v0.2: log loss `0.6081`, AUROC `0.6147`.
 - Conservative top-five target: log loss `<=0.6038`.
-- Required robust improvement over v0.2: at least `0.0043`.
+- Remaining public gap from v0.5 to the conservative target: `0.0016`.
+- The frozen top-five local gate remains a robust improvement of at least `0.0043` over v0.2.
 - The BGE backup clears the frozen backup gate but not the top-five gate.
 
 ## Completed recovery outcomes

@@ -441,3 +441,16 @@ associations. E530 transfers only this taxonomy and never loads the rejected E43
   objective-conditioned tutor-evidence view. Competition labels may train only fold-local linear probes; candidate
   weights remain exactly 10%, 20%, and 30% over raw BGE-base replacement. `V_joint`, `V_final`, backup/top-five,
   and manual-only submission restrictions remain literal.
+
+## Public evidence amendment after the BGE-base submission and before E530 scoring
+
+The participant manually submitted the unchanged verified BGE-base backup as full job `id-2518`. The supplied
+platform log verifies completed execution, exit code `0`, root-level output generation, and public log loss
+`0.6054`; the participant observed rank `#8`. Public AUROC was not included in the supplied log and is not inferred.
+Runtime was approximately 242.6 seconds.
+
+This replaces v0.2 as the public champion and is a `0.0027` public loss improvement over `0.6081`, larger than the
+four-environment local gain of `0.001272`. The conservative `0.6038` top-five target is now `0.0016` away in public
+loss. This public result is confirmation evidence only: it does not alter E530's data, representation, classifier,
+external gate, fixed 10/20/30% competition weights, or sealed-evaluation rules, and it cannot authorize any
+post-hoc calibration or weight sweep. The literal top-five local gate remains `0.0043` robust gain versus v0.2.
