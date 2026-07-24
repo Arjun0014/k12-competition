@@ -525,7 +525,7 @@ chronological evidence instances independently and performs target-free semantic
   BGE-base context, and objective hashes remain
   `ea49463819e387b3a61aeafda5007938e39948940eac5b134f607ab13e3d6ede`,
   `1693717193bae4bed75765d48b6c85de8f240eba8f5ac92b0724f499e7fe7ba6`,
-  `b5f0066cc8d659e6596ac47967bd14f2d0f02cedc82319e2a2313cf564d1a`, and
+  `b5f0066cc8d659e6593596ac47967bd14f2d0f02cedc82319e2a2313cf564d1a`, and
   `6cc754a287f9ec303aa5f81dd98ab0321c7c5299b2a4e251d6f86f63afe6eb27`.
 - Fixed text transform: retain the existing objective header and split its already-selected discussion lines into
   four contiguous chronological bins with `numpy.array_split`. For a bin with more than eight lines, keep its
