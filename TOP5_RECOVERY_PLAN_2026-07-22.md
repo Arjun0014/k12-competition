@@ -333,3 +333,43 @@ gate. No generated tokens or prompt changes are allowed.
   C, calibration, or blend rescue.
 - Only a passing screen can earn full-cache/hardened evaluation; all sealed-environment, backup/top-five, and
   manual-submission restrictions remain literal.
+
+## E510 freeze after E500 rejection and before timing-dynamics scoring
+
+E420/E450/E470/E490/E500 all show that another blind representation-capacity change is not justified. A complete
+raw-field coverage audit found one competition-legal input family not yet modeled beyond coarse total duration:
+the relative utterance timestamps. The target-free audit covered all 6,139,854 cached utterances and 22,821
+sessions. Timestamps are complete and monotonic, every session has at least 10 distinct timestamps, and positive
+inter-utterance gaps have median 6 seconds and 90th percentile 24 seconds. E510 therefore isolates interaction
+timing without changing any text encoder or inspecting any new target result.
+
+- Source: `data_cache/utterances.parquet`, SHA-256
+  `80a231d18dbb0641989ebb972f08988f0ddd3cb7c4fb769ad2fe90b5a98ba5a4`. Use only `session_id`,
+  `utterance_id`, relative `HH:MM:SS` timestamp, and the supplied role. No response label, objective ID, provider ID,
+  test aggregate, inferred identity, or external annotation enters cache construction.
+- Fixed session features: distinct-time share; zero-gap share; log1p mean/median/p90/p95/p99/maximum/standard
+  deviation of positive gaps; shares of gaps over 10 and 30 seconds; the same fixed mean/median/p90/zero-gap
+  summaries for tutor-to-student and student-to-tutor transitions; their median-latency asymmetry; early and late
+  median positive gaps and log difference; early and late tutor-to-student medians and log difference; log1p total,
+  student, tutor, and background turns per minute; and entropy of the fixed gap bins
+  `[0], [1], [2], [3-5], [6-10], [11-30], [31+]`. Missing transition subsets receive deterministic zeros.
+- Probe: one timing-only `LogisticRegression(C=0.1, solver="liblinear", max_iter=1000, random_state=20260724)`.
+  Standardization is fit inside each legal outer-training fold only. The existing frozen `V_seen`, `V_objective`,
+  and `V_style` assignments and session purge are used exactly; no feature selection, C sweep, nonlinear model,
+  target calibration, or label-dependent cache statistic is allowed.
+- Comparator: reconstruct raw BGE-base replacement exactly as
+  `0.25 * pred_full + 0.25 * pred_role + 0.50 * pred_bge_base` from immutable Phase C component OOF artifacts.
+  The development source run is `20260720T075633Z_environment_component_validation`; its
+  `development_candidate_oof.parquet` SHA-256 is
+  `07430f29fef800edd04800fc04392d5ca655e25897eb3712899d7cc0bf1d60a0`.
+- Candidate weights are exactly 10%, 20%, and 30% timing component over raw BGE-base replacement. Select the lowest
+  equal-fold-macro development log loss, with weight as the only selection dimension. No weight interpolation or
+  post-hoc sweep is permitted.
+- Development continuation gate: mean loss gain at least `0.00075` across `V_seen`, `V_objective`, and `V_style`;
+  at least two environments improved; worst environment regression at most `0.0005`; macro AUROC, Brier, and ECE
+  non-regression; and at least `90%` paired session-bootstrap support for positive macro loss gain. Failure rejects
+  this exact timing component and all three frozen weights without opening any additional assignment or rescue.
+- Passing locks the selected weight and permits one evaluation on the already-opened Phase C `V_joint` component
+  artifact. It does not make `V_joint` untouched evidence. Promotion then applies the existing backup and top-five
+  gates literally across all four hardened environments. `V_final` remains sealed unless the full top-five gate
+  authorizes it. No platform upload or submission is authorized.
