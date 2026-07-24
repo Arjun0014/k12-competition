@@ -555,3 +555,12 @@ chronological evidence instances independently and performs target-free semantic
   line allocation, compaction, C, pooling, encoder, dense controls, or blend weights. Passing earns full target-free
   cache construction and frozen `V_seen`/`V_objective`/`V_style` evaluation only. `V_joint`, `V_final`,
   backup/top-five gates, and manual-only platform submission remain literal.
+
+### E540 benchmark authorization
+
+The committed implementation passes seven focused E540/E520 tests and Ruff in the competition environment.
+The fixed 128-row benchmark took `38.648` wall-clock seconds and projects `2,825.139` seconds (`0.784761` hours)
+for all 16,384 segment encodes. Peak RSS was `1,084,813,312` bytes. Both frozen resource clauses pass, so the
+exact cache build is authorized with one calculated completion checkpoint and no interim polling. Benchmark
+SHA-256 is `7bbc44f76fb0c932e1b566f185b9ff0e48f97b7303af1fff01061ef26d9e6310`.
+No target metric, `V_joint`, or `V_final` was accessed.
