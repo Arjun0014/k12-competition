@@ -564,3 +564,21 @@ for all 16,384 segment encodes. Peak RSS was `1,084,813,312` bytes. Both frozen 
 exact cache build is authorized with one calculated completion checkpoint and no interim polling. Benchmark
 SHA-256 is `7bbc44f76fb0c932e1b566f185b9ff0e48f97b7303af1fff01061ef26d9e6310`.
 No target metric, `V_joint`, or `V_final` was accessed.
+
+### E540 completed result and rejection
+
+The cache build completed in `1,920.789` seconds with peak RSS `1,163,173,888` bytes. Cache SHA-256 is
+`c5d54f1f69baf17a640fcff8f8f292cc2dbbe579c529257734885890520d2c48`; segment-text SHA-256 is
+`6d9c04624f8a4a31e30d4bbe9dcb6ff43e03dd527ee186ddeebba9074cd13b9f`.
+
+Frozen run `20260724T180101Z_semantic_attention` selected the preregistered `10%` blend, but it regressed the
+identical-fold BGE comparator on every metric: log loss `0.595732349` versus `0.595607488`
+(`+0.000124861` worse), AUROC `0.608344076` versus `0.608965679` (`-0.000621603`), Brier `0.203629751`
+versus `0.203578114` (`+0.000051637`), and ECE-10 `0.024429701` versus `0.024219608` (`+0.000210093`).
+The 5,000-replicate paired session bootstrap has mean log-loss gain `-0.000124980`, 95% interval
+`[-0.000184901,-0.000065013]`, and zero positive-gain support. All three continuation clauses fail.
+
+Reject E540 exactly without post-hoc attention, segmentation, compaction, C, pooling, feature, or blend changes.
+No full cache, hardened evaluation, ZIP, or public projection is authorized. Report SHA-256 is
+`5ef6d959574f362c36fb30d24d8a91b65d7b6211d1ad66636d6d6f89aa66ca02`.
+`V_joint_accessed=false`; `V_final_accessed=false`.
