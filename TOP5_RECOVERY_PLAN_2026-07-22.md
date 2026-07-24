@@ -490,3 +490,24 @@ To preserve the frozen solver rather than substitute a different optimizer, E530
 for the exclusive four-class output. It changes no row, text, vocabulary rule, block weight, base estimator,
 regularization, seed, metric, threshold, bootstrap, or gate. The failed pre-fit launch is not evidence and the
 corrected run must start from zero.
+
+## E530 completed result and rejection
+
+Corrected run `20260724T164257Z_mathdial_tutor_move_transfer` completed from zero in 12.8 seconds under `.venv`
+Python 3.12.8 and scikit-learn 1.8.0. It fit 11,106 training turns and evaluated all 3,664 immutable test turns
+over 391 question IDs with a 97,930-column sparse matrix.
+
+- Accuracy `0.536572 < 0.60`.
+- Macro-F1 `0.498263 < 0.55`.
+- Class F1: focus `0.566291`, generic `0.755182`, probing `0.250188`, telling `0.421390`; therefore the
+  every-class `>=0.45` clause fails.
+- Top-label ECE-10 `0.035565` passes.
+- Log loss `1.026673` versus prior `1.357012` gains `0.330338`, passing the `0.20` clause.
+- Summed multiclass Brier `0.567969` versus prior `0.735933` gains `0.167965`, passing the `0.05` clause.
+- The 5,000-replicate test-`qid` bootstrap has `1.0000` positive-gain support, mean `0.330261`, and 95% interval
+  `[0.311361, 0.349291]`, passing its clause.
+
+Three of seven mandatory clauses fail. Reject this exact E530 branch without class weighting, threshold changes,
+calibration, vocabulary/C/solver changes, alternate contexts, neural rescue, or selective class use. It does not
+authorize a competition cache, fold-local outcome probe, hardened-environment evaluation, blend, package, or
+public projection. `V_joint` and `V_final` were not accessed.
