@@ -454,3 +454,25 @@ four-environment local gain of `0.001272`. The conservative `0.6038` top-five ta
 loss. This public result is confirmation evidence only: it does not alter E530's data, representation, classifier,
 external gate, fixed 10/20/30% competition weights, or sealed-evaluation rules, and it cannot authorize any
 post-hoc calibration or weight sweep. The literal top-five local gate remains `0.0043` robust gain versus v0.2.
+
+## E530 parser correction and final pre-score freeze
+
+The earlier pause handoff quoted `11,139/3,699` move turns from a preliminary raw-teacher-turn audit. The exact
+frozen parser, tested before any external prediction metric, applies every written exclusion and the exact E430
+dialogue subset:
+
+- Exclude the same nine official-train and four official-test dialogues with missing `self-correctness` used by
+  E430, then purge the 314 labeled test `qid` values from labeled training. This yields exactly 1,679 training
+  dialogues and 595 test dialogues with no question overlap.
+- Initialize each dialogue's preceding non-teacher evidence with its supplied `student_incorrect_solution`, which
+  is the student's documented state immediately before tutoring. Thereafter, update it after every non-teacher
+  turn. This makes the first tutor move well-defined without inventing text.
+- Split turns only on the official `|EOM|` marker. Remove the leading move annotation from tutor text before
+  vectorization. Exclude one malformed training move marker, 42 empty training tutor texts, and 13 empty test tutor
+  texts.
+- The resulting immutable screen has 11,106 training turns
+  (`focus=4,102`, `generic=2,611`, `probing=2,567`, `telling=1,826`) and 3,664 official-test turns
+  (`focus=1,241`, `generic=884`, `probing=946`, `telling=593`).
+
+These are corrections to preliminary counting, not model or threshold changes. The TF-IDF, classifier, external
+gate, bootstrap, continuation, sealed-evaluation, and manual-submission contracts above remain unchanged.
