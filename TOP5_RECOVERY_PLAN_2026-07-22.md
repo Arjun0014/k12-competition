@@ -511,3 +511,47 @@ Three of seven mandatory clauses fail. Reject this exact E530 branch without cla
 calibration, vocabulary/C/solver changes, alternate contexts, neural rescue, or selective class use. It does not
 authorize a competition cache, fold-local outcome probe, hardened-environment evaluation, blend, package, or
 public projection. `V_joint` and `V_final` were not accessed.
+
+## E540 freeze after E530 rejection and before multi-instance BGE-base encoding
+
+E530 is rejected and cannot supply move features. E540 returns to the only representation with confirmed public
+transfer, BGE-base, but tests a genuinely different information bottleneck: the current model compresses up to 70
+chronological objective-relevant transcript lines into one short string before encoding. E540 encodes four
+chronological evidence instances independently and performs target-free semantic attention afterward.
+
+- Immutable sources: `response_objective_context.parquet` SHA-256
+  `218d5b041f78c6803f28078c35b7fa9e37b725f456c4052974e5150b2afa43f6`; exact 4,096-row pilot index
+  SHA-256 `4e62045be2bd473ef41e8aaf5f4b351b7432760ed6c1bbd7ccd88ca112d1efba`; modeling, baseline OOF,
+  BGE-base context, and objective hashes remain
+  `ea49463819e387b3a61aeafda5007938e39948940eac5b134f607ab13e3d6ede`,
+  `1693717193bae4bed75765d48b6c85de8f240eba8f5ac92b0724f499e7fe7ba6`,
+  `b5f0066cc8d659e6596ac47967bd14f2d0f02cedc82319e2a2313cf564d1a`, and
+  `6cc754a287f9ec303aa5f81dd98ab0321c7c5299b2a4e251d6f86f63afe6eb27`.
+- Fixed text transform: retain the existing objective header and split its already-selected discussion lines into
+  four contiguous chronological bins with `numpy.array_split`. For a bin with more than eight lines, keep its
+  first four and last four; retain all lines otherwise. Compact every retained line to its first 16 whitespace
+  words. No target, role-specific rescore, cue lexicon, alternate retrieval, or learned selector enters.
+- Label-free audit on all pilot texts: discussion-line count min/median/p95/max is `3/45/65/70`; all 16,384
+  segments are non-empty and 16,355 are unique. BGE-base token-count min/median/p95/p99/max is
+  `8/133/176/192/232`; none reaches the fixed 256-token limit.
+- Encoder: the exact packaged MIT `BAAI/bge-base-en-v1.5` assets and hashes already verified for v0.5, CPU
+  float32, six threads, batch 16, maximum length 256, packaged CLS pooling, and L2 normalization. Benchmark 32
+  fixed length quantiles from each segment position before building. Proceed only below two projected hours for
+  all 16,384 pilot segments and below 8 GB peak RSS; no batch/length/pooling change follows the benchmark.
+- Fixed attention: for unit segment embeddings `e_i` and unit objective embedding `o`, compute
+  `a_i = softmax(10 * dot(e_i, o))` across the four chronological instances, then L2-normalize
+  `sum_i a_i e_i`. Temperature `10`, four bins, eight-line cap, and compaction are frozen; no alternative is
+  scored.
+- Fair screen: construct the existing
+  `[0.7*context, 0.7*objective, 6.0*product, 0.7*absolute_difference]` interaction and the same legal dense controls,
+  replacing only their final cosine with the attended-context/objective cosine. Fit fixed fold-local
+  `C=0.1` logistic probes with session purge on the exact five `semantic_k50_s0` folds. Reconstruct the raw
+  BGE-base original-context comparator on the identical rows and folds.
+- Candidate weights are exactly 10%, 20%, and 30% attended probe over the fair BGE-base comparator; lowest pilot
+  log loss selects the weight. Continue only through the existing E520 dual path: at least `0.0015` loss gain with
+  AUROC/Brier/ECE non-regression, or at least `0.0050` AUROC gain with loss/Brier/ECE non-regression, plus at least
+  90% paired session-bootstrap support for positive loss gain.
+- Failure rejects this exact multi-instance attention branch without changing temperature, segment count,
+  line allocation, compaction, C, pooling, encoder, dense controls, or blend weights. Passing earns full target-free
+  cache construction and frozen `V_seen`/`V_objective`/`V_style` evaluation only. `V_joint`, `V_final`,
+  backup/top-five gates, and manual-only platform submission remain literal.
