@@ -660,6 +660,49 @@ Both resource gates pass; the frozen validation is authorized directly. Benchmar
 `ecc439a519bcda6becc718916519edc6eb75842311230cec235ed64846a15c35`.
 No outcome score, `V_joint`, or `V_final` was accessed.
 
+### E570 completed result and rejection
+
+Frozen run `20260724T185443Z_objective_pairwise_ranker` selected the preregistered `30%` blend. It improved log
+loss by `0.000440043`, AUROC by `0.003218648`, and Brier by `0.000198833`, but worsened ECE-10 by
+`0.006165258`. The 5,000-draw paired session bootstrap has mean gain `0.000442064`, 95% interval
+`[-0.000014790,+0.000908053]`, and `0.9706` positive-gain support. Bootstrap passes, but both magnitude paths
+and ECE non-regression fail.
+
+Reject E570 exactly without loss-mixture, pairing, regularization, optimizer, calibration, or blend rescue.
+No hardened evaluation, ZIP, or public projection is authorized. Report SHA-256 is
+`22aca753689c361d83561d45dbc0c62911619b42e6803088e62fb6df109f3601`.
+`V_joint_accessed=false`; `V_final_accessed=false`.
+
+## E580 freeze after E570 rejection and before multi-corpus correctness training
+
+E580 is a new external-transfer checkpoint trained from the untouched original DeBERTa NLI base. It does not load
+or continue the rejected E400 delta. Canonical SemEval supplies natural correct/partial/incorrect responses;
+MIT GSM8K adds explicit mathematical final-answer verification.
+
+- Immutable SemEval cache SHA-256 is
+  `527256be4e5f2e509f725b302ab8b163cc57760560a58621b2c02880ebe5dbb1`; use its exact 8,910 training rows and
+  official unseen-question/unseen-domain sets. GSM8K main train/test parquet SHA-256 values are
+  `ea82612ea9582142387730c793eb67d3b12849002bc0b7fa6f8efafa7351419d` and
+  `ee7b8da9e381df27b9e3f7758a159ab2bdaa4dbaa910546cbbc47e0cb44e4f59`.
+- All GSM final answers are integers after `####`. Select 4,455 training questions by
+  `(SHA256(question), original_row)` order; selected-question SHA-256 is
+  `2bbcc18022ccf879c60a2cbaf46d8487e89e74c22c723fe4130a9f8ea1bb4092`.
+  Create one entailment row from the original solution and one contradiction row by changing only the final
+  integer `n` to `n+1` for nonnegative `n` or `n-1` for negative `n`. Fixed hypothesis:
+  `The correct final answer is n.` Use all 1,319 official test questions as 2,638 untouched paired rows.
+- Training contains exactly 8,910 SemEval plus 8,910 GSM rows, shuffled once with seed `20260725`. Start from the
+  original `cross-encoder/nli-deberta-v3-small`; one epoch, batch 16, maximum 256, only top two of six encoder
+  layers plus pooler/head trainable, encoder/head learning rates `2e-5/1e-4`, weight decay `0.01`, 10% warmup,
+  gradient cap `1.0`. No class/corpus weighting or checkpoint selection.
+- The original E400 clauses remain unchanged: unseen-question correct-vs-rest AUROC at least `0.70`, unseen-domain
+  AUROC at least `0.68`, unseen-question macro-F1 at least `0.45`, and no AUROC regression versus untouched base
+  on either split. Additional GSM clauses require correct-vs-corrupt AUROC at least `0.95`, two-class-normalized
+  log loss at most `0.35`, and no AUROC or loss regression versus the untouched base.
+- Any failure rejects the exact E580 checkpoint without corpus weight, selection, corruption, prompt, label,
+  epoch, layer, optimizer, learning-rate, calibration, or checkpoint rescue. Passing earns competition cache
+  construction and the already frozen fold-local/hardened protocol only. `V_final` stays sealed; submissions
+  remain manual-only.
+
 ## E550 freeze after E540 rejection and before BGE-base masked-mean encoding
 
 E540 shows that selecting more instances with the existing CLS geometry is harmful. E550 tests a different,
