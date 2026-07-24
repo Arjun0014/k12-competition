@@ -290,3 +290,29 @@ sentence-embedding path—but changes the encoder architecture and contrastive p
 - Passing earns a full 35,072-row cache and hardened fold-local validation. Competition blend weights remain only
   10%, 20%, and 30% over raw BGE-base replacement; `V_joint`, `V_final`, backup/top-five gates, and manual-only
   platform submission remain unchanged.
+
+## E490 freeze after E470 rejection and before instruction-model scoring
+
+E470 regressed loss/AUROC/Brier with zero bootstrap support, closing blind generic encoder replacement. The next
+independent representation adds explicit outcome reasoning while remaining label-free at cache time.
+
+- Model: official Apache-2.0 `Qwen/Qwen3-0.6B` revision
+  `c1899de289a04d12100db370d81485cdf75e47ca`. Use the exact safetensors/config/tokenizer/chat-template files,
+  CPU float32, six threads, evaluation mode, and no generated tokens.
+- Sample: exact 4,096-row prior encoder sample and `semantic_k50_s0` folds. For every row, use the existing compact
+  objective context and objective string only. Fixed system message: `You assess whether a student has mastered a
+  K-12 learning objective after tutoring.` Fixed user message: `Learning objective: {objective}\nTutoring
+  evidence:\n{context}\n\nWill the student answer the next assessment question correctly? Answer Yes or No.`
+  Apply the official chat template with thinking disabled and truncate the evidence only to a 384-token total prompt.
+- Frozen representation: L2-normalized final prompt-token hidden state plus the uncalibrated next-token
+  `logit(Yes)-logit(No)` scalar. Cache construction is label-free; there is no generation, prompt variant, layer
+  selection, or answer parsing.
+- Operational gate: benchmark 16 deterministic prompt-length quantiles at batch size one. Proceed only if the full
+  4,096-row cache projects below eight hours and RSS stays below 8 GB. Batch size, prompt, length, dtype, and threads
+  remain fixed afterward.
+- Fair screen: one fixed `C=0.1` fold-local logistic probe with the same legal dense controls and session purge,
+  compared with BGE-base on identical rows/folds. Continue only through the existing dual loss/AUROC path with
+  Brier/ECE non-regression and at least 90% paired session-bootstrap support. Failure rejects this exact
+  representation without prompt, token, layer, C, calibration, or blend rescue.
+- Passing earns full-cache and hardened-environment work only; 10/20/30% blends over raw BGE-base, sealed-evaluation
+  restrictions, backup/top-five gates, and manual-only submission remain unchanged.
