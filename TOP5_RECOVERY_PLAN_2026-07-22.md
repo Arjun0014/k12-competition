@@ -847,6 +847,19 @@ variance rather than a new encoder, view, head, objective, or calibration.
   feature, class weight, calibration, or blend rescue. Passing earns only frozen V_seen/V_objective/V_style
   evaluation; V_joint remains confirmation-only and V_final sealed. Submission remains manual-only.
 
+### E600 completed result and rejection
+
+Frozen run `20260727T164822Z_session_bagging` worsened the identical single-fit BGE comparator on every required
+metric. Candidate-minus-comparator changes were log loss `+0.001110363`, AUROC `-0.001700568`, Brier
+`+0.000450354`, and ECE `+0.005814786`; all five outer folds regressed in loss. The 5,000-replicate paired
+session bootstrap estimated mean log-loss gain `-0.001108170`, 95% interval
+`[-0.001456518,-0.000759177]`, and zero positive-gain support.
+
+Reject E600 exactly without any bag-count, session-hash, retained-fraction, C, scale, feature, class-weight,
+calibration, or blend rescue. No hardened evaluation, ZIP, public projection, or submission is authorized.
+Report SHA-256 is `a0bddb097db481989044ac751c0c088e7793685b5399f2abb64be0f1d676f1c6`.
+`V_joint_accessed=false`; `V_final_accessed=false`.
+
 ## E550 freeze after E540 rejection and before BGE-base masked-mean encoding
 
 E540 shows that selecting more instances with the existing CLS geometry is harmful. E550 tests a different,
