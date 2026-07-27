@@ -1156,3 +1156,36 @@ batches took `35.974071` seconds. This projects `6,185.473` seconds (`1.718187` 
 pass. Benchmark SHA-256 is `0465f7c414223b1b01442f1ccf9751666f5ce6f651b5db8efa26bee5b22dd4be`.
 No outcome metric was computed. Authorize exactly one material E630 run from the verified fresh binary head, with
 one calculated completion heartbeat and no worker/log inspection before it.
+
+### E630 completed external result and literal rejection
+
+Run `20260727T192934Z_dialogue_kt_transfer` completed all 499 training steps and both external evaluations in
+`5,227.613` seconds (`1.452115` hours), below the measured resource projection. Final mean training loss was
+`0.697319`. The fresh binary-head, canonical source, runtime, zero-CoMTA-training, and no-current-student-response
+contracts all matched their frozen hashes; `V_final_accessed=false`.
+
+On all 2,573 official MathDial test turns, candidate accuracy/macro-F1/AUROC were
+`0.540614069/0.537010413/0.563515689`; log loss, Brier, and ECE-10 were
+`0.693397132/0.249964660/0.056300784`. Versus the legal MathDial-train prior, log-loss/Brier gains were only
+`0.000901865/0.000611182`. The 2,000-replicate bootstrap across 386 test `qid` groups had mean gain
+`0.000971313`, 95% interval `[-0.005854962,0.008285809]`, and `0.6055` positive support. Only the ECE clause
+passes; AUROC, macro-F1, absolute loss, both proper-score gains, and bootstrap support fail.
+
+On all 623 evaluation-only CoMTA turns, accuracy/macro-F1/AUROC were
+`0.524879615/0.516709997/0.523795944`; log loss, Brier, and ECE-10 were
+`0.690553032/0.248749411/0.063438432`. Log loss and Brier regress the unchanged MathDial-train prior by
+`0.000052909/0.000072801`. The 2,000-replicate bootstrap across 151 dialogues had mean gain
+`-0.000029578`, 95% interval `[-0.012999494,0.013406494]`, and `0.4950` positive support. Again only the ECE
+clause passes; all classification, loss, non-regression, and bootstrap clauses fail.
+
+Delta/prediction/metrics/training/report SHA-256 values are
+`ccda1ea41fb0629aacbabb7e425e9355b03e40d6b1f224f51855570695451d4c`,
+`549e776fe21595b7a5c6bfccdc7e76edbd91abcc57fdb9585dfc7c3ab961a6ed`,
+`988009bcaccb93dc9dae56ad10db02f590386a1fa2ffc732aa02089ab090927e`,
+`dfe924a06fd5ac95d895545061b18b8f89e715507b12b7c5a8e60dee394918d5`, and
+`a5b6f53d7fc456b4209d083c6b913a8794728dfb88f72a1a7773e8499ef4a79c`.
+
+Reject E630 exactly without history/current-response leakage, objective compaction, source mixture, final-label
+rule, prompt, length, layer, epoch, optimizer, class weight, threshold, calibration, checkpoint, or external-gate
+rescue. No competition cache, hardened environment, ZIP, or public projection is authorized. Champion remains
+v0.5 at public `0.6054`, participant-observed rank `#8`; no platform action occurred.
