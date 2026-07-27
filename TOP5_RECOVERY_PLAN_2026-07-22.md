@@ -826,6 +826,27 @@ ZIP, V_joint, V_final, or submission is authorized. Delta/report SHA-256 values 
 `400b98d5de925bd720a2aa7311ac8d11413d704ffaa3a5960251f6649f00d3f5` and
 `7fb4fbad0c642151a7a19c6e1c8c893b1e09e72fa9a0225d8d05336ae140153e`.
 
+## E600 freeze after E590 rejection and before session-bagged scoring
+
+The external correctness programs improved shifted educational ranking but repeatedly failed classification or
+seen/style transfer. E600 returns to the only publicly confirmed BGE-base feature family and tests estimator
+variance rather than a new encoder, view, head, objective, or calibration.
+
+- Use the exact 4,096-row `semantic_k50_s0` pilot, frozen five outer folds, session purge, BGE-base interaction
+  block, 35 legal controls, fold-local standardization scaled by `0.08`, `C=0.1` L-BFGS logistic estimator, and
+  identical single-fit BGE comparator from E560/E570.
+- Inside each legal outer-training fold, assign every training session to one of five immutable slices using
+  `int(SHA256("E600|" + session_id)[:16],16) mod 5`. Fit five estimators; estimator `k` excludes only slice `k`.
+  Each estimator fits its own dense scaler on its legal retained rows. Average their five validation
+  probabilities with equal 20% weights. No label stratification, bootstrap resampling, class weighting, or
+  prediction calibration is allowed.
+- The candidate is the bagged probability itself, not a blend-weight sweep. Continue only if it improves pilot
+  log loss by at least `0.0015` with AUROC/Brier/ECE non-regression, or AUROC by at least `0.0050` with
+  loss/Brier/ECE non-regression, and 5,000 paired session bootstraps give at least 90% positive-loss-gain support.
+- Failure rejects this exact bagging estimator without bag count, slice hash, retained fraction, C, scaling,
+  feature, class weight, calibration, or blend rescue. Passing earns only frozen V_seen/V_objective/V_style
+  evaluation; V_joint remains confirmation-only and V_final sealed. Submission remains manual-only.
+
 ## E550 freeze after E540 rejection and before BGE-base masked-mean encoding
 
 E540 shows that selecting more instances with the existing CLS geometry is harmful. E550 tests a different,
