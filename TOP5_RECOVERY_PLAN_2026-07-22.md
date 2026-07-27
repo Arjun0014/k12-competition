@@ -1064,3 +1064,95 @@ Reject E550 exactly without layer, token, pooling-scale, C, dense-feature, calib
 cache, hardened evaluation, ZIP, or public projection is authorized. Report SHA-256 is
 `010505a7b883ebb89fddd1923069bec8206894b6a947e8a5400e51cff5911ad5`.
 `V_joint_accessed=false`; `V_final_accessed=false`.
+
+## E630 freeze after E620 rejection and before Dialogue-KT next-response transfer
+
+E620 confirms that frozen multilingual embeddings expose broad mastery but collapse MathDial's middle class.
+E630 does not collapse that label, reweight E620, or reuse E430/E580/E620 weights. It changes the external task to
+the directly deployment-aligned Dialogue Knowledge Tracing objective: given dialogue history through the tutor's
+current question and a learning objective, predict whether the student's *next* response will be correct.
+
+- Source: official MIT `umass-ml4ed/dialogue-kt` repository at commit
+  `c61f335f89005161b6ef439872cc1735bee26745`; repository-license SHA-256 is
+  `d51d440899b6671ff0d71fc859fa74ec3a3f095c9a8aa74da5adcc194cbba1f2`. Its annotated MathDial train/test
+  SHA-256 values are `bd3906355e98d357cbfa5e0e67e3b778e976f6f1a340cef35928a33325b7e6ad` and
+  `f9d583489b6fe57f62b2a5239194a013f6b0662bcbcfe5b5218cf97b0a1efe63`. MathDial remains CC BY-SA 4.0
+  under the participant-supplied organizer ruling. The evaluation-only CoMTA file and license hash to
+  `fdfebc0108bec3f6eab0839a5ccc8b58f24ba4c0e55e2511e67c7116845de9e1` and
+  `d047c993977d0017314176b237da232de7525bc6b2faad8341bbbb242debc761`; CoMTA may be used only as an
+  internal untouched external evaluation set and must never train, tune, package, redistribute, or enter a
+  submission artifact.
+- Leakage-safe source split: keep all 595 official MathDial test dialogues and purge from training every one of
+  the 314 test `qid` values, exactly as E430. This leaves 1,679 legal training dialogues over 720 question IDs.
+  Parse the released `dialogue` and `annotation` fields only. Match the official Dialogue-KT correction by using
+  MathDial's human `self-correctness` on an eligible final turn (`Yes=true`, `No=false`, answer-revealed=missing)
+  and CoMTA's human `expected_result` on its eligible final turn. Exclude malformed annotations, missing
+  correctness, empty knowledge-component lists, and empty current tutor turns. The audited usable counts before
+  canonical serialization are 7,980 MathDial train turns, 2,573 MathDial official-test turns, and 623 CoMTA
+  evaluation-only turns.
+- Input contract: for turn `t`, include dialogue history only through the tutor utterance at `t`; never include
+  the student response whose correctness is the label. Preserve prior tutor/student pairs in order and end on the
+  current tutor utterance. The second sequence is the released knowledge-component descriptions, deduplicated in
+  source order. Use tokenizer left truncation at 384 tokens so the current tutor question and objective survive.
+  No problem text, ground-truth solution, initial incorrect solution, self-correctness field, annotation rationale,
+  dialogue metadata, competition label, source-split marker, or current student answer may enter the model input.
+- Backbone: a clean official Apache-2.0 `cross-encoder/nli-deberta-v3-small` base, never an E400/E460/E580/E590
+  checkpoint. Replace its three-way head with a freshly seeded two-logit head and verify the exact initialization
+  before training. Freeze embeddings and encoder layers 0-3; train only encoder layers 4-5, pooler, and classifier
+  for exactly one epoch, batch 16, AdamW encoder/head learning rates `2e-5/1e-4`, weight decay `0.01`, 10% linear
+  warmup, gradient cap `1.0`, unweighted cross-entropy, deterministic shuffle, CPU float32, and six threads.
+  There is no checkpoint selection, validation split, class weighting, threshold fit, calibration, or prompt/model
+  rescue.
+- Resource gate: after canonical-cache and focused-test completion, benchmark two fixed training batches plus two
+  fixed evaluation batches. Project the full 499-step epoch and both external evaluations; proceed only below
+  three hours and 8 GiB RSS. The benchmark uses real tokenized inputs but synthetic alternating labels and may not
+  compute any outcome metric.
+- Frozen external gate: on all 2,573 legal MathDial official-test turns require AUROC at least `0.70`, macro-F1
+  at least `0.60`, log loss at most `0.66`, ECE-10 at most `0.10`, log-loss gain at least `0.02` and Brier gain
+  at least `0.005` versus the untouched legal-train prior, plus at least `0.95` support for positive loss gain in
+  2,000 `qid` bootstraps. On all 623 evaluation-only CoMTA turns require AUROC at least `0.60`, macro-F1 at least
+  `0.55`, log loss at most `0.68`, ECE-10 at most `0.15`, no log-loss or Brier regression versus the same frozen
+  MathDial train prior, and at least `0.90` positive-loss-gain support in 2,000 dialogue bootstraps. Every clause
+  is mandatory.
+- Any failed clause rejects E630 without source mixture, final-label rule, input/history change, current-response
+  leakage, prompt, length, layer, optimizer, class weight, threshold, calibration, checkpoint, or gate rescue.
+  A complete pass permits one target-free competition cache using the same history/objective contract, followed by
+  only leakage-safe fold-local probes and the frozen 10%/20%/30% blends over v0.5 BGE-base. Selection remains
+  limited to `V_seen`, `V_objective`, and `V_style`; `V_joint` is confirmation-only as already authorized and
+  `V_final` stays sealed until the literal top-five gate. No platform upload or submission is authorized.
+
+### E630 canonical-cache and initialization authorization
+
+The source-bound builder reproduces 7,980/2,573/623 usable train/MathDial-test/CoMTA-evaluation turns, with
+zero legal MathDial `qid` overlap and zero CoMTA training rows. Ordered-content SHA-256 is
+`f6d5cf38716bf5b6a8fabade6346a17d9d3a4cbd7966a600907b4bb1ffa45458`; Parquet SHA-256 is
+`2d7647576e681527c90be80db9bb7dac0794b864314e6c79ce3aeb3fae7d9152`. Two clean seed-`20260727`
+model constructions reproduce binary classifier weight/bias SHA-256 values
+`c06504ffa78c64e79d3a6ecbad025b542a50bc7188463f7f4b1fd07ca267abb1` and
+`af5570f5a1810b7af78caf4bc70a660f0df51e42baf91d4de5b2328de0e83dfc`.
+No prediction metric, competition outcome, `V_joint`, or `V_final` was accessed. Authorize only the frozen
+two-train/two-evaluation-batch resource benchmark.
+
+### E630 pre-benchmark objective-length correction
+
+The first benchmark attempt stopped during tokenizer construction before a forward pass or prediction because some
+released multi-KC second sequences were too long for `only_first` truncation at 384 tokens. Freeze a deterministic
+source-only compaction before rebuilding the canonical cache: keep the first three unique KC descriptions in
+released order and the first 180 Unicode characters of each, joined by ` | `. This preserves the no-current-answer
+contract and keeps second-sequence semantics while guaranteeing capacity for dialogue history. It changes no label,
+split, model, optimizer, gate, or evaluation rule. Recompute and bind the canonical hashes before rerunning the
+benchmark; the failed attempt produced no benchmark artifact and no outcome metric.
+
+The corrected canonical rebuild preserves all 7,980/2,573/623 rows and zero-overlap invariants. Its bound
+ordered-content/Parquet SHA-256 values are
+`f6d5cf38716bf5b6a8fabade6346a17d9d3a4cbd7966a600907b4bb1ffa45458` and
+`2d7647576e681527c90be80db9bb7dac0794b864314e6c79ce3aeb3fae7d9152`.
+
+### E630 resource result and material-run authorization
+
+Two fixed real-input/synthetic-label training batches took `21.114765` seconds and two real-input evaluation
+batches took `35.974071` seconds. This projects `6,185.473` seconds (`1.718187` hours) for all 499 training and
+51 external-evaluation batches. Observed RSS was `2,072,903,680` bytes. Both frozen three-hour and 8 GiB gates
+pass. Benchmark SHA-256 is `0465f7c414223b1b01442f1ccf9751666f5ce6f651b5db8efa26bee5b22dd4be`.
+No outcome metric was computed. Authorize exactly one material E630 run from the verified fresh binary head, with
+one calculated completion heartbeat and no worker/log inspection before it.
