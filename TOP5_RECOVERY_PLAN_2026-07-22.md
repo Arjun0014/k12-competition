@@ -616,6 +616,29 @@ checkpoint.
   Continue only through the unchanged `0.0015` loss or `0.0050` AUROC path with Brier/ECE non-regression and
   90% session-bootstrap support. V_joint remains confirmation-only, V_final sealed, and submission manual-only.
 
+### E620 benchmark, external result, and rejection
+
+The 64-row frozen-encoder benchmark completed in `5.919467` seconds and projected `862.207336` seconds
+(`0.239502` hours) for all 9,322 conditional external/pilot encodes at `1,021,825,024` bytes RSS. Benchmark
+SHA-256 is `7702b40a05de1185e0749b5e03acb9e4b74ce3a9a6c4cfff4014219cb1679504`.
+The authorized external cache then completed all 5,226 rows in `476.882965` seconds; its shape is
+`[5226,384]`, cache SHA-256 is `6cd5b733970ddbfa94b9507c047c6915bd83b664bddbea99a4a923fb36f16a1f`,
+and metadata SHA-256 is `04d87c4f1675bb8b3f7b805fe12967ad868d044dfae52fa36b13326c34979990`.
+
+The frozen group-disjoint test produced accuracy `0.659552846`, macro-F1 `0.469735660`, class F1
+`[0.761372706,0.000000000,0.647834275]`, macro one-vs-rest AUROC `0.761372780`, quadratic kappa
+`0.494533948`, log loss `0.820439933`, summed multiclass Brier `0.470915542`, and reporting-only top-label
+ECE-10 `0.056854967`. Loss improved over the legal train-prior predictor by `0.193923616`. The 2,000-draw
+95-source-group bootstrap has mean gain `0.164471962`, 95% interval `[0.122465764,0.205161815]`, and `1.0000`
+positive support. Eight clauses pass, but the mandatory every-class F1 clause fails because the Understanding
+class F1 is zero.
+
+Reject E620 exactly without model, prefix, length, pooling, C, scaling, class weight, calibration, threshold, or
+label rescue. No competition pilot/cache, hardened validation, ZIP, or public projection is authorized. External
+report SHA-256 is `5cd14a0cf186e95af59c163d2174fa35913c874b4a0b1383f1ee2bef6ff87467`;
+ordered prediction SHA-256 is `d0bac62924fc25033af91cdffade92c14b443bc717b4dd1362c66bc6bcf192b6`.
+`V_joint_accessed=false`; `V_final_accessed=false`.
+
 ## E560 freeze after E550 rejection and before nonlinear-head scoring
 
 E520, E540, and E550 show that new BGE-base views and pooling do not improve the fair pilot. E560 keeps the exact
