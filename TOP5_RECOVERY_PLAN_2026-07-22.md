@@ -1189,3 +1189,11 @@ Reject E630 exactly without history/current-response leakage, objective compacti
 rule, prompt, length, layer, epoch, optimizer, class weight, threshold, calibration, checkpoint, or external-gate
 rescue. No competition cache, hardened environment, ZIP, or public projection is authorized. Champion remains
 v0.5 at public `0.6054`, participant-observed rank `#8`; no platform action occurred.
+
+### Post-E630 source-screen result
+
+`umass-ml4ed/Difficulty-Aware-DialogKT` was inspected at commit
+`3a9362e12eb51675897a5b5b458b0fc709d2ff63`. The repository currently exposes only a 71-byte README and has no
+code, data, model weights, experimental result, or license. Reject it as a usable independent branch until the
+authors publish reproducible, licensed material. This screening accessed no competition validation environment;
+`V_final` remains sealed.
