@@ -811,6 +811,21 @@ Observed RSS was `1,929,891,840` bytes. Both the frozen six-hour and 8 GiB gates
 Authorize exactly one E590 material run from zero with one calculated completion heartbeat and no process/log
 inspection beforehand. No prediction metric, competition outcome, V_joint, or V_final was accessed.
 
+### E590 completed external result and rejection
+
+Run `20260727T154320Z_prm_correctness_transfer` completed all 1,114 steps in `16,183.689` seconds. It improved
+PRM test log loss from `1.669510424` to `1.079224649`; the 2,000-replicate held-out-question bootstrap mean gain
+was `0.590862304`, 95% interval `[0.519872697,0.663775560]`, with `1.0000` positive support. Nevertheless,
+PRM macro-F1 `0.303501964`, contradiction AUROC `0.581801001`, and loss `1.079224649` failed their
+`0.50/0.75/0.90` clauses.
+
+SemEval ranking remained strong—unseen-question/domain AUROC `0.717038025/0.752461658`—but unseen-question
+macro-F1 was `0.417453866 < 0.45`. Four frozen clauses therefore fail. Reject E590 exactly without corpus,
+sampling, context, prompt, label, class weight, optimizer, threshold, or checkpoint rescue. No competition cache,
+ZIP, V_joint, V_final, or submission is authorized. Delta/report SHA-256 values are
+`400b98d5de925bd720a2aa7311ac8d11413d704ffaa3a5960251f6649f00d3f5` and
+`7fb4fbad0c642151a7a19c6e1c8c893b1e09e72fa9a0225d8d05336ae140153e`.
+
 ## E550 freeze after E540 rejection and before BGE-base masked-mean encoding
 
 E540 shows that selecting more instances with the existing CLS geometry is harmful. E550 tests a different,
