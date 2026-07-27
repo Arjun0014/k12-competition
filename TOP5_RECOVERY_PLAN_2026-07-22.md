@@ -1197,3 +1197,60 @@ v0.5 at public `0.6054`, participant-observed rank `#8`; no platform action occu
 code, data, model weights, experimental result, or license. Reject it as a usable independent branch until the
 authors publish reproducible, licensed material. This screening accessed no competition validation environment;
 `V_final` remains sealed.
+
+## E640 freeze after E630 rejection and before SimulatorArena outcome scoring
+
+E430/E580/E590/E630 tested synthetic self-correction, answer/process correctness, and next-response correctness.
+E640 instead uses a newly released source with a directly aligned real outcome: whether a human student answered a
+math problem correctly after an actual multi-turn AI tutoring interaction. Microsoft SimulatorArena is MIT
+licensed at immutable commit `e9f677c4975496fdd37f28bb6343ec3c1c54c8b4`. The redacted 450-dialogue annotation
+file SHA-256 is `b2909d037da14ebfafd72e66ad8985ab700f0f164bc5d94713ca6fc43aaf651a`; the repository
+license SHA-256 is `9906940f61b1f0b533fa7d99baf55178b2808fbe113ea51dfbfad8572ccd5f2b`.
+
+- Keep the 449 rows whose released `problem_1_correctness` is exactly `correct` or `incorrect`; exclude the one
+  `unknown` row. The binary target is `correct=1`. Use only paired `user_queries` and `ai_responses` through
+  `problem_1_turns`, or all pairs when the released turn count is non-positive.
+- Never input the separate final answer or solution, initial solution, `solve_or_not`, second-problem content,
+  correctness label, rating, feedback, strength/weakness, stop reason, model identity, worker/user identity,
+  problem ID, source path, difficulty/type, expertise, or extracted profile. These fields may support lineage,
+  grouping, and audits only. The redacted problem/solution is not restored.
+- Canonical text is chronological `Student:`/`Tutor:` dialogue with whitespace collapsed, followed by the fixed
+  task line `Task: predict whether the student will answer the held-out assessment correctly after tutoring.`
+  Encode with the exact packaged MIT `BAAI/bge-base-en-v1.5` v0.5 assets, normalized final-layer CLS pooling,
+  CPU float32, six threads, batch 16, maximum 256 tokens, and left truncation so the end-state evidence and task
+  survive. No E430/E580/E590/E620/E630 checkpoint is loaded.
+- Assign each released `workerId` to one of five immutable outer folds with
+  `int(SHA256("E640|" + workerId)[:16],16) mod 5`. For outer fold `k`, validate every row from workers in `k`;
+  train only on other workers and additionally purge every row whose `problem_id` occurs in validation. This
+  yields 449 OOF predictions with zero worker and problem overlap in every fit. Fit one unweighted
+  `LogisticRegression(C=0.1, solver="lbfgs", max_iter=1000, random_state=20260728)` on normalized embeddings per
+  fold. No class weight, threshold fitting, calibration, prompt/view, C, pooling, length, or fold sweep exists.
+- Compare against each fold's legal training-positive-rate probability. Every clause is mandatory: AUROC at
+  least `0.60`; macro-F1 at threshold 0.5 at least `0.55`; log loss at most `0.65`; log-loss gain versus the
+  fold prior at least `0.02`; Brier gain at least `0.008`; ECE-10 at most `0.15`; positive log-loss gain in at
+  least four of five folds; and at least `0.90` positive-gain support in separate 2,000-replicate worker and
+  problem bootstraps.
+- Any failed clause rejects E640 without row, label, prompt, truncation, pooling, fold, C, class-weight, threshold,
+  calibration, checkpoint, or gate rescue. A complete pass permits one all-source refit, one target-free
+  competition session cache using the identical text/encoder contract, and only leakage-safe fold-local probes.
+  Competition selection remains limited to `V_seen`, `V_objective`, and `V_style`; `V_joint` is
+  confirmation-only. Candidate weights are exactly 10%, 20%, and 30% over raw v0.5 BGE-base, with no post-hoc
+  sweep. `V_final` remains sealed until the literal top-five gate, and no upload or submission is authorized.
+
+### E640 canonical-source authorization
+
+The canonical builder reproduces 449 usable rows with label counts `incorrect=153`, `correct=296`; every outer
+fit has 240-298 training rows and 70-124 validation rows with zero worker or problem overlap. Ordered-content
+SHA-256 is `950c0341583c6721b2e51fdca28c53d2a00d33d2a3d46d5ce2122c05671cf447`; Parquet SHA-256 is
+`e743a05e140b10f154ad1f8e2d8d431d90cade9883c9e8e8f4c4988d55d57f60`. These hashes are bound in code before
+the resource benchmark or any candidate prediction. Authorize only the fixed 32-row, label-free resource
+benchmark next.
+
+### E640 resource result and external-cache authorization
+
+The fixed 32-row benchmark completed in `6.393618` seconds (`0.199801` seconds/row) and projects `89.710453`
+seconds (`0.024920` hours) for all 449 external rows. Peak RSS was `927,973,376` bytes. The frozen one-hour and
+8 GiB gates pass under Python `3.12.8`, scikit-learn `1.8.0`, Torch `2.13.0+cpu`, and Transformers `5.14.1`.
+Benchmark SHA-256 is `f259ee1d75563fd7a7128c04ce04cb25ee5976a1f6e883855c19cb6784ca3bf0`. No label or prediction metric was
+accessed. Authorize exactly one external-cache build with one calculated active completion heartbeat and no
+worker/log inspection before it.
