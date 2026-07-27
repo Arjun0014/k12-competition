@@ -914,6 +914,26 @@ authentic one-to-one grade-8 mathematics dialogue labeled by demonstrated master
   A pilot pass earns full target-free caching and frozen V_seen/V_objective/V_style evaluation; V_joint remains
   confirmation-only and V_final sealed. Platform submission remains manual-only.
 
+### E610 tokenizer compatibility correction before cache construction
+
+Transformers 5.14.1 requires the official SentencePiece parser and flags the legacy tokenizer regex embedded in
+this older checkpoint. Before any tokenization or prediction, pin `sentencepiece==0.2.1` and
+`protobuf==6.33.5`, and load the unchanged official tokenizer with `fix_mistral_regex=True`. This is the
+library's explicit compatibility correction; it changes no model/data source, split, text, maximum length,
+training setting, metric, or gate. The downloaded PyTorch and SentencePiece payloads exactly match published
+SHA-256 values `6f89419baf0f1aaad5cab7d53901e36a8c1af8f6b4ab58b15db9af32df656ead`
+and `13c8d666d62a7bc4ac8f040aab68e942c861f93303156cc28f5c7e885d86d6e3`.
+
+### E610 canonical-cache authorization
+
+The source-bound canonical builder reproduces the frozen 4,242/984 rows and 399/95 disjoint groups. Ordered
+content SHA-256 is `6336d7d377d67c34c8ea5471d2a7f6e3c119b8d0448b35f118bfa4f01401d4f9`;
+Parquet SHA-256 is `4180bbb1829214c569f084e3387eb38352d5b241e03f217736305b0c97d4dc2f`.
+Two clean initializations reproduce trainable-state SHA-256
+`4e51494114193795988a96c8313394dcda333ff7e696053f9363e087d43a4b0f` across exactly 14,768,643 trainable
+parameters. No prediction metric or competition outcome was accessed. The frozen target-free resource benchmark
+is authorized.
+
 ## E550 freeze after E540 rejection and before BGE-base masked-mean encoding
 
 E540 shows that selecting more instances with the existing CLS geometry is harmful. E550 tests a different,
