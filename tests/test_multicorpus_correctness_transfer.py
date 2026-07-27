@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import pandas as pd
+import trace_ace.multicorpus_correctness_transfer as correctness_transfer
 
 from trace_ace.multicorpus_correctness_transfer import (
     GSM_TRAIN_QUESTIONS,
@@ -58,3 +59,35 @@ def test_real_multicorpus_cache_contract() -> None:
         "GSM8K": 8_910,
     }
     assert metadata["gsm_test_rows"] == 2_638
+
+
+def test_competition_cache_wrapper_preserves_e580_lineage(monkeypatch) -> None:
+    captured: dict[str, object] = {}
+
+    def fake_cache(project_root, transfer_run_id, **kwargs):
+        captured.update(
+            project_root=project_root,
+            transfer_run_id=transfer_run_id,
+            **kwargs,
+        )
+        return {"ok": True}
+
+    monkeypatch.setattr(correctness_transfer, "assert_runtime", lambda: {})
+    monkeypatch.setattr(
+        correctness_transfer,
+        "build_adapted_session_cache",
+        fake_cache,
+    )
+    result = correctness_transfer.build_competition_session_cache(
+        ".",
+        "run-id",
+        batch_size=32,
+    )
+    assert result == {"ok": True}
+    assert captured == {
+        "project_root": ".",
+        "transfer_run_id": "run-id",
+        "batch_size": 32,
+        "candidate_name": "E580_semeval_gsm8k_correctness_session",
+        "experiment_label": "E580",
+    }

@@ -578,6 +578,8 @@ def build_competition_session_cache(
     *,
     batch_size: int = EVAL_BATCH_SIZE,
     chunk_size: int = 256,
+    candidate_name: str = "E400_sem_eval_adapted_deberta_session",
+    experiment_label: str = "E400",
 ) -> dict[str, object]:
     import torch
     from transformers import AutoTokenizer
@@ -586,13 +588,17 @@ def build_competition_session_cache(
     run_dir = paths.experiments_dir / "runs" / transfer_run_id
     report_path = run_dir / "report.json"
     if not report_path.exists():
-        raise FileNotFoundError(f"E400 report not found: {report_path}")
+        raise FileNotFoundError(f"{experiment_label} report not found: {report_path}")
     report = json.loads(report_path.read_text(encoding="utf-8"))
     if not bool(report.get("passes_external_gate")):
-        raise RuntimeError("E400 external gate failed; competition caching is forbidden.")
+        raise RuntimeError(
+            f"{experiment_label} external gate failed; competition caching is forbidden."
+        )
     delta_path = run_dir / str(report["delta_file"])
     if _sha256(delta_path) != report["delta_sha256"]:
-        raise ValueError("E400 delta SHA-256 changed before competition caching.")
+        raise ValueError(
+            f"{experiment_label} delta SHA-256 changed before competition caching."
+        )
 
     frame = pd.read_parquet(
         paths.cache_dir / "modeling_base.parquet",
@@ -603,7 +609,9 @@ def build_competition_session_cache(
         columns=["response_id", "objective_context"],
     )
     if list(frame["response_id"]) != list(contexts["response_id"]):
-        raise ValueError("E400 competition context rows are misaligned.")
+        raise ValueError(
+            f"{experiment_label} competition context rows are misaligned."
+        )
     premises = [
         compact_objective_context(text) for text in contexts["objective_context"]
     ]
@@ -620,7 +628,7 @@ def build_competition_session_cache(
     model = _load_adapted_model(model_path, delta_path)
     model.eval()
     if int(model.config.hidden_size) != 768:
-        raise ValueError("Unexpected E400 hidden dimension.")
+        raise ValueError(f"Unexpected {experiment_label} hidden dimension.")
 
     prefix = str(report["delta_sha256"])[:12]
     pooled_path = paths.cache_dir / f"sra_deberta_session_pooled_256_{prefix}.npy"
@@ -631,14 +639,18 @@ def build_competition_session_cache(
     logits_shape = (len(frame), 3)
     if pooled_path.exists() or logits_path.exists():
         if not (pooled_path.exists() and logits_path.exists() and progress_path.exists()):
-            raise RuntimeError("Incomplete E400 cache artifacts cannot be resumed safely.")
+            raise RuntimeError(
+                f"Incomplete {experiment_label} cache artifacts cannot be resumed safely."
+            )
         pooled_values = np.lib.format.open_memmap(pooled_path, mode="r+")
         logits_values = np.lib.format.open_memmap(logits_path, mode="r+")
         if pooled_values.shape != pooled_shape or logits_values.shape != logits_shape:
-            raise ValueError("Existing E400 cache shape changed.")
+            raise ValueError(f"Existing {experiment_label} cache shape changed.")
         progress = json.loads(progress_path.read_text(encoding="utf-8"))
         if progress.get("delta_sha256") != report["delta_sha256"]:
-            raise ValueError("E400 progress belongs to another checkpoint.")
+            raise ValueError(
+                f"{experiment_label} progress belongs to another checkpoint."
+            )
         completed = int(progress.get("completed_rows", 0))
     else:
         pooled_values = np.lib.format.open_memmap(
@@ -691,10 +703,12 @@ def build_competition_session_cache(
     pooled = np.asarray(np.load(pooled_path, mmap_mode="r"))
     logits = np.asarray(np.load(logits_path, mmap_mode="r"))
     if not np.isfinite(pooled).all() or not np.isfinite(logits).all():
-        raise RuntimeError("E400 competition cache contains non-finite values.")
+        raise RuntimeError(
+            f"{experiment_label} competition cache contains non-finite values."
+        )
     metadata = {
         "generated_at_utc": datetime.now(timezone.utc).isoformat(),
-        "candidate": "E400_sem_eval_adapted_deberta_session",
+        "candidate": candidate_name,
         "transfer_run_id": transfer_run_id,
         "delta_sha256": report["delta_sha256"],
         "rows": int(len(frame)),

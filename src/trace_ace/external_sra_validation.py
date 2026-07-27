@@ -184,6 +184,9 @@ def _gate_decisions(
 def run_external_sra_validation(
     project_root: str | Path,
     transfer_run_id: str,
+    *,
+    candidate_code: str = "e400_sra",
+    candidate_family: str = "E400_sem_eval_adapted_deberta_blend",
 ) -> dict[str, object]:
     paths = discover_project_paths(project_root)
     frame = pd.read_parquet(paths.cache_dir / "modeling_base.parquet").reset_index(drop=True)
@@ -255,7 +258,9 @@ def run_external_sra_validation(
                     "target",
                 ]
             ].copy()
-            output["candidate"] = f"e400_sra_blend_{int(round(100 * weight)):02d}"
+            output["candidate"] = (
+                f"{candidate_code}_blend_{int(round(100 * weight)):02d}"
+            )
             output["calibration"] = "raw"
             output["prediction"] = np.clip(
                 (1.0 - weight) * bge_replacement + weight * adapted_prediction,
@@ -313,7 +318,7 @@ def run_external_sra_validation(
     report = {
         "run_id": run_id,
         "generated_at_utc": timestamp.isoformat(),
-        "candidate_family": "E400_sem_eval_adapted_deberta_blend",
+        "candidate_family": candidate_family,
         "transfer_run_id": transfer_run_id,
         "transfer_delta_sha256": cache_metadata["delta_sha256"],
         "phase_c_component_run_id": PHASE_C_RUN_ID,

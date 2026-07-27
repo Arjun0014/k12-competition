@@ -31,6 +31,7 @@ from trace_ace.external_sra_transfer import (
     WEIGHT_DECAY,
     _evaluate_external,
     _freeze_deberta,
+    build_competition_session_cache as build_adapted_session_cache,
     _premises,
     _tokenize,
     _trainable_state_dict,
@@ -771,12 +772,48 @@ def train(project_root: str | Path) -> dict[str, object]:
     }
 
 
+def build_competition_session_cache(
+    project_root: str | Path,
+    transfer_run_id: str,
+    *,
+    batch_size: int = EVAL_BATCH_SIZE,
+) -> dict[str, object]:
+    assert_runtime()
+    return build_adapted_session_cache(
+        project_root,
+        transfer_run_id,
+        batch_size=batch_size,
+        candidate_name="E580_semeval_gsm8k_correctness_session",
+        experiment_label="E580",
+    )
+
+
+def validate_competition_features(
+    project_root: str | Path,
+    transfer_run_id: str,
+) -> dict[str, object]:
+    from trace_ace.external_sra_validation import run_external_sra_validation
+
+    assert_runtime()
+    return run_external_sra_validation(
+        project_root,
+        transfer_run_id,
+        candidate_code="e580_correctness",
+        candidate_family="E580_semeval_gsm8k_correctness_blend",
+    )
+
+
 def main(argv: Iterable[str] | None = None) -> None:
     parser = argparse.ArgumentParser(
         description="Run frozen E580 SemEval plus GSM8K correctness transfer."
     )
-    parser.add_argument("stage", choices=("prepare", "benchmark", "train", "pipeline"))
+    parser.add_argument(
+        "stage",
+        choices=("prepare", "benchmark", "train", "cache", "validate", "pipeline"),
+    )
     parser.add_argument("--project-root", default=".")
+    parser.add_argument("--transfer-run-id")
+    parser.add_argument("--batch-size", type=int, default=EVAL_BATCH_SIZE)
     args = parser.parse_args(list(argv) if argv is not None else None)
     if args.stage == "prepare":
         result = prepare_multicorpus_cache(args.project_root)
@@ -784,15 +821,46 @@ def main(argv: Iterable[str] | None = None) -> None:
         result = benchmark(args.project_root)
     elif args.stage == "train":
         result = train(args.project_root)
+    elif args.stage == "cache":
+        if not args.transfer_run_id:
+            raise ValueError("--transfer-run-id is required for the cache stage.")
+        result = build_competition_session_cache(
+            args.project_root,
+            args.transfer_run_id,
+            batch_size=args.batch_size,
+        )
+    elif args.stage == "validate":
+        if not args.transfer_run_id:
+            raise ValueError("--transfer-run-id is required for the validate stage.")
+        result = validate_competition_features(
+            args.project_root,
+            args.transfer_run_id,
+        )
     else:
         cache_result = prepare_multicorpus_cache(args.project_root)
         benchmark_result = benchmark(args.project_root)
         if not benchmark_result["proceed"]:
             raise RuntimeError("E580 benchmark failed; training is prohibited.")
+        trained = train(args.project_root)
+        if trained["report"]["passes_external_gate"]:
+            session_cache = build_competition_session_cache(
+                args.project_root,
+                trained["run_id"],
+                batch_size=args.batch_size,
+            )
+            validation = validate_competition_features(
+                args.project_root,
+                trained["run_id"],
+            )
+        else:
+            session_cache = None
+            validation = None
         result = {
             "cache": cache_result,
             "benchmark": benchmark_result,
-            "train": train(args.project_root),
+            "train": trained,
+            "session_cache": session_cache,
+            "validation": validation,
         }
     print(json.dumps(result, indent=2, sort_keys=True))
 
