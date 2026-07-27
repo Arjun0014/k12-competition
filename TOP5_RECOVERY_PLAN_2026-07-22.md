@@ -798,6 +798,19 @@ rescue.
   calibration, or checkpoint rescue. A pass earns only the same target-free session cache and frozen 10%/20%/30%
   fold-local competition screen. `V_final` remains sealed and all submission remains manual-only.
 
+### E590 cache and benchmark authorization
+
+The canonical 43,350-row cache reproduces both frozen PRM content hashes. Ordered-content SHA-256 is
+`bcb3781c4c46b97a9404ba20dc8f54e196fe5a9f534fc462cd5abccb1322e974`; Parquet SHA-256 is
+`9f48c85106c5dfc46aad9b4aeaf12d7cdf20ac2b44f785b046bd3cbdf15282e6`.
+
+The two-training-batch/two-evaluation-batch benchmark took `12.813906/20.604873` seconds and projects
+`17,336.757` seconds (`4.815766` hours) for all 1,114 steps and two complete 31,644-row external passes.
+Observed RSS was `1,929,891,840` bytes. Both the frozen six-hour and 8 GiB gates pass. Benchmark SHA-256 is
+`e286fc0ee006cb6fe1f73cbb0ecae6d81c7b3b1e115d9fe365583977ef72e47c`.
+Authorize exactly one E590 material run from zero with one calculated completion heartbeat and no process/log
+inspection beforehand. No prediction metric, competition outcome, V_joint, or V_final was accessed.
+
 ## E550 freeze after E540 rejection and before BGE-base masked-mean encoding
 
 E540 shows that selecting more instances with the existing CLS geometry is harmful. E550 tests a different,
