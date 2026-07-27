@@ -37,6 +37,7 @@ from trace_ace.external_sra_transfer import (
 )
 from trace_ace.io import discover_project_paths
 from trace_ace.metrics import binary_metrics
+from trace_ace.source_robust_validation import _current_rss_bytes
 
 
 PROTOCOL_ID = "E580_semeval_gsm8k_correctness_transfer_v1"
@@ -458,7 +459,7 @@ def benchmark(project_root: str | Path) -> dict[str, object]:
         train_elapsed / len(loader) * total_steps
         + 2.0 * eval_elapsed / len(eval_loader) * total_eval_batches
     )
-    peak_rss = int(__import__("psutil").Process().memory_info().rss)
+    peak_rss = _current_rss_bytes()
     result = {
         "protocol_id": PROTOCOL_ID,
         "generated_at_utc": datetime.now(timezone.utc).isoformat(),
