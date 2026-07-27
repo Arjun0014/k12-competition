@@ -583,6 +583,39 @@ No full cache, hardened evaluation, ZIP, or public projection is authorized. Rep
 `5ef6d959574f362c36fb30d24d8a91b65d7b6211d1ad66636d6d6f89aa66ca02`.
 `V_joint_accessed=false`; `V_final_accessed=false`.
 
+## E620 freeze after E610 resource rejection and before frozen multilingual mastery scoring
+
+E610 is closed and its trainable mDeBERTa model may not be shortened or substituted. E620 is a separately
+preregistered question: whether the aligned MCD mastery labels are already linearly available in a small,
+fully-frozen cross-lingual sentence representation. It performs no encoder adaptation and cannot inherit an E610
+checkpoint.
+
+- Reuse only E610's immutable MCD raw sources, canonical compaction, label map, and 4,242-row/399-group training
+  versus 984-row/95-group test split. Canonical ordered-content and Parquet SHA-256 values remain
+  `6336d7d377d67c34c8ea5471d2a7f6e3c119b8d0448b35f118bfa4f01401d4f9` and
+  `4180bbb1829214c569f084e3387eb38352d5b241e03f217736305b0c97d4dc2f`.
+- Encoder: official MIT `intfloat/multilingual-e5-small` revision
+  `614241f622f53c4eeff9890bdc4f31cfecc418b3`, safetensors SHA-256
+  `1a55775f53449dac10a2bcbc312469fac40b96d53198c407081a831f81c98477`.
+  Prefix every canonical text with `passage: `, tokenize with maximum 384 and left truncation, run CPU float32,
+  six threads, batch 16, attention-mask mean pool, and L2 normalize. Every encoder parameter remains frozen.
+- Fit exactly one multinomial `LogisticRegression(C=1.0, solver="lbfgs", max_iter=400,
+  random_state=20260727)` on legal training embeddings, with no scaling, class/sample weights, calibration,
+  threshold, or feature addition. Evaluate the complete group-disjoint test.
+- Before full encoding, benchmark 32 fixed SHA-ordered train rows and 32 fixed SHA-ordered test rows. Project all
+  5,226 external plus 4,096 competition-pilot encodes; proceed only below four hours and 8 GiB RSS.
+- External gate requires accuracy at least `0.50`, macro-F1 at least `0.42`, every-class F1 at least `0.30`,
+  macro one-vs-rest AUROC at least `0.65`, quadratic-weighted kappa at least `0.25`, log loss at most `1.00`,
+  summed multiclass Brier at most `0.60`, log-loss gain at least `0.10` over the legal train-prior predictor, and
+  at least 90% positive-gain support in 2,000 source-group bootstraps. Every clause is mandatory.
+- Failure rejects E620 without model, prefix, length, pooling, C, scaling, class weight, calibration, or
+  threshold rescue. Passing permits the exact 4,096-row `semantic_k50_s0` competition pilot only. Encode
+  `passage: Tutoring evidence: {objective_context}\nObjective: {learning_objective}` under the same contract;
+  concatenate the 384-dimensional unit embedding, three frozen MCD logits, and the existing 35 controls. Fit the
+  legal fold-local `C=0.1` probe and evaluate only 10%, 20%, and 30% blends over the fair raw BGE comparator.
+  Continue only through the unchanged `0.0015` loss or `0.0050` AUROC path with Brier/ECE non-regression and
+  90% session-bootstrap support. V_joint remains confirmation-only, V_final sealed, and submission manual-only.
+
 ## E560 freeze after E550 rejection and before nonlinear-head scoring
 
 E520, E540, and E550 show that new BGE-base views and pooling do not improve the fair pilot. E560 keeps the exact
