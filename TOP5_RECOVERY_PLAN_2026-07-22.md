@@ -703,6 +703,20 @@ MIT GSM8K adds explicit mathematical final-answer verification.
   construction and the already frozen fold-local/hardened protocol only. `V_final` stays sealed; submissions
   remain manual-only.
 
+### E580 cache and benchmark authorization
+
+The competition-aligned implementation passes Ruff and seven focused E580/E400 tests. The canonical cache has
+`17,820` training rows and `2,638` official paired GSM8K test rows; ordered-content SHA-256 is
+`1ef624e1cf53708d52628cc3e05da117986b7e34a623dbe8427ed06ce8cac78c` and Parquet SHA-256 is
+`2ed6dbaa3f02e8333735c1c7005f17c28e6d1181a4670a47781736b634d89003`.
+
+The corrected two-training-batch/two-evaluation-batch benchmark took `11.425449/19.504990` seconds,
+projects `9,036.159` seconds (`2.510044` hours) for 1,114 training steps plus both frozen base/candidate external
+passes, and observed `1,851,256,832` bytes RSS. Both six-hour and 8 GiB resource clauses pass. Benchmark SHA-256
+is `abe6e69b01a7ee297eb48b183fbd1dac5b8a4ebbfff5ddfd446793e3da48d8dc`.
+Authorize exactly one E580 material run from step zero with one calculated completion heartbeat and no inspection
+of its worker or logs beforehand. No outcome score, `V_joint`, or `V_final` was accessed by the benchmark.
+
 ## E550 freeze after E540 rejection and before BGE-base masked-mean encoding
 
 E540 shows that selecting more instances with the existing CLS geometry is harmful. E550 tests a different,
