@@ -860,6 +860,60 @@ calibration, or blend rescue. No hardened evaluation, ZIP, public projection, or
 Report SHA-256 is `a0bddb097db481989044ac751c0c088e7793685b5399f2abb64be0f1d676f1c6`.
 `V_joint_accessed=false`; `V_final_accessed=false`.
 
+## E610 freeze after E600 rejection and before MCD cross-lingual mastery transfer
+
+E600 confirms that estimator variance is not the missing signal. The external audit therefore changes the
+supervision source, not the rejected BGE estimator. E610 uses the closest permissively licensed public task found:
+authentic one-to-one grade-8 mathematics dialogue labeled by demonstrated mastery level.
+
+- Source: public MIT repository `ai4ed/MCD` at commit
+  `7ffc5e97948654d91e1cd368a3ecce96e0f4763a`, with its raw Google Drive payload linked by that repository.
+  Immutable raw SHA-256 values are
+  `153d77a2324cdcb73d7c41f87fc216821cb9cc9a5284a02459cb90362c5d1cf3`
+  (`df_feature_num_label-3.csv`),
+  `103c9f9cc878dc491e67668f7e9e574b066fa72504efcf0a6ab1fff8a73c4157`
+  (`item_dict_anonymized.json`), and
+  `34e5f6c610ed65b4be0f5ea3d8e714995dc2274914bcdb80e2252d4a8f82e37d`
+  (`train_dev_test.json`). There are 5,226 unique transcripts and no exact transcript duplicates.
+- The published split is not used for scoring because the identifier prefix shared by related source recordings
+  overlaps heavily across its train/dev/test partitions. Define `source_group` as the substring of `new_id`
+  before the first underscore. Assign group test iff
+  `int(SHA256("E610|" + source_group)[:16],16) mod 5 == 0`; all other groups train. This yields 4,242 rows
+  over 399 train groups and 984 rows over 95 disjoint test groups, with zero group or exact-transcript overlap.
+  Supplied integer labels are kept in their documented ordinal order
+  `0=Apprentice, 1=Understanding, 2=Mastery`; no handcrafted numeric features are model inputs.
+- Each dialogue input uses the last 24 non-empty turns in original order. Prefix each with `Tutor:` or `Student:`,
+  keep the first 24 Unicode characters of that turn, then append
+  `Task: classify demonstrated math mastery as Apprentice, Understanding, or Mastery.` Tokenizer truncation is
+  from the left at 384 tokens so the latest evidence and task remain. No translation, target lexicon, metadata,
+  timestamps, official-split indicator, or numeric feature enters.
+- Backbone: official MIT `microsoft/mdeberta-v3-base` revision
+  `a0484667b22365f84929a935b5e50a51f71f159d`, multilingual CC100 pretraining, 12 layers and hidden size 768.
+  Freeze embeddings and encoder layers 0-9; train only layers 10-11, pooler, and a fresh three-logit classifier
+  initialized once under seed `20260727`. Train exactly one epoch, batch 8, gradient accumulation 2, AdamW
+  learning rate `2e-5`, weight decay `0.01`, linear warmup 6%, gradient cap `1.0`, unweighted cross-entropy,
+  deterministic row shuffle, CPU float32 and six threads. No checkpoint selection or class weighting.
+- Before material training, benchmark two fixed train batches, two fixed test batches, and the matching backward
+  passes; project the complete base-feature pass, 266 optimizer steps, and base/candidate test evaluation.
+  Proceed only below 10 hours and 8 GiB RSS.
+- External comparator: one fold-safe multinomial
+  `LogisticRegression(C=0.1, solver="lbfgs", max_iter=400, random_state=20260727)` fitted on untouched
+  mDeBERTa normalized CLS vectors from the 4,242 legal training rows. E610 must achieve test accuracy at least
+  `0.55`, macro-F1 at least `0.48`, every-class F1 at least `0.35`, macro one-vs-rest AUROC at least `0.70`,
+  quadratic-weighted kappa at least `0.35`, log loss at most `0.95`, and summed multiclass Brier at most `0.55`.
+  It must not regress from the frozen-CLS comparator in log loss, macro AUROC, or kappa, and a 2,000-replicate
+  source-group bootstrap must give at least 90% support for positive paired log-loss gain. Every clause is
+  mandatory.
+- Failure rejects E610 without source-group, label, compaction, length, layer, epoch, optimizer, class-weight,
+  calibration, threshold, checkpoint, or prompt rescue. Passing permits only a target-free 4,096-row pilot
+  cache: normalized candidate CLS plus three raw logits from
+  `Tutoring evidence: {objective_context}\nObjective: {learning_objective}` at the same 384-token left-truncated
+  contract. Fit the exact legal fold-local `C=0.1` probe on those 771 values plus the existing 35 controls and
+  evaluate only 10%, 20%, and 30% blends over the fair raw BGE comparator. Continue only through the unchanged
+  `0.0015` loss or `0.0050` AUROC path with Brier/ECE non-regression and 90% session-bootstrap support.
+  A pilot pass earns full target-free caching and frozen V_seen/V_objective/V_style evaluation; V_joint remains
+  confirmation-only and V_final sealed. Platform submission remains manual-only.
+
 ## E550 freeze after E540 rejection and before BGE-base masked-mean encoding
 
 E540 shows that selecting more instances with the existing CLS geometry is harmful. E550 tests a different,
