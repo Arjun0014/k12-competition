@@ -717,6 +717,25 @@ is `abe6e69b01a7ee297eb48b183fbd1dac5b8a4ebbfff5ddfd446793e3da48d8dc`.
 Authorize exactly one E580 material run from step zero with one calculated completion heartbeat and no inspection
 of its worker or logs beforehand. No outcome score, `V_joint`, or `V_final` was accessed by the benchmark.
 
+### E580 completed external result and continuation
+
+Run `20260727T085628Z_multicorpus_correctness_transfer` completed all `1,114/1,114` steps in approximately
+`10,770.321` seconds and passed all nine frozen external clauses:
+
+- unseen-question AUROC `0.711945848`, macro-F1 `0.455755785`, and multiclass loss `1.041258151`;
+- unseen-domain AUROC `0.760500763`, macro-F1 `0.469804458`, and multiclass loss `0.997024533`;
+- GSM paired AUROC `0.994636045`, log loss `0.111028344`, Brier `0.033980069`, ECE-10 `0.024192835`, and
+  accuracy `0.950720243`.
+
+The untouched base scored unseen-question/unseen-domain AUROC `0.596582994/0.724288305` and GSM AUROC/loss
+`0.778627064/0.648353903`, so every non-regression clause also passes. Delta SHA-256 is
+`13a2b5aa4d4fefa122b65c15ece3407719a29df8903047926dfe7acbb0116e9a`; report SHA-256 is
+`acbff2ab6af75cddd68c021d90e45e8451adf8e10c864d8d5945e832fb25201f`.
+
+Accept E580 through its external gate only. This authorizes target-free competition cache construction and the
+already frozen leakage-safe fold-local probe protocol; it does not yet authorize a backup ZIP, `V_final`, or a
+platform submission. No post-hoc corpus, prompt, model, optimizer, or checkpoint change is permitted.
+
 ## E550 freeze after E540 rejection and before BGE-base masked-mean encoding
 
 E540 shows that selecting more instances with the existing CLS geometry is harmful. E550 tests a different,
