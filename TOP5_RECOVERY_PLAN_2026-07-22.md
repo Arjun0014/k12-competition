@@ -736,6 +736,28 @@ Accept E580 through its external gate only. This authorizes target-free competit
 already frozen leakage-safe fold-local probe protocol; it does not yet authorize a backup ZIP, `V_final`, or a
 platform submission. No post-hoc corpus, prompt, model, optimizer, or checkpoint change is permitted.
 
+### E580 competition result and rejection
+
+The target-free 35,072-row cache completed in `5,732.478` seconds. Pooled/logit shapes are
+`[35072,768]/[35072,3]`; SHA-256 values are
+`c02bc9774e95803567feb4e25a8541f1b69e5d361e9bc027a9b522cb825c1685` and
+`822a7f5e845d8c84c992138f5d5fa16d453cb64f3f55a9e58cca146b8e2d6722`.
+
+Frozen run `20260727T105659Z_external_sra_validation` evaluated only the preregistered 10%, 20%, and 30% blends.
+None passed the three-environment development guard:
+
+- 10% mean loss gain `-0.000219870`, only one environment improved, worst regression `0.001443243`, mean AUROC
+  gain `0.001348021`, Brier gain `-0.000085859`, and ECE gain `-0.001373519`;
+- 20% mean loss gain `-0.002116213`, worst regression `0.004246710`;
+- 30% mean loss gain `-0.004322192`, worst regression `0.007410665`.
+
+At 10%, V_objective improved loss by `0.002137427`, but V_seen and V_style regressed by
+`0.001353793/0.001443243`; V_style AUROC also regressed `0.000162913`. Therefore no weight was selected,
+V_joint was not opened, and bootstrap/top-five projection are not applicable. Reject E580 exactly without
+corpus, cache-view, prompt, probe, calibration, or blend rescue. No ZIP or submission is authorized; V_final
+remains sealed. Validation report SHA-256 is
+`6c3b9ef0cccf950067a222c2e4f2be6677c432b45dbc7815c44ecdfa2017586c`.
+
 ## E550 freeze after E540 rejection and before BGE-base masked-mean encoding
 
 E540 shows that selecting more instances with the existing CLS geometry is harmful. E550 tests a different,
