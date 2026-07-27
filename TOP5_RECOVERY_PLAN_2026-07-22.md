@@ -758,6 +758,46 @@ corpus, cache-view, prompt, probe, calibration, or blend rescue. No ZIP or submi
 remains sealed. Validation report SHA-256 is
 `6c3b9ef0cccf950067a222c2e4f2be6677c432b45dbc7815c44ecdfa2017586c`.
 
+## E590 freeze after E580 rejection and before PRM800K scoring
+
+E580 proved that explicit mathematical correctness can preserve SemEval transfer, but its synthetic final-answer
+corruption learned an objective-shift-only signal and regressed seen/style calibration. E590 is a fresh checkpoint
+from the untouched NLI base using human step-level correctness judgments, not an E580 checkpoint or data-weight
+rescue.
+
+- Source: OpenAI PRM800K at commit `7ecc794703b2877f63226f2477a49b34f9b25163`, MIT license SHA-256
+  `f213be7e9bf1040b5407cdc7b55c24a053c8fe7bc9b9f755541d822ff8af814b`. Phase-2 train/test SHA-256 values
+  are `1110237feeb51d1bc200cb37b8f965cfdc1036eac7d506094049366fe7dc1089` and
+  `6b172efa884ac8341a946dd82e06947c135b7254109fb3f7aa907c715d98aaad`; official MATH train/test split
+  hashes are `90d96daeac3fe343ebb1e22ce93dd99690f75983e957f88de42f87cffe1e8076` and
+  `35dc41080a3680858b27fa7e0533d2d547825316fc5dafe5d316f4ccc5a06132`.
+- Split: admit only phase-2 train examples whose problem occurs in the official 11,999-problem train split;
+  exclude quality-control and initial-screening rows. The complete phase-2 test set maps to 458 distinct official
+  held-out problems with zero train-question overlap. Exclude flagged, blank, or unrated completions. Hash the
+  exact `(problem, ground truth, prior chosen steps, candidate step)` input; remove all inputs with conflicting
+  ratings and deduplicate exact repeats.
+- Labels map human rating `-1/0/+1` to contradiction/neutral/entailment. From the remaining training pool, select
+  exactly 2,970 unique inputs per class by SHA-256 order, for 8,910 PRM rows. Selected content SHA-256 is
+  `73eed21b2a1fe1d26a5ab93b9751dd616b8892687294d4d1796147f4d3bddc3d`.
+  Evaluate every 25,530 unique non-conflicting phase-2 test input: 5,810 contradiction, 1,938 neutral, and
+  17,782 entailment; content SHA-256 is
+  `456ecb3150c941b2d457bfb37476e687b47a8ad5847f100d17a87c72a9d74774`.
+- Fixed PRM premise order is candidate step, problem, ground-truth solution, then prior reasoning, compacted to
+  first `64/64/80` whitespace tokens and the last 48 prior-reasoning tokens respectively. Fixed hypothesis:
+  `The candidate reasoning step is mathematically correct and advances the solution.` No alternative text,
+  context budget, label mapping, sample balance, or data mixture may be scored.
+- Train one fresh checkpoint on the canonical 8,910 SemEval rows plus 8,910 PRM rows, shuffled once with seed
+  `20260727`. Preserve E580's original model, one epoch, batch 16, maximum length 256, top two trainable encoder
+  layers plus pooler/head, learning rates `2e-5/1e-4`, weight decay `0.01`, 10% warmup, gradient cap `1.0`, and
+  no weighting or checkpoint selection.
+- Preserve every SemEval clause from E580. On the full question-disjoint PRM test set require macro-F1 at least
+  `0.50`, contradiction-vs-rest AUROC at least `0.75`, multiclass log loss at most `0.90`, log-loss improvement
+  of at least `0.10` versus the untouched base, no contradiction-AUROC regression, and at least `0.95`
+  held-out-question-bootstrap support for positive log-loss gain using 2,000 replicates.
+- Any failed clause rejects E590 without prompt, context, sample, class/corpus weight, label, layer, optimizer,
+  calibration, or checkpoint rescue. A pass earns only the same target-free session cache and frozen 10%/20%/30%
+  fold-local competition screen. `V_final` remains sealed and all submission remains manual-only.
+
 ## E550 freeze after E540 rejection and before BGE-base masked-mean encoding
 
 E540 shows that selecting more instances with the existing CLS geometry is harmful. E550 tests a different,
