@@ -31,6 +31,7 @@ SOURCE_HASHES = {
     "spm": "cfc8146abe2a0488e9e2a0c56de7952f7c11ab059eca145a0a727afce0db2865",
 }
 MCD_CACHE_SHA256 = "4180bbb1829214c569f084e3387eb38352d5b241e03f217736305b0c97d4dc2f"
+BOOTSTRAP_REPLICATES = 2_000
 
 
 def _sha256(path: str | Path) -> str:
@@ -52,6 +53,9 @@ def _paths(project_root: str | Path) -> dict[str, Path]:
         "spm": model / "sentencepiece.bpe.model",
         "mcd_cache": paths.cache_dir / "mcd_mastery_e610.parquet",
         "benchmark": paths.cache_dir / "frozen_multilingual_e620_benchmark.json",
+        "external_embeddings": paths.cache_dir / "frozen_multilingual_e620_mcd.npy",
+        "external_metadata": paths.cache_dir / "frozen_multilingual_e620_mcd.metadata.json",
+        "progress": paths.cache_dir / "frozen_multilingual_e620_mcd.progress.json",
     }
 
 
@@ -185,12 +189,185 @@ def benchmark(project_root: str | Path) -> dict[str, object]:
     return result
 
 
+def build_external_cache(project_root: str | Path) -> dict[str, object]:
+    import torch
+    from numpy.lib.format import open_memmap
+
+    source_hashes = verify_sources(project_root)
+    paths = _paths(project_root)
+    benchmark_result = json.loads(paths["benchmark"].read_text(encoding="utf-8"))
+    if benchmark_result.get("proceed") is not True:
+        raise ValueError("E620 benchmark did not authorize cache construction.")
+    frame = pd.read_parquet(paths["mcd_cache"])
+    tokenizer, model = _load_model(project_root)
+    matrix = open_memmap(
+        paths["external_embeddings"],
+        mode="w+",
+        dtype=np.float32,
+        shape=(len(frame), EMBEDDING_DIMENSION),
+    )
+    started = time.perf_counter()
+    for start in range(0, len(frame), BATCH_SIZE):
+        stop = min(start + BATCH_SIZE, len(frame))
+        encoded = tokenizer(
+            [f"passage: {value}" for value in frame.iloc[start:stop]["text"]],
+            padding=True,
+            truncation=True,
+            max_length=MAX_LENGTH,
+            return_tensors="pt",
+        )
+        with torch.inference_mode():
+            output = model(**encoded)
+            pooled = mean_pool(
+                output.last_hidden_state, encoded["attention_mask"]
+            )
+        matrix[start:stop] = pooled.cpu().numpy()
+        matrix.flush()
+        paths["progress"].write_text(
+            json.dumps(
+                {
+                    "completed_rows": stop,
+                    "total_rows": len(frame),
+                    "elapsed_seconds": time.perf_counter() - started,
+                },
+                sort_keys=True,
+            )
+            + "\n",
+            encoding="utf-8",
+        )
+        if stop % 512 == 0 or stop == len(frame):
+            print(f"e620_cache completed_rows={stop}/{len(frame)}", flush=True)
+    del matrix
+    loaded = np.load(paths["external_embeddings"])
+    if (
+        loaded.shape != (len(frame), EMBEDDING_DIMENSION)
+        or not np.isfinite(loaded).all()
+        or not np.allclose(np.linalg.norm(loaded, axis=1), 1.0, atol=1e-5)
+    ):
+        raise ValueError("E620 external cache audit failed.")
+    metadata = {
+        "protocol_id": PROTOCOL_ID,
+        "generated_at_utc": datetime.now(timezone.utc).isoformat(),
+        "rows": len(frame),
+        "shape": list(loaded.shape),
+        "elapsed_seconds": time.perf_counter() - started,
+        "cache_sha256": _sha256(paths["external_embeddings"]),
+        "source_sha256": source_hashes,
+        "mcd_cache_sha256": MCD_CACHE_SHA256,
+        "V_joint_accessed": False,
+        "V_final_accessed": False,
+    }
+    paths["external_metadata"].write_text(
+        json.dumps(metadata, indent=2, sort_keys=True) + "\n", encoding="utf-8"
+    )
+    return metadata
+
+
+def _multiclass_metrics(target: np.ndarray, probability: np.ndarray) -> dict[str, object]:
+    from sklearn.metrics import (
+        accuracy_score,
+        cohen_kappa_score,
+        f1_score,
+        log_loss,
+        roc_auc_score,
+    )
+
+    prediction = probability.argmax(axis=1)
+    one_hot = np.eye(3, dtype=np.float64)[target]
+    return {
+        "accuracy": float(accuracy_score(target, prediction)),
+        "macro_f1": float(f1_score(target, prediction, average="macro")),
+        "class_f1": f1_score(target, prediction, average=None).tolist(),
+        "macro_ovr_auc": float(
+            roc_auc_score(target, probability, multi_class="ovr", average="macro")
+        ),
+        "quadratic_kappa": float(
+            cohen_kappa_score(target, prediction, weights="quadratic")
+        ),
+        "log_loss": float(log_loss(target, probability, labels=[0, 1, 2])),
+        "summed_brier": float(np.mean(np.sum((probability - one_hot) ** 2, axis=1))),
+    }
+
+
+def validate_external(project_root: str | Path) -> dict[str, object]:
+    from sklearn.linear_model import LogisticRegression
+
+    paths = _paths(project_root)
+    metadata = json.loads(paths["external_metadata"].read_text(encoding="utf-8"))
+    if metadata.get("cache_sha256") != _sha256(paths["external_embeddings"]):
+        raise ValueError("E620 external cache binding failed.")
+    frame = pd.read_parquet(paths["mcd_cache"])
+    embeddings = np.load(paths["external_embeddings"])
+    train_mask = frame["split"].eq("train").to_numpy()
+    test_mask = frame["split"].eq("test").to_numpy()
+    target = frame["label"].to_numpy(dtype=np.int8)
+    model = LogisticRegression(
+        C=1.0, solver="lbfgs", max_iter=400, random_state=20260727
+    )
+    model.fit(embeddings[train_mask], target[train_mask])
+    probability = model.predict_proba(embeddings[test_mask])
+    test_target = target[test_mask]
+    metrics = _multiclass_metrics(test_target, probability)
+    prior = np.bincount(target[train_mask], minlength=3).astype(np.float64)
+    prior /= prior.sum()
+    prior_probability = np.tile(prior, (test_mask.sum(), 1))
+    prior_metrics = _multiclass_metrics(test_target, prior_probability)
+    gains = -np.log(np.clip(prior_probability[np.arange(len(test_target)), test_target], 1e-9, 1)) + np.log(
+        np.clip(probability[np.arange(len(test_target)), test_target], 1e-9, 1)
+    )
+    groups = frame.loc[test_mask, "source_group"].astype(str).to_numpy()
+    unique = np.unique(groups)
+    grouped = np.array([gains[groups == group].mean() for group in unique])
+    rng = np.random.default_rng(20260727)
+    draws = grouped[rng.integers(0, len(grouped), size=(BOOTSTRAP_REPLICATES, len(grouped)))].mean(axis=1)
+    clauses = {
+        "accuracy": metrics["accuracy"] >= 0.50,
+        "macro_f1": metrics["macro_f1"] >= 0.42,
+        "every_class_f1": min(metrics["class_f1"]) >= 0.30,
+        "macro_ovr_auc": metrics["macro_ovr_auc"] >= 0.65,
+        "quadratic_kappa": metrics["quadratic_kappa"] >= 0.25,
+        "log_loss": metrics["log_loss"] <= 1.00,
+        "summed_brier": metrics["summed_brier"] <= 0.60,
+        "prior_loss_gain": prior_metrics["log_loss"] - metrics["log_loss"] >= 0.10,
+        "bootstrap_support": float(np.mean(draws > 0)) >= 0.90,
+    }
+    result = {
+        "protocol_id": PROTOCOL_ID,
+        "metrics": metrics,
+        "prior_metrics": prior_metrics,
+        "log_loss_gain_vs_prior": prior_metrics["log_loss"] - metrics["log_loss"],
+        "source_group_bootstrap": {
+            "replicates": BOOTSTRAP_REPLICATES,
+            "groups": len(unique),
+            "support": float(np.mean(draws > 0)),
+            "mean_gain": float(draws.mean()),
+            "ci95": np.quantile(draws, [0.025, 0.975]).tolist(),
+        },
+        "clauses": clauses,
+        "passes_external_gate": all(clauses.values()),
+        "V_joint_accessed": False,
+        "V_final_accessed": False,
+    }
+    report = paths["external_metadata"].with_name(
+        "frozen_multilingual_e620_external_report.json"
+    )
+    report.write_text(json.dumps(result, indent=2, sort_keys=True) + "\n", encoding="utf-8")
+    result["report_sha256"] = _sha256(report)
+    return result
+
+
 def main(argv: Iterable[str] | None = None) -> None:
     parser = argparse.ArgumentParser(description="Run the frozen E620 screen.")
-    parser.add_argument("stage", choices=("benchmark",))
+    parser.add_argument("stage", choices=("benchmark", "build-cache", "validate"))
     parser.add_argument("--project-root", default=".")
     args = parser.parse_args(list(argv) if argv is not None else None)
-    print(json.dumps(benchmark(args.project_root), indent=2, sort_keys=True))
+    if args.stage == "benchmark":
+        result = benchmark(args.project_root)
+    elif args.stage == "build-cache":
+        result = build_external_cache(args.project_root)
+    else:
+        result = validate_external(args.project_root)
+    print(json.dumps(result, indent=2, sort_keys=True))
 
 
 if __name__ == "__main__":
