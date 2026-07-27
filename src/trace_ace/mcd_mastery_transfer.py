@@ -3,7 +3,10 @@ from __future__ import annotations
 import argparse
 import hashlib
 import json
+import math
 import platform
+import random
+import time
 from collections.abc import Iterable
 from datetime import datetime, timezone
 from pathlib import Path
@@ -25,6 +28,12 @@ TRAIN_ROWS = 4_242
 TEST_ROWS = 984
 TRAIN_GROUPS = 399
 TEST_GROUPS = 95
+TRAIN_BATCH_SIZE = 8
+GRADIENT_ACCUMULATION_STEPS = 2
+LEARNING_RATE = 2e-5
+WEIGHT_DECAY = 0.01
+MAX_PROJECTED_HOURS = 10.0
+MAX_RSS_BYTES = 8 * 1024**3
 SOURCE_HASHES = {
     "labels": "153d77a2324cdcb73d7c41f87fc216821cb9cc9a5284a02459cb90362c5d1cf3",
     "transcripts": "103c9f9cc878dc491e67668f7e9e574b066fa72504efcf0a6ab1fff8a73c4157",
@@ -305,16 +314,173 @@ def trainable_state_sha256(model) -> str:
     return digest.hexdigest()
 
 
+def _configure_runtime() -> None:
+    import torch
+
+    random.seed(SEED)
+    np.random.seed(SEED)
+    torch.manual_seed(SEED)
+    torch.set_num_threads(6)
+    try:
+        torch.set_num_interop_threads(1)
+    except RuntimeError:
+        pass
+    torch.use_deterministic_algorithms(True)
+
+
+def _tokenize_frame(tokenizer, frame: pd.DataFrame):
+    encoded = tokenizer(
+        frame["text"].astype(str).tolist(),
+        padding="max_length",
+        truncation=True,
+        max_length=MAX_LENGTH,
+        return_tensors="pt",
+    )
+    if encoded["input_ids"].shape != (len(frame), MAX_LENGTH):
+        raise ValueError("E610 tokenization shape changed.")
+    return encoded
+
+
+def benchmark(project_root: str | Path) -> dict[str, object]:
+    import torch
+    from torch.utils.data import DataLoader, TensorDataset
+
+    from trace_ace.source_robust_validation import _current_rss_bytes
+
+    _configure_runtime()
+    runtime = assert_runtime()
+    source_hashes = verify_sources(project_root)
+    paths = _paths(project_root)
+    metadata = json.loads(paths["metadata"].read_text(encoding="utf-8"))
+    if (
+        metadata.get("ordered_content_sha256")
+        != "6336d7d377d67c34c8ea5471d2a7f6e3c119b8d0448b35f118bfa4f01401d4f9"
+        or metadata.get("cache_sha256") != _sha256(paths["cache"])
+    ):
+        raise ValueError("E610 canonical cache binding failed.")
+    frame = pd.read_parquet(paths["cache"])
+    tokenizer = load_tokenizer(project_root)
+    encoded = _tokenize_frame(tokenizer, frame)
+    synthetic = torch.arange(len(frame), dtype=torch.long) % N_LABELS
+    dataset = TensorDataset(
+        encoded["input_ids"],
+        encoded["attention_mask"],
+        synthetic,
+    )
+    train_indices = (
+        frame.index[frame["split"].eq("train")].to_numpy(dtype=np.int64)[:16]
+    )
+    test_indices = (
+        frame.index[frame["split"].eq("test")].to_numpy(dtype=np.int64)[:16]
+    )
+    model = initialize_model(project_root)
+    optimizer = torch.optim.AdamW(
+        [value for value in model.parameters() if value.requires_grad],
+        lr=LEARNING_RATE,
+        weight_decay=WEIGHT_DECAY,
+    )
+    train_loader = DataLoader(
+        torch.utils.data.Subset(dataset, train_indices.tolist()),
+        batch_size=TRAIN_BATCH_SIZE,
+        shuffle=False,
+    )
+    model.train()
+    optimizer.zero_grad(set_to_none=True)
+    train_started = time.perf_counter()
+    training_losses: list[float] = []
+    for input_ids, attention_mask, labels in train_loader:
+        output = model(
+            input_ids=input_ids,
+            attention_mask=attention_mask,
+            labels=labels,
+        )
+        loss = output.loss / GRADIENT_ACCUMULATION_STEPS
+        loss.backward()
+        training_losses.append(float(output.loss.detach()))
+    torch.nn.utils.clip_grad_norm_(
+        [value for value in model.parameters() if value.requires_grad], 1.0
+    )
+    optimizer.step()
+    train_elapsed = time.perf_counter() - train_started
+
+    test_loader = DataLoader(
+        torch.utils.data.Subset(dataset, test_indices.tolist()),
+        batch_size=TRAIN_BATCH_SIZE,
+        shuffle=False,
+    )
+    model.eval()
+    eval_started = time.perf_counter()
+    with torch.inference_mode():
+        for input_ids, attention_mask, _ in test_loader:
+            output = model(
+                input_ids=input_ids,
+                attention_mask=attention_mask,
+                output_hidden_states=True,
+            )
+            if (
+                output.logits.shape != (len(input_ids), N_LABELS)
+                or output.hidden_states[-1].shape
+                != (len(input_ids), MAX_LENGTH, 768)
+            ):
+                raise ValueError("E610 benchmark output contract failed.")
+    eval_elapsed = time.perf_counter() - eval_started
+    train_batches = math.ceil(TRAIN_ROWS / TRAIN_BATCH_SIZE)
+    base_batches = math.ceil((TRAIN_ROWS + TEST_ROWS) / TRAIN_BATCH_SIZE)
+    candidate_test_batches = math.ceil(TEST_ROWS / TRAIN_BATCH_SIZE)
+    projected_seconds = (
+        train_elapsed / 2 * train_batches
+        + eval_elapsed / 2 * (base_batches + candidate_test_batches)
+    )
+    peak_rss = _current_rss_bytes()
+    result = {
+        "protocol_id": PROTOCOL_ID,
+        "generated_at_utc": datetime.now(timezone.utc).isoformat(),
+        "benchmark": (
+            "two synthetic-label train batches and two target-free test batches"
+        ),
+        "train_elapsed_seconds": train_elapsed,
+        "eval_elapsed_seconds": eval_elapsed,
+        "training_losses": training_losses,
+        "projected_seconds": projected_seconds,
+        "projected_hours": projected_seconds / 3600.0,
+        "projected_train_batches": train_batches,
+        "projected_optimizer_steps": math.ceil(
+            train_batches / GRADIENT_ACCUMULATION_STEPS
+        ),
+        "projected_base_feature_batches": base_batches,
+        "projected_candidate_test_batches": candidate_test_batches,
+        "peak_rss_bytes": peak_rss,
+        "proceed": bool(
+            projected_seconds <= MAX_PROJECTED_HOURS * 3600
+            and peak_rss < MAX_RSS_BYTES
+        ),
+        "runtime": runtime,
+        "source_sha256": source_hashes,
+        "canonical_cache_sha256": _sha256(paths["cache"]),
+        "trainable_initialization_sha256": (
+            "4e51494114193795988a96c8313394dcda333ff7e696053f9363e087d43a4b0f"
+        ),
+        "outcome_labels_accessed": False,
+        "competition_outcomes_accessed": False,
+        "V_joint_accessed": False,
+        "V_final_accessed": False,
+    }
+    paths["benchmark"].write_text(
+        json.dumps(result, indent=2, sort_keys=True) + "\n", encoding="utf-8"
+    )
+    return result
+
+
 def main(argv: Iterable[str] | None = None) -> None:
     parser = argparse.ArgumentParser(
         description="Prepare the frozen E610 MCD mastery-transfer branch."
     )
-    parser.add_argument("stage", choices=("prepare", "audit-model"))
+    parser.add_argument("stage", choices=("prepare", "audit-model", "benchmark"))
     parser.add_argument("--project-root", default=".")
     args = parser.parse_args(list(argv) if argv is not None else None)
     if args.stage == "prepare":
         result = build_canonical_cache(args.project_root)
-    else:
+    elif args.stage == "audit-model":
         model = initialize_model(args.project_root)
         tokenizer = load_tokenizer(args.project_root)
         result = {
@@ -329,6 +495,8 @@ def main(argv: Iterable[str] | None = None) -> None:
             "V_joint_accessed": False,
             "V_final_accessed": False,
         }
+    else:
+        result = benchmark(args.project_root)
     print(json.dumps(result, indent=2, sort_keys=True))
 
 

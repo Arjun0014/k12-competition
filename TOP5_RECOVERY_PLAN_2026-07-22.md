@@ -934,6 +934,19 @@ Two clean initializations reproduce trainable-state SHA-256
 parameters. No prediction metric or competition outcome was accessed. The frozen target-free resource benchmark
 is authorized.
 
+### E610 resource result and rejection
+
+The two fixed synthetic-label training batches took `361.492176` seconds and the two target-free evaluation
+batches took `106.720519` seconds. This projects `137,437.094` seconds (`38.176971` hours) for the frozen
+base-feature pass, 531 physical training batches/266 optimizer steps, and candidate test evaluation. Peak RSS was
+`1,465,061,376` bytes. The memory clause passes, but the frozen ten-hour ceiling fails by a factor of 3.82.
+
+Reject E610 exactly at its resource gate without sequence-length, compaction, layer, batch, epoch, optimizer,
+checkpoint, quantization, or model substitution rescue. No MCD outcome prediction, external metric, competition
+cache, hardened validation, ZIP, or public projection is authorized. Benchmark SHA-256 is
+`3de48a2b8282bed89bfac15e30a4d73c32896bbe793c4cfb42ad6d80ba6e74d6`.
+`V_joint_accessed=false`; `V_final_accessed=false`.
+
 ## E550 freeze after E540 rejection and before BGE-base masked-mean encoding
 
 E540 shows that selecting more instances with the existing CLS geometry is harmful. E550 tests a different,
