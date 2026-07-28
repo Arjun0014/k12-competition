@@ -1,0 +1,366 @@
+{
+  "V_final_accessed": false,
+  "V_joint_accessed": false,
+  "V_objective_outcomes_accessed": false,
+  "V_seen_outcomes_accessed": false,
+  "V_style_outcomes_accessed": false,
+  "competition_outcomes_accessed": false,
+  "environment": {
+    "numpy": "2.5.1",
+    "pandas": "2.3.3",
+    "python": "3.12.8",
+    "scikit_learn": "1.8.0"
+  },
+  "evaluation": {
+    "balanced_accuracy": 0.502234862151665,
+    "clauses": {
+      "at_least_200_feedback_linked_relations": true,
+      "at_least_250_distinct_responses": true,
+      "at_least_500_parsed_relations": true,
+      "at_least_50_invalid_relations": true,
+      "at_least_50_valid_relations": true,
+      "at_least_8_style_cells_with_10_links": true,
+      "balanced_accuracy_at_least_0_70": false,
+      "matthews_correlation_at_least_0_30": false,
+      "positive_feedback_rate_gap_at_least_0_25": false
+    },
+    "distinct_responses": 8718,
+    "feedback_linked_relations": 5187,
+    "invalid_positive_feedback_rate": 0.9811320754716981,
+    "invalid_relations": 3059,
+    "matthews_correlation": 0.012858885193755465,
+    "parsed_relations": 19046,
+    "passes_discovery_gate": false,
+    "positive_feedback_rate_gap": 0.004469724303330036,
+    "response_coverage": 0.24857436131386862,
+    "style_cell_feedback_linked_counts": {
+      "0": 36,
+      "1": 593,
+      "10": 139,
+      "11": 47,
+      "13": 496,
+      "14": 852,
+      "15": 398,
+      "16": 37,
+      "17": 302,
+      "18": 548,
+      "2": 520,
+      "3": 46,
+      "4": 7,
+      "5": 290,
+      "6": 221,
+      "7": 109,
+      "8": 412,
+      "9": 134
+    },
+    "style_cells_with_at_least_10_links": 17,
+    "total_responses": 35072,
+    "valid_positive_feedback_rate": 0.9856017997750282,
+    "valid_relations": 15987
+  },
+  "generated_at_utc": "2026-07-28T13:16:07.137456+00:00",
+  "protocol_id": "E790_math_validity_target_free_discovery_v1",
+  "runtime": {
+    "numpy": "2.5.1",
+    "python": "3.12.8",
+    "scikit_learn": "1.8.0",
+    "torch": "2.13.0+cpu",
+    "transformers": "5.14.1"
+  },
+  "runtime_seconds": 25.54807369998889,
+  "source_hashes": {
+    "modeling_base.parquet": "ea49463819e387b3a61aeafda5007938e39948940eac5b134f607ab13e3d6ede",
+    "response_objective_context.parquet": "218d5b041f78c6803f28078c35b7fa9e37b725f456c4052974e5150b2afa43f6",
+    "validation_environments_selection.parquet": "600664b9ce6c3809ff4b17206397285cfdd905a203a5c5f4d6969b403dfc9b40"
+  },
+  "synthetic_gate": {
+    "clauses": {
+      "all_invalid_examples_recovered": true,
+      "all_valid_examples_recovered": true,
+      "ambiguous_and_unsafe_examples_rejected": true,
+      "background_breaks_immediate_link": true,
+      "duplicate_input_is_decision_invariant": true,
+      "immediate_negative_feedback_linked": true,
+      "immediate_positive_feedback_linked": true,
+      "target_column_is_prohibited": true
+    },
+    "invalid_examples": [
+      [
+        {
+          "comparator": "=",
+          "computed": "5",
+          "form": "arithmetic",
+          "left": "2",
+          "operator": "+",
+          "raw_relation": "2 + 3 = 6",
+          "right": "3",
+          "stated": "6",
+          "valid": false
+        }
+      ],
+      [
+        {
+          "comparator": "=",
+          "computed": "3",
+          "form": "arithmetic",
+          "left": "7",
+          "operator": "-",
+          "raw_relation": "7 minus 4 is 2",
+          "right": "4",
+          "stated": "2",
+          "valid": false
+        }
+      ],
+      [
+        {
+          "comparator": "=",
+          "computed": "12",
+          "form": "arithmetic",
+          "left": "2",
+          "operator": "*",
+          "raw_relation": "2 times 6 equals 13",
+          "right": "6",
+          "stated": "13",
+          "valid": false
+        }
+      ],
+      [
+        {
+          "comparator": "=",
+          "computed": "3",
+          "form": "arithmetic",
+          "left": "9",
+          "operator": "/",
+          "raw_relation": "9 divided by 3 is 4",
+          "right": "3",
+          "stated": "4",
+          "valid": false
+        }
+      ],
+      [
+        {
+          "comparator": "=",
+          "computed": "3/4",
+          "form": "arithmetic",
+          "left": "1/2",
+          "operator": "+",
+          "raw_relation": "0.5 plus 0.25 equals 0.8",
+          "right": "1/4",
+          "stated": "4/5",
+          "valid": false
+        }
+      ],
+      [
+        {
+          "comparator": "=",
+          "computed": "3/4",
+          "form": "arithmetic",
+          "left": "1/2",
+          "operator": "+",
+          "raw_relation": "1/2 + 1/4 = 2/4",
+          "right": "1/4",
+          "stated": "1/2",
+          "valid": false
+        }
+      ],
+      [
+        {
+          "comparator": ">",
+          "computed": "",
+          "form": "comparison",
+          "left": "1/4",
+          "operator": "",
+          "raw_relation": "3/12 is greater than 4/12",
+          "right": "1/3",
+          "stated": "",
+          "valid": false
+        }
+      ],
+      [
+        {
+          "comparator": "<",
+          "computed": "",
+          "form": "comparison",
+          "left": "3",
+          "operator": "",
+          "raw_relation": "3 < 2",
+          "right": "2",
+          "stated": "",
+          "valid": false
+        }
+      ]
+    ],
+    "linked_examples": [
+      {
+        "comparator": "=",
+        "computed": "5",
+        "feedback": "positive",
+        "form": "arithmetic",
+        "left": "2",
+        "next_tutor_text": "Exactly, that is correct.",
+        "operator": "+",
+        "raw_relation": "2 plus 3 equals 5",
+        "relation_index": 0,
+        "response_id": "synthetic",
+        "right": "3",
+        "stated": "5",
+        "student_text": "2 plus 3 equals 5.",
+        "style_cell": 0,
+        "turn_index": 0,
+        "valid": true
+      },
+      {
+        "comparator": "=",
+        "computed": "8",
+        "feedback": "negative",
+        "form": "arithmetic",
+        "left": "4",
+        "next_tutor_text": "Not quite. Try again.",
+        "operator": "+",
+        "raw_relation": "4 plus 4 equals 9",
+        "relation_index": 0,
+        "response_id": "synthetic",
+        "right": "4",
+        "stated": "9",
+        "student_text": "4 plus 4 equals 9.",
+        "style_cell": 0,
+        "turn_index": 2,
+        "valid": false
+      },
+      {
+        "comparator": "=",
+        "computed": "10",
+        "feedback": "unknown",
+        "form": "arithmetic",
+        "left": "5",
+        "next_tutor_text": "",
+        "operator": "+",
+        "raw_relation": "5 plus 5 equals 10",
+        "relation_index": 0,
+        "response_id": "synthetic",
+        "right": "5",
+        "stated": "10",
+        "student_text": "5 plus 5 equals 10.",
+        "style_cell": 0,
+        "turn_index": 4,
+        "valid": true
+      }
+    ],
+    "passes": true,
+    "rejected_examples": [
+      [],
+      [],
+      [],
+      [],
+      [],
+      [],
+      []
+    ],
+    "valid_examples": [
+      [
+        {
+          "comparator": "=",
+          "computed": "5",
+          "form": "arithmetic",
+          "left": "2",
+          "operator": "+",
+          "raw_relation": "2 + 3 = 5",
+          "right": "3",
+          "stated": "5",
+          "valid": true
+        }
+      ],
+      [
+        {
+          "comparator": "=",
+          "computed": "3",
+          "form": "arithmetic",
+          "left": "7",
+          "operator": "-",
+          "raw_relation": "7 minus 4 is 3",
+          "right": "4",
+          "stated": "3",
+          "valid": true
+        }
+      ],
+      [
+        {
+          "comparator": "=",
+          "computed": "12",
+          "form": "arithmetic",
+          "left": "2",
+          "operator": "*",
+          "raw_relation": "2 times 6 equals 12",
+          "right": "6",
+          "stated": "12",
+          "valid": true
+        }
+      ],
+      [
+        {
+          "comparator": "=",
+          "computed": "3",
+          "form": "arithmetic",
+          "left": "9",
+          "operator": "/",
+          "raw_relation": "9 divided by 3 is 3",
+          "right": "3",
+          "stated": "3",
+          "valid": true
+        }
+      ],
+      [
+        {
+          "comparator": "=",
+          "computed": "3/4",
+          "form": "arithmetic",
+          "left": "1/2",
+          "operator": "+",
+          "raw_relation": "0.5 plus 0.25 equals 0.75",
+          "right": "1/4",
+          "stated": "3/4",
+          "valid": true
+        }
+      ],
+      [
+        {
+          "comparator": "=",
+          "computed": "3/4",
+          "form": "arithmetic",
+          "left": "1/2",
+          "operator": "+",
+          "raw_relation": "1/2 + 1/4 = 3/4",
+          "right": "1/4",
+          "stated": "3/4",
+          "valid": true
+        }
+      ],
+      [
+        {
+          "comparator": ">",
+          "computed": "",
+          "form": "comparison",
+          "left": "1/3",
+          "operator": "",
+          "raw_relation": "4/12 is greater than 3/12",
+          "right": "1/4",
+          "stated": "",
+          "valid": true
+        }
+      ],
+      [
+        {
+          "comparator": "<",
+          "computed": "",
+          "form": "comparison",
+          "left": "2",
+          "operator": "",
+          "raw_relation": "2 < 3",
+          "right": "3",
+          "stated": "",
+          "valid": true
+        }
+      ]
+    ]
+  }
+}

@@ -3126,3 +3126,39 @@ The participant supplied the full text of the forum question thread on 2026-07-1
   `65467003547fb62ec867733c6acf0a63e6f9fb0fed9533b61b9592e143b17186`. No candidate ZIP, upload, or
   submission occurred. **Decision: reject exact E780 without parser, threshold, feature, model, or gate rescue.
   No E780 preregistration or competition validation is authorized.**
+
+## 2026-07-28 - E790 target-free mathematical-validity discovery: rejected
+
+- The proposed generic residual atlas was rejected before scoring because it duplicates the v0.4 forensic
+  disagreement audit, E230 observable-style component gating, pooled stacking/calibration controls, E560
+  residual heads, and D100 source-robust group-risk training. Code/log novelty search instead found one untested
+  target-free mechanism: exact mathematical truth of explicit student arithmetic relations. E221 had encoded
+  lexical answer/feedback events but had never evaluated equation validity.
+- Froze `E790_math_validity_target_free_discovery_v1` before the full audit. Immutable SHA-256 values were
+  `218d5b041f78c6803f28078c35b7fa9e37b725f456c4052974e5150b2afa43f6` for objective contexts,
+  `600664b9ce6c3809ff4b17206397285cfdd905a203a5c5f4d6969b403dfc9b40` for target-free style assignments,
+  and `ea49463819e387b3a61aeafda5007938e39948940eac5b134f607ab13e3d6ede` for identity-only modeling
+  lineage. The runner explicitly requested only response/session/objective identity columns and never loaded
+  `target` or a component prediction.
+- The conservative parser uses exact rational arithmetic for explicit binary integer/decimal/fraction
+  equations and comparisons, rejects ambiguous/chained/unsafe expressions, and links only an immediately
+  following tutor turn. Two focused pre-audit corrections fixed terminal-punctuation token boundaries and
+  fraction-comparison precedence; neither accessed real audit evidence or changed the frozen relation classes
+  or gates. All eight focused tests and every synthetic clause then passed.
+- The sole full target-free audit completed in `25.5480737` seconds in `.venv` Python `3.12.8`,
+  scikit-learn `1.8.0`, NumPy `2.5.1`, and pandas `2.3.3`. It found `19,046` relations across `8,718`
+  responses (`0.2485743613` coverage): `15,987` valid, `3,059` invalid, and `5,187` feedback-linked. Seventeen
+  style cells had at least ten linked relations. All six volume/coverage clauses passed.
+- All three discrimination clauses failed. Validity versus positive immediate tutor feedback had balanced
+  accuracy `0.5022348622 < 0.70` and Matthews correlation `0.0128588852 < 0.30`. Positive-feedback rates were
+  `0.9856017998` for valid relations and `0.9811320755` for invalid relations, a gap of only
+  `0.0044697243 < 0.25`. Immediate tutor praise is nearly constant and is not a usable target-free correctness
+  proxy.
+- Report SHA-256 is `81e11b57ed20b5f206888f925dfa930d75624537106d87943ad13f7ebcc5469c`.
+  Log loss, AUROC, Brier, ECE, competition folds/environments, outcome bootstraps, projected public loss, and
+  rank gain are not applicable because no competition outcome was accessed. V_joint and V_final remained
+  untouched. Runtime was far below one hour, so the audit correctly remained in the foreground without a wake.
+- Protected v0.5 ZIP SHA-256 remains
+  `65467003547fb62ec867733c6acf0a63e6f9fb0fed9533b61b9592e143b17186`; no new ZIP, upload, or submission
+  occurred. **Decision: reject exact E790 without parser, feedback lexicon, linkage, threshold, or subgroup
+  rescue. E790 does not nominate an E800 competition candidate.**
