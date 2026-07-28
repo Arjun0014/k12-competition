@@ -2906,3 +2906,33 @@ The participant supplied the full text of the forum question thread on 2026-07-1
   is authorized. The protected v0.5 ZIP and its hash remain unchanged. Projected public loss remains verified
   v0.5 `0.6054`; honest observed rank remains approximately `#11`; two manual submission slots remain, and
   neither is recommended for E750.
+
+## 2026-07-28 (Asia/Kolkata) - first-place research audit and gated portfolio
+
+- Reconfirmed clean `codex/v04-recovery` at
+  `878245f182e6403b81ba57181098d315ca2d99eb`, identical to `origin/codex/v04-recovery`, with Git identity
+  `arjun0014 <23293383+Arjun0014@users.noreply.github.com>`. No K12 Python worker was active.
+- Reverified protected v0.5 ZIP SHA-256
+  `65467003547fb62ec867733c6acf0a63e6f9fb0fed9533b61b9592e143b17186`. No competition upload,
+  submission, new ZIP, `V_joint`, or `V_final` access occurred.
+- Audited the complete experiment/decision history and source tree. The repeated failures close generic encoder
+  scale, longer context, pooling, generic trajectories, timing, calibration, provider gates, session aggregation,
+  objective priors/interactions, unrelated external transfer, and E710-E750 exact branches. Ordered feedback
+  adjacency and raw BGE-base remain the only stable positive process/semantic evidence.
+- Primary-source research identified three unimplemented mechanisms: directional student-to-next-tutor uptake;
+  NTO tutor-move by student-state interactions; and an identifiable ability-versus-task-demand challenge model.
+  These mechanisms are documented with sources and literal fallback gates in
+  `FIRST_PLACE_ACTION_PLAN_2026-07-28.md`, SHA-256
+  `73775d200fdc965e40cf817ee773142b6d732a4a9e9db925165895623436559e`.
+- The `ddemszky/conversational-uptake` repository advertises MIT licensing for code/data and contains 2,246
+  expert-labeled K-12 student-to-teacher exchanges. Its published Hugging Face checkpoint is labeled
+  `CC-BY-NC-ND-4.0` and is explicitly excluded. E760 is not yet preregistered or authorized: the exact source
+  commit, license scope, hashes, grouped split, target-free benchmark, features, estimator, seed, weights, and
+  gates must be frozen before any competition outcome score.
+- The live leaderboard is sign-in gated and was unavailable in the only browser context. Current first-place,
+  fifth-place, fifteenth-place, and v0.5 rank must be manually recorded before a submission decision. The older
+  local leader value `0.6013` is treated as stale, not current evidence.
+- Research-only audit metrics: log loss, AUROC, Brier, ECE, folds, bootstraps, projected public loss, and rank
+  gain are not applicable because no model or outcome validation ran. Environment remains `.venv` Python
+  `3.12.8` and scikit-learn `1.8.0`; elapsed model runtime is zero. **Decision:** preserve v0.5 and begin only
+  the E760 source/legal and target-free gates next. No platform action is authorized.
