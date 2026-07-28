@@ -1648,3 +1648,10 @@ Canonicalization completed under Python 3.12.8 without accessing competition out
 `[250,199,180,249,257]`; concept-disjoint counts are `[177,280,208,272,198]`. All ten train/validation group
 intersections are empty and every split contains both classes. These hashes are now frozen and authorize only
 the preregistered first-32-row target-free benchmark.
+
+The fixed benchmark encoded 32 rows in 5.501544 seconds, projecting 195.132899 seconds for all 1,135 rows.
+It produced a finite `32 x 768` float32 matrix, peaked at 884,129,792 RSS bytes, and passed the one-hour/8 GiB
+resource gate under Python 3.12.8, scikit-learn 1.8.0, Torch 2.13.0+cpu, and Transformers 5.14.1. Benchmark
+SHA-256 is `d835b51b87cb1405c4f6347361162ef772eb4d5587b8123d22974f4820bd762e`. No action label,
+competition outcome, `V_joint`, or `V_final` was accessed. This authorizes exactly one E680 external-cache
+worker and one calculated non-repeating completion checkpoint.
