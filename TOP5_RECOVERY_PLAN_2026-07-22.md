@@ -1526,3 +1526,18 @@ four-turn contexts are expected multiple expert annotations and are protected by
 This audit authorizes canonicalization only. Bind the ordered canonical-content and Parquet hashes before any
 embedding benchmark or candidate prediction, then run only the fixed first-32-pair target-free resource
 benchmark. The resource gate is projected full-cache runtime at most one hour and peak RSS at most 8 GiB.
+
+### E670 canonical-source authorization
+
+The first canonical attempt found a released source edge case before any embedding: 16 empty history turns and
+three empty candidate-response turns. Preserve each as its chronological empty speaker marker; require the
+complete candidate response to contain nonempty text. No row was removed and no target, embedding, or prediction
+was accessed. The corrected canonicalizer reproduces all 700 pairs and all source/split counts.
+
+Session-disjoint validation folds contain `[126,160,143,121,150]` pairs from `[68,82,75,70,88]` held-out
+session roots. Lesson-disjoint folds contain `[242,72,145,101,140]` pairs from `[47,36,42,36,47]` held-out
+lessons. Every fold has zero held-out-group or pair overlap. Ordered-content SHA-256 is
+`1a6a300fe87904aa83b9a3ce6e804f6583d763b5e9805566c55d5e7c9dea2b32`; canonical Parquet SHA-256 is
+`a460bfa5d864c29dfd02e08e9b92e8173bfad9829fc69ebd1fa205707aa734f1`. Bind both hashes in code before
+any candidate embedding or preference score. Authorize only the frozen first-32-pair target-free resource
+benchmark next.
