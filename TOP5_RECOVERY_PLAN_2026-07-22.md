@@ -1743,6 +1743,33 @@ The benchmark SHA-256 is `fbd042173ec7376e40455ec319f920a1195d5d293c685d45d4a8d7
 The two-hour/8 GiB gates pass and authorize one foreground pilot cache build; no timer is needed for a measured
 single-digit-second task. No competition target score, `V_joint`, or `V_final` was accessed.
 
+### E710 completed pilot and literal rejection
+
+The full target-free build formed 54,771 positive pairs and 109,542 balanced examples. Five session-cross-fits
+took 7.923822 model seconds and 27.3 wall-clock seconds including parsing/hashing; peak RSS was 2,138,791,936
+bytes. The finite `4096 x 12` cache and metadata SHA-256 values are
+`2eab7b3e7870c09a805a4b2b302ba0e084c5236fee6b9e897bb044dd4c406ebf` and
+`a8e35bfa1f592a976c375a88321e6faf55cd82d29e9001d87a61bcab5bc3db28`.
+
+Frozen run `20260728T075508Z_target_free_coherence` selected the smallest 10% blend. The fair BGE comparator
+scored loss/AUROC/Brier/ECE `0.595607488/0.608965679/0.203578114/0.024219608`; E710 scored
+`0.595717388/0.610214017/0.203613403/0.025657986`. It gained `0.001248338` AUROC but regressed loss
+`0.000109900`, Brier `0.000035289`, and ECE `0.001438378`. Fold loss changes were
+`+0.000390475/-0.000105159/+0.000345422/-0.000053286/-0.000055836`.
+
+The 5,000-replicate paired session bootstrap estimated mean loss gain `-0.000109363`, 95% interval
+`[-0.000320473,0.000115642]`, and support `0.1672`. Only AUROC and the fold-regression bound pass; loss
+magnitude, Brier, ECE, and bootstrap clauses fail. Reject E710 without negative, hash, token, interaction,
+aggregate, alpha, epoch, control, calibration, model, seed, or weight rescue. Prediction/metrics/fold/bootstrap/
+report SHA-256 values are
+`bc4079b4a9a881aec30d4601b210e911ac26d04ea770817121271f548046a673`,
+`9c5c0a341820100b49de82c5ad98cd78a54f016399cf807d882b72aa097307dc`,
+`39da0830f8f62270d99cdd1c76634406f122c4c18b0f42218e0e474f1b12496e`,
+`835306caac80b0b40125fc4e8b0b97a0e58310e1a30bbcf8e8d2fd26e0dc2e26`, and
+`51b9aa1320caad6ee62cde4e61541e7d3dc30ff30cd7d6e4e76ac8eca9869117`.
+No full cache, hardened validation, ZIP, upload, or submission is authorized. `V_joint_accessed=false`;
+`V_final_accessed=false`.
+
 ## E700 freeze after E690 rejection and before FairytaleQA candidate embedding
 
 E690 is closed and none of its EssayJudge data, target, head, coefficient, prediction, or threshold evidence may
