@@ -1741,6 +1741,14 @@ a different within-story negative without dropping examples. Validation and test
 attributes, explicit and implicit questions, and local and summary questions. This audit authorizes
 canonicalization only; bind ordered-content and Parquet hashes before the fixed 32-row target-free benchmark.
 
+Canonicalization completed under Python 3.12.8. Ordered-content and canonical Parquet SHA-256 values are
+`2d4fb1f185b3931e9e00020ed835660ead7bfd5b0315adf91a2522ebb061beb2` and
+`f64cc3c9c7ac6f744e17e318dd6a2bbe7222cc370c5117b88cc25748724c881a`. The exact balanced split/target
+counts are train `4096/4096`, validation `1025/1025`, and test `1007/1007`, totaling 12,256 rows across
+`232/23/23` mutually disjoint stories. No candidate duplicates its paired positive answer; metadata and
+answer-support labels are absent from text. No competition outcome, `V_joint`, or `V_final` was accessed.
+Both hashes are frozen and authorize only the preregistered fixed first-32-row target-free benchmark.
+
 ## E690 freeze after E680 rejection and before EssayJudge candidate embedding
 
 E680 is closed. None of its CIMA rows, labels, head, coefficient, probability, threshold, or calibration
