@@ -1408,3 +1408,11 @@ the six broad-dimension counts range from 189 to 589. Raw dialogues have 13/21/1
 and 141/456/9,557 minimum/median/maximum whitespace tokens. The frozen subdimension folds contain
 `[520,565,385,374,290]` rows from `[5,5,4,4,3]` held-out subdimensions. This audit authorizes canonical-cache
 construction only; no candidate prediction metric has been generated.
+
+Canonicalization reproduced all 2,134 rows, both rating scales, six dimensions, four topics, and every frozen
+zero-overlap split. Ordered-content SHA-256 is
+`952587761234e94183217b77f5637d131f11cc22aa25f59e013ef7dadb0717b8`; Parquet SHA-256 is
+`664eabd969d837cb0fba8f490caa897f9ac2f9c28290b8e8c94d960d7d513941`. Normalized effectiveness
+mean/std are `0.588918/0.270404`; completeness mean/std are `0.625937/0.308970`. Bind both hashes in code
+before any embedding benchmark or candidate prediction. Authorize only the fixed 32-row target-free resource
+benchmark next.
