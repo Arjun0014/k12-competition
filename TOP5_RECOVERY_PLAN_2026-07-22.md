@@ -1818,6 +1818,33 @@ drifted to rank `#11`, with two manual submission slots remaining this week. No 
 slots for tuning, and recommend a manual submission only after a locally verified candidate clears the frozen
 backup gate. Codex must never upload or submit.
 
+### E720 completed result, literal rejection, and wake failure
+
+The sequential worker completed before 13:34 IST, but the persisted ACTIVE hourly heartbeat did not deliver at
+13:40. The automation was deleted at 13:54 before result inspection. This is an orchestration failure, not a
+model failure or hidden active process. Future long jobs must use an explicitly anchored one-time schedule,
+verify the anchored next-run timestamp as well as ACTIVE persistence, and retain the same no-polling rule.
+
+The cache build completed in 3.330960 seconds with shape `4096 x 524288`, 3,611,435 nonzeros, and peak RSS
+848,953,344 bytes. Cache SHA-256 is
+`6af9535a45e605ee3c8e98b191b46243ba8bace1dd76476a6b3dee9c6aacfe31`.
+Frozen run `20260728T080400Z_sparse_objective_interaction` selected 10%. Versus the BGE comparator it changed
+loss/AUROC/Brier/ECE by `+0.001834117/-0.005349205/+0.000869603/+0.001825527`; absolute candidate values were
+`0.597441606/0.603616473/0.204447717/0.026045135`. Fold loss changes were
+`+0.006697702/+0.006517232/+0.001785007/-0.004661570/-0.001288230`.
+
+The 5,000-session bootstrap estimated mean loss gain `-0.001848706`, 95% interval
+`[-0.004220268,0.000555910]`, and support `0.0626`. Every frozen clause fails. Reject E720 without feature,
+token, cap, hash, alpha, epoch, averaging, control, calibration, solver, or weight rescue. Artifact SHA-256
+values for prediction/metrics/folds/bootstrap/report are
+`88451b2db86208ebd4532929e776f296d09593104587cfcd8ec3faeafcd5d11c`,
+`5789cdbe56b62fafae355d17cda4a95c721cb937ceb4cb61acc97298b806f4c4`,
+`11c8c1f357474d8501ceb48f6c187350ca84ab9cb3c0ca2411baec6f9bbfdbf4`,
+`26ae36546b4921b9e320881aa969682fa51c875b3a34c6cee166b849f8d47475`, and
+`ef47fe209e48902d93c889896f0fbec7e8a230572f6a1b58dcb5078a80f85139`.
+No hardened validation, ZIP, upload, or submission is authorized. `V_joint_accessed=false`;
+`V_final_accessed=false`.
+
 ## E700 freeze after E690 rejection and before FairytaleQA candidate embedding
 
 E690 is closed and none of its EssayJudge data, target, head, coefficient, prediction, or threshold evidence may
