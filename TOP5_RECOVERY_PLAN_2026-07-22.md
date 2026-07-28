@@ -1733,6 +1733,16 @@ pair construction or the coherence model.
   cache and only the frozen `V_seen`, `V_objective`, and `V_style` protocol. `V_joint` remains
   confirmation-only after those three pass; `V_final` remains sealed. No upload or submission is authorized.
 
+### E710 implementation and target-free resource benchmark
+
+Focused tests pass `4/4` and Ruff is clean under the frozen `.venv`. The fixed first-512-row benchmark created
+6,330 positive pairs and 12,660 balanced examples. Its five cross-fits took 0.860135 seconds, projected
+6.881076 seconds for the complete 4,096-row pilot, and peaked at 721,113,088 RSS bytes. The cross-fitted
+positive-pair score mean/standard deviation were `0.604402117/0.462919023`; all 12 aggregates were finite.
+The benchmark SHA-256 is `fbd042173ec7376e40455ec319f920a1195d5d293c685d45d4a8d7dbccd06c71`.
+The two-hour/8 GiB gates pass and authorize one foreground pilot cache build; no timer is needed for a measured
+single-digit-second task. No competition target score, `V_joint`, or `V_final` was accessed.
+
 ## E700 freeze after E690 rejection and before FairytaleQA candidate embedding
 
 E690 is closed and none of its EssayJudge data, target, head, coefficient, prediction, or threshold evidence may
