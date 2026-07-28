@@ -1426,3 +1426,43 @@ The fixed 32-row benchmark completed in `6.491799` seconds and projects `432.921
 `45d4271f38fcbcb8af806ef41d34f2db0049003fc763dbecec84f5484e78fefb`. No rating, dimension, candidate
 prediction, competition outcome, `V_joint`, or `V_final` was accessed. Authorize exactly one external-cache build
 with one calculated ACTIVE completion heartbeat and no worker/log inspection before it.
+
+### E660 completed external result and literal rejection
+
+The target-free cache completed `2,134/2,134` rows in `394.637652` seconds versus the `432.921812`-second
+projection. Its finite float32 shape is `2134 x 768`, and SHA-256 is
+`fd25b9d68f660460fad476a556964c4502af1fa18596fec260a5007e7835cbec`. Runtime was Python `3.12.8`,
+scikit-learn `1.8.0`, Torch `2.13.0+cpu`, and Transformers `5.14.1`; every frozen source, license, canonical,
+and encoder binding matched.
+
+Subdimension-disjoint effectiveness RMSE/MAE/Pearson/Spearman were
+`0.266721623/0.236146846/0.164661252/0.169305434`, with prior RMSE/gain `0.273285629/0.006564006`.
+Completeness RMSE/MAE/Pearson/Spearman were `0.305745197/0.260942124/0.146388226/0.148762441`, with prior
+RMSE/gain `0.313131537/0.007386340`. Effectiveness fold gains were
+`[0.007032679,0.008125151,0.004301792,0.005536436,0.007639791]`; completeness fold gains were
+`[0.005049050,0.010228058,0.004667493,0.006948443,0.010776400]`. Dimension macro-F1/log loss/prior
+loss/gain were `0.085655981/1.984642534/1.981505576/-0.003136958`. The 2,000-replicate grouped bootstrap
+estimated effectiveness mean squared-error gain `0.003523123`, 95% interval `[0.002184970,0.004688000]`, and
+support `1.0000`.
+
+Topic-disjoint effectiveness RMSE/MAE/Pearson/Spearman were
+`0.266249456/0.236397645/0.196367640/0.205097257`, with prior RMSE/gain `0.271380392/0.005130936`.
+Completeness RMSE/MAE/Pearson/Spearman were `0.305628633/0.263395310/0.156287978/0.173845319`, with prior
+RMSE/gain `0.310501595/0.004872962`. Effectiveness fold gains were
+`[0.006126791,0.003386168,0.007849288,0.004720660]`; completeness fold gains were
+`[0.007013741,0.002820100,0.007372854,0.003243892]`. Dimension macro-F1/log loss/prior loss/gain were
+`0.072720199/1.714333949/1.718619705/0.004285755`. The 2,000-replicate grouped bootstrap estimated
+effectiveness mean squared-error gain `0.002931742`, interval `[0.002198736,0.003675220]`, and support `1.0000`.
+
+Both protocols pass only positive gain in every regression fold and bootstrap support. Both fail every frozen
+effectiveness/completeness correlation and RMSE-gain threshold and both dimension macro-F1/log-loss-gain
+thresholds. Reject E660 exactly without label, source, text, segment, prompt, pooling, alpha, C, classifier,
+weighting, calibration, fold, threshold, checkpoint, or gate rescue. No all-source fit, competition cache,
+hardened validation, blend, ZIP, public improvement, upload, or submission is authorized. Prediction,
+fold-model, and report SHA-256 values are
+`f5589837f6e7c71221b0b6e8bf8419e169fef31353068adc54781e4576a00a79`,
+`1676429ab113590b4572f3f3b5056ada37beb44a39c91efdb97c7df6b62b7db8`, and
+`cd31b109e008a939b8923d44972d9c9f24f0cbba3e2616ac8ff7d86afe5cd469`. The v0.5 score/rank evidence remains
+`0.6054` and approximately `#8`; the preserved ZIP remains unchanged at
+`65467003547fb62ec867733c6acf0a63e6f9fb0fed9533b61b9592e143b17186`. `competition_outcomes_accessed=false`;
+`V_joint_accessed=false`; `V_final_accessed=false`.
