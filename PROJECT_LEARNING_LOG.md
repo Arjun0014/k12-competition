@@ -2796,3 +2796,75 @@ The participant supplied the full text of the forum question thread on 2026-07-1
   Reject E740 literally without rescue. Projected public loss remains v0.5 `0.6054`; honest observed rank
   remains approximately `#11`. No hardened evaluation, ZIP, upload, or submission is authorized;
   `V_joint_accessed=false`; `V_final_accessed=false`.
+
+### 2026-07-28 verified continuation, scheduler proof failure, and E750 gap audit
+
+- Re-read the complete handoff, learning log, recovery/failure plans, overview, rules, and code format in the
+  mandated order. Live fetch verified clean `codex/v04-recovery` HEAD and
+  `origin/codex/v04-recovery` at `baadf919793ca42a6be533da8f68d4b6ec576986`, ahead/behind `0/0`;
+  research code/results remain pushed through `0c17ebb`. Git identity is
+  `arjun0014 <23293383+Arjun0014@users.noreply.github.com>`.
+- The protected v0.5 ZIP remains exactly 258,290,506 bytes with SHA-256
+  `65467003547fb62ec867733c6acf0a63e6f9fb0fed9533b61b9592e143b17186`. The live project runtime is
+  `.venv` Python 3.12.8, scikit-learn 1.8.0, NumPy 2.5.1, pandas 2.3.3, SciPy 1.18.0, and joblib 1.5.3.
+  No K12 Python worker or prior automation was active.
+- A harmless ACTIVE heartbeat was anchored for 16:18 IST and targeted this exact task. At 16:22 IST there
+  was still no wake or execution evidence—only the unchanged persisted definition—so the test failed and
+  was deleted. The automation directory then contained no automation. No unattended run over one hour is
+  authorized in this session; measured sub-hour work must stay in the foreground with one blocking wait.
+- Audited only the frozen authorized `V_seen`, `V_objective`, and `V_style` component OOF files; `V_joint`
+  was not read and `V_final` remains sealed. Mixed-outcome sessions cover
+  `23.5873850%/23.6541971%/23.6541971%` of eligible rows. Raw v0.5 loss on those rows is
+  `0.702922857/0.746255374/0.704262919`, respectively. Recovering the required `0.0016` overall gain needs
+  only about `0.006783287/0.006764127/0.006764127` mixed-row loss gain.
+- Raw v0.5 positive-over-negative same-session pair accuracy is about `0.70` in every `V_seen`/`V_style`
+  fold, but is unstable across `V_objective` folds at
+  `0.753425/0.322148/0.635659/0.291667/0.616352`. Each legal outer-training fold still has
+  `1,707-2,031` mixed sessions and `2,323-3,052` positive-negative pairs in `V_objective`, so the gap is
+  estimable without test aggregation.
+- Code/log search found no prior same-session conditional likelihood. E570 instead fixed the objective and
+  paired rows across sessions; E740 predicted the session mean and discarded within-session objective
+  deviations. E750 fixes the session and learns only objective-specific ordering within that transcript.
+  It uses neither E570's within-objective pair construction nor its BCE-plus-pairwise objective, and it uses
+  neither E740's transcript hash nor its session-mean target. This orthogonal nuisance-removal estimand is
+  the sole basis for preregistration; no rejected score, probability, checkpoint, or cache enters E750.
+
+### E750 session-conditional objective likelihood preregistration and synthetic benchmark
+
+- Freeze immutable sources before any E750 outcome score: `modeling_base.parquet`, BGE-base context/objective
+  arrays, and the three component OOF files have SHA-256
+  `ea49463819e387b3a61aeafda5007938e39948940eac5b134f607ab13e3d6ede`,
+  `b5f0066cc8d659e6593596ac47967bd14f2d0f02cedc82319e2a2313cf564d1a`,
+  `6cc754a287f9ec303aa5f81dd98ab0321c7c5299b2a4e251d6f86f63afe6eb27`,
+  `1e53a9974d45e00ab86cf44ba79a4e435965dfc0c75b8c4a76fc7f69778e82af`,
+  `c6e7a586c9b45ff88b8bac169bc85f36306569cde813320f6997e95a1fc939a7`, and
+  `6b6895214173be7343801d1152452099d0590fe1a3186fe6d0bc27908ee43038`.
+- In every legal session-purged outer-training fold, sort by `(session_id,response_id)` and construct every
+  Cartesian positive-negative pair only within a mixed-outcome session. Add the reversed example; weight
+  orientations so each mixed training session has total weight exactly one. No mining, subsampling,
+  objective/provider weight, class weight, or prediction-based selection exists.
+- Features are exactly the immutable 3,072-wide BGE-base context, objective, scaled product, and absolute
+  difference block. Fit only intercept-free `LogisticRegression(C=0.1, solver="lbfgs", max_iter=400,
+  tol=1e-5, random_state=20260728)`. Add the legal fold-training prior logit to the conditional score, then
+  evaluate only 10%, 20%, and 30% probability blends over raw v0.5
+  `(0.25 full + 0.25 role + 0.50 BGE-base)`. Inference is sample-independent; no test session aggregate is
+  calculated.
+- Select the preregistered weight with lowest equal-environment macro loss, breaking an exact tie toward the
+  smaller weight. Every continuation clause is mandatory: mean raw-v0.5 loss gain at least `0.0016`; all
+  three environments improve with no environment regression; worst fold regression at most `0.0005`;
+  macro AUROC, Brier, and ECE non-regression; and at least `0.95` positive-gain support in separate
+  5,000-replicate paired session and semantic-family bootstraps. A failed clause rejects exact E750 without
+  pair, weighting, feature, C, solver, prior, calibration, seed, blend, fold, or gate rescue. Only a full
+  pass can authorize locked `V_joint` confirmation; `V_final` remains sealed and platform submissions remain
+  manual-only.
+- Seven focused E750/E570/E740 tests pass in 10.61 seconds; Ruff and `git diff --check` are clean. The
+  response-ID-hash synthetic one-fold benchmark used 4,051 mixed sessions, 7,207 pairs, 14,414 symmetric
+  examples, and 3,072 features. The fit took `0.726496` seconds and five L-BFGS iterations, projecting
+  `10.897440` seconds for all 15 environment folds; peak RSS was 1,292,464,128 bytes. The one-hour and
+  8 GiB gates pass. Benchmark SHA-256 is
+  `c6a0cd46d5830f5dfa97cb5e1f173faa40738f25bb2019d19f93e67707acfea0`.
+  Log loss, AUROC, Brier, ECE, folds/environments, bootstrap outcome evidence, and projected public loss are
+  not applicable because synthetic labels were used. `competition_outcomes_accessed=false`;
+  `V_joint_accessed=false`; `V_final_accessed=false`. **Decision:** authorize exactly one foreground
+  `V_seen`/`V_objective`/`V_style` validation after the frozen implementation and this preregistration are
+  committed and pushed.

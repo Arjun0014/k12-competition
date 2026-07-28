@@ -2169,3 +2169,49 @@ Prediction, fold-model, and report SHA-256 values are
 `ed2999e50fe83802dee17880be08ede8ace6fc37883ccf32a969a3d70af764fc`.
 `competition_outcomes_accessed=false`; `V_joint_accessed=false`; `V_final_accessed=false`. Projected public
 loss remains verified v0.5 `0.6054`; the honest observed rank bracket remains approximately `#8`.
+
+## E750 freeze after E740 rejection and before session-conditional scoring
+
+E750 addresses a newly isolated selection-side estimand, not a rejected-branch rescue. Raw v0.5 performs
+consistently on same-session positive-negative ordering in `V_seen` and `V_style`, but its `V_objective`
+fold accuracy swings from approximately `0.29` to `0.75`. Mixed-outcome sessions cover about `23.6%` of
+eligible rows and have raw-v0.5 loss `0.703-0.746`; only about `0.0068` mixed-row loss recovery is required
+to yield the conservative `0.0016` overall gain.
+
+E570 held learning objective constant and paired examples across sessions using a combined rowwise
+BCE/pairwise loss. E740 collapsed a session to its mean target. E750 instead holds the transcript session
+constant and estimates objective-specific conditional odds, removing session propensity from the training
+likelihood. No E570/E740 pair, coefficient, prediction, checkpoint, hash matrix, session mean, or score is
+reused.
+
+- Immutable lineage is the 35,072-row `modeling_base.parquet`, BGE-base context/objective arrays, and only
+  the already authorized `V_seen`, `V_objective`, and `V_style` component OOF files from
+  `20260720T075633Z_environment_component_validation`. Their six SHA-256 values are frozen in
+  `PROJECT_LEARNING_LOG.md` and asserted by code. `V_joint` is excluded and `V_final` remains sealed.
+- For each environment and fold, purge every validation session. Within each legal training session containing
+  both labels, sort by `response_id`, form every positive-negative Cartesian pair plus its reversal, and
+  weight examples so every mixed session contributes total weight one.
+- Use only the immutable 3,072-dimensional BGE-base context/objective/product/absolute-difference block.
+  Fit one intercept-free scikit-learn 1.8.0 logistic head with `C=0.1`, `lbfgs`, 400 maximum iterations,
+  tolerance `1e-5`, and seed `20260728`. Add the fold-training prior logit to its score. No dense controls,
+  rowwise BCE, class weight, pair mining, calibration, or checkpoint selection is allowed.
+- Blend that probability over raw v0.5 at exactly 10%, 20%, and 30%. Select lowest equal-environment macro
+  log loss with smaller-weight tie break. Require mean gain at least `0.0016`, all three environments
+  improved, no environment regression, worst fold regression at most `0.0005`, macro AUROC/Brier/ECE
+  non-regression, and at least `0.95` support in separate 5,000-draw session and semantic-family bootstraps.
+- Failure rejects exact E750 without pair, session weight, features, C, solver, prior, blend, calibration,
+  seed, fold, or gate rescue. A full pass alone authorizes locked `V_joint` confirmation under the existing
+  backup/top-five gates. It does not authorize `V_final`, a ZIP, upload, or submission.
+
+### E750 implementation and benchmark authorization
+
+Seven focused E750/E570/E740 tests pass; Ruff and diff checks are clean. The deterministic
+response-ID-hash synthetic benchmark fit one full `V_seen` fold using 4,051 mixed sessions, 7,207 pairs,
+14,414 symmetric examples, and 3,072 features. It took `0.726496` seconds, projected `10.897440` seconds
+for all 15 selection folds, and peaked at 1,292,464,128 RSS bytes. Benchmark SHA-256 is
+`c6a0cd46d5830f5dfa97cb5e1f173faa40738f25bb2019d19f93e67707acfea0`.
+
+The one-hour/8 GiB gate passes. No competition outcome, `V_joint`, or `V_final` was accessed. Authorize
+exactly one foreground E750 selection validation after the implementation and freeze are committed and
+pushed. The scheduler proof failed to wake in this session and was deleted, so no unattended long run is
+authorized.
