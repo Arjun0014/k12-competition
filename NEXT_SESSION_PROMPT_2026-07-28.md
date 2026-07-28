@@ -22,7 +22,8 @@ that no K12 worker or automation remains active.
 
 Current verified state:
 
-- Branch codex/v04-recovery is pushed through commit 0c17ebb.
+- Research code/results are pushed through commit 0c17ebb; the handoff documentation was committed afterward.
+  Verify that codex/v04-recovery matches origin/codex/v04-recovery and record the current HEAD before acting.
 - Public champion v0.5 has log loss 0.6054 and last observed rank approximately #11.
 - Two manual submissions remain this week.
 - The protected ZIP is:

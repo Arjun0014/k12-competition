@@ -8,7 +8,10 @@
 
 **Remote:** `https://github.com/Arjun0014/k12-competition.git`
 
-**Latest pushed commit:** `0c17ebb` (`Record literal E740 rejection`)
+**Latest research-state commit:** `0c17ebb` (`Record literal E740 rejection`)
+
+**Documentation state:** This handoff and its prompt were committed and pushed after `0c17ebb`; verify the
+current branch tip with `git rev-parse HEAD` at startup.
 
 **Git identity:** `arjun0014 <23293383+Arjun0014@users.noreply.github.com>`
 
@@ -17,7 +20,8 @@
 ## Verified stop state
 
 - The working tree was clean before creating this handoff.
-- Branch `codex/v04-recovery` matched `origin/codex/v04-recovery` at `0c17ebb`.
+- All research code/results through `0c17ebb` were pushed. The handoff documentation was pushed afterward,
+  and the branch matched `origin/codex/v04-recovery` when this session ended.
 - No K12 Python training, cache, or validation worker was active.
 - No Codex heartbeat or cron automation remains active.
 - The scheduled E750 continuation was explicitly deleted at the participant's request.
