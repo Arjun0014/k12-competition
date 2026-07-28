@@ -1757,6 +1757,35 @@ Transformers 5.14.1. Benchmark SHA-256 is
 metric, competition outcome, `V_joint`, or `V_final` was accessed. This authorizes exactly one E700
 external-cache worker and one calculated non-repeating completion checkpoint.
 
+### E700 completed external result and literal rejection
+
+The target-free cache completed all 12,256 rows in 2,549.290610 seconds (42.488177 minutes) versus the
+3,072.715242-second projection. Its finite float32 shape is `12256 x 768`; embedding and metadata SHA-256
+values are `28d1b92aea738824ea8ab14176da95ad6709c0b2e39b930f92012b499f73d5d4` and
+`d5db11b924c6f8852ffed0af069aa111e2be61eee3c2b8ff569f8a7aeddbdf09`. Runtime remained Python 3.12.8,
+scikit-learn 1.8.0, Torch 2.13.0+cpu, and Transformers 5.14.1.
+
+- Official validation AUROC/macro-F1/log loss/Brier/ECE-10 were
+  `0.563619750/0.530501397/0.690059061/0.248457582/0.026136687`. Against the legal 0.5 prior, log-loss and
+  Brier gains were `0.003088120/0.001542418`. Its 2,000-replicate, 23-story bootstrap estimated mean
+  log-loss gain `0.003082807`, 95% interval `[0.002687363,0.003493298]`, support `1.0000`.
+- Official test AUROC/macro-F1/log loss/Brier/ECE-10 were
+  `0.558146598/0.534088269/0.690342008/0.248598661/0.024538793`. Log-loss and Brier gains were
+  `0.002805172/0.001401339`. Its independent 23-story bootstrap estimated mean gain `0.002813994`, interval
+  `[0.002386784,0.003280741]`, support `1.0000`.
+
+Both splits pass ECE and bootstrap support only. Both fail frozen AUROC, macro-F1, log-loss gain, and Brier
+gain by large margins. Reject E700 without negative construction, training sample, C, prompt, context,
+truncation, pooling, estimator, weighting, calibration, threshold, split, or gate rescue. No all-source head,
+competition cache, hardened validation, blend, ZIP, upload, or submission is authorized.
+
+Prediction, model, and report SHA-256 values are
+`4ab4ed9dd4e016ef8cf9614d57cce3a446f3bf0e0f505355eb0286c1f6de9531`,
+`2083b605b7c8f6a05ecb7b0d0e7e4702f7c4daa3b40ba009f26b27fa612dfac6`, and
+`434a6965605ca1d4f3359afac7b7410eaa93a2ea400942798b975c811539e204`.
+`competition_outcomes_accessed=false`; `V_joint_accessed=false`; `V_final_accessed=false`. Projected public
+loss remains verified v0.5 `0.6054`; the honest observed rank bracket remains approximately `#8`.
+
 ## E690 freeze after E680 rejection and before EssayJudge candidate embedding
 
 E680 is closed. None of its CIMA rows, labels, head, coefficient, probability, threshold, or calibration
