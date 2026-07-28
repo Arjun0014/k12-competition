@@ -1770,6 +1770,39 @@ report SHA-256 values are
 No full cache, hardened validation, ZIP, upload, or submission is authorized. `V_joint_accessed=false`;
 `V_final_accessed=false`.
 
+## E720 freeze after E710 rejection and before any cross-hash target score
+
+E710 confirms that adjacency coherence alone adds ranking but not calibrated outcome information. Do not reuse
+its cache, probability, aggregate, or head. The remaining feature audit isolates an untested interaction:
+existing sparse components concatenate objective and dialogue tokens, while the semantic component supplies a
+dense embedding product/difference. No prior branch explicitly represents objective-token by response-token
+lexical conjunctions. Such conjunctions can preserve concrete mathematical terms and answer language while
+sharing objective words across unseen objective IDs.
+
+The label-free pilot audit finds median `6/64/64` retained objective/student/tutor unique tokens and 3,098,238
+total conjunctions over the frozen 4,096 rows. This is bounded and has a plausible 0.0016 path because the
+full/role sparse models provide substantial independent signal, while the current ensemble lacks their direct
+objective-conditioned lexical interaction.
+
+- Source only `modeling_base.learning_objective` and the matching row's
+  `response_objective_context.objective_context`. Lowercase and retain alphanumeric tokens in first-occurrence
+  order: at most 12 unique objective tokens, 64 student tokens, and 64 tutor tokens. Background is excluded.
+- Hash into exactly `2^19` signed features: raw `o=`, `s=`, and `t=` backoff tokens plus every
+  `os={objective}|{student}` and `ot={objective}|{tutor}` conjunction. No target-derived vocabulary,
+  ID/provider token, n-gram, character feature, E220 event, E710 score, old OOF prediction, or test aggregate
+  enters the transform.
+- In every frozen outer fold, purge validation sessions with the existing masks. Fit exactly one
+  `SGDClassifier(loss="log_loss", alpha=1e-4, penalty="l2", max_iter=20, tol=None, average=True,
+  random_state=20260728, class_weight=None)` over the hashed block plus the existing 35 training-fold-standardized
+  legal controls scaled by `0.08`. No alpha, epoch, average, hash, token cap, role, control, or solver sweep.
+- Compare only raw 10%, 20%, and 30% probability blends over the identical raw BGE-base comparator. Select
+  minimum pooled log loss, breaking ties by higher AUROC then smaller weight.
+- Continuation requires loss gain at least `0.0016`, no fold loss regression over `0.0005`, AUROC and Brier
+  non-regression, ECE regression at most `0.001`, and at least `0.95` positive-gain support in the fixed
+  5,000-replicate paired session bootstrap. Failure rejects E720 without any feature, optimizer, calibration,
+  regularization, or weight rescue. Passing authorizes only the frozen three-environment evaluation;
+  `V_joint` remains confirmation-only and `V_final` sealed. No upload or submission is authorized.
+
 ## E700 freeze after E690 rejection and before FairytaleQA candidate embedding
 
 E690 is closed and none of its EssayJudge data, target, head, coefficient, prediction, or threshold evidence may
