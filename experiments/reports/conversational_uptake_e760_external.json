@@ -1,0 +1,262 @@
+{
+  "V_final_accessed": false,
+  "V_joint_accessed": false,
+  "benchmark_sha256": "3b78e80d372dacd9e52e52a2d6b7ae77695dc1d1710b4accd610cef676b12cbd",
+  "candidate": "E760_directional_teacher_uptake",
+  "canonical": {
+    "V_final_accessed": false,
+    "V_joint_accessed": false,
+    "canonical_content_sha256": "c2ef8d92db3f22247e1a16ec8c81d5acb2058e3eec6aa889d65ead1629546d82",
+    "canonical_parquet_sha256": "368b5cee4035251838bd50be09904374024c2e81f1cb2fe504df9acadb30d542",
+    "competition_outcomes_accessed": false,
+    "fold_audit": [
+      {
+        "fold": 0,
+        "group_overlap": 0,
+        "training_groups": 596,
+        "training_rows": 1555,
+        "validation_groups": 149,
+        "validation_rows": 443
+      },
+      {
+        "fold": 1,
+        "group_overlap": 0,
+        "training_groups": 596,
+        "training_rows": 1673,
+        "validation_groups": 149,
+        "validation_rows": 325
+      },
+      {
+        "fold": 2,
+        "group_overlap": 0,
+        "training_groups": 596,
+        "training_rows": 1437,
+        "validation_groups": 149,
+        "validation_rows": 561
+      },
+      {
+        "fold": 3,
+        "group_overlap": 0,
+        "training_groups": 596,
+        "training_rows": 1651,
+        "validation_groups": 149,
+        "validation_rows": 347
+      },
+      {
+        "fold": 4,
+        "group_overlap": 0,
+        "training_groups": 596,
+        "training_rows": 1676,
+        "validation_groups": 149,
+        "validation_rows": 322
+      }
+    ],
+    "generated_at_utc": "2026-07-28T12:13:34.841846+00:00",
+    "groups": 774,
+    "labeled_rows": 1998,
+    "protocol_id": "E760_conversational_uptake_transfer_v1",
+    "rows": 2246,
+    "source": {
+      "commit": "67fb30cf7c3ea6f619487e33d2f99692dca107d0",
+      "hashes": {
+        "LICENSE": "c4fcfe38abef13391b7546f3a3ec9f8c8fc7a480255f888655a57e49076c0429",
+        "README.md": "2a2895477a4308d4214a5010dfa162797bc236667f4b02a1e1f508cdc1bdc0a7",
+        "uptake_data.csv": "c6bb9e5ff69b6c8ae8981b9d613c41bda1c1ed5685e9e8a74f97d3c1bddb642d"
+      },
+      "hugging_face_checkpoint_used": false,
+      "license": "MIT repository root LICENSE; notice must be retained",
+      "repository": "https://github.com/ddemszky/conversational-uptake.git"
+    },
+    "splitter": {
+      "group": "obs_id",
+      "n_splits": 5,
+      "name": "GroupKFold",
+      "random_state": 20260728,
+      "shuffle": true
+    },
+    "uptake_majority_counts": {
+      "0.0": 171,
+      "1.0": 744,
+      "2.0": 780,
+      "<NA>": 551
+    },
+    "uptake_zscore_summary": {
+      "25%": -0.5032718725063484,
+      "50%": 0.0552364547211804,
+      "75%": 0.6190431162779222,
+      "count": 1998.0,
+      "max": 1.4326673817254671,
+      "mean": -0.021634615004882698,
+      "min": -2.4300164728265674,
+      "std": 0.8359410290676706
+    }
+  },
+  "clauses": {
+    "all_five_candidate_spearman_folds_positive": true,
+    "at_least_four_spearman_improvement_folds": true,
+    "candidate_pearson_at_least_0_30": true,
+    "candidate_spearman_at_least_0_30": true,
+    "group_bootstrap_support_at_least_0_90": true,
+    "quadratic_weighted_kappa_at_least_0_15": true,
+    "rmse_gain_over_repetition_at_least_0_015": false,
+    "spearman_gain_over_repetition_at_least_0_05": false
+  },
+  "competition_outcomes_accessed": false,
+  "external_uptake_outcomes_accessed": true,
+  "fold_metrics": [
+    {
+      "baseline_pearson": 0.5383576568940531,
+      "baseline_rmse": 0.6889138504938662,
+      "baseline_spearman": 0.5575687343593818,
+      "candidate_pearson": 0.5544923704494821,
+      "candidate_rmse": 0.6806130156141759,
+      "candidate_spearman": 0.5730667885017958,
+      "fold": 0,
+      "rmse_gain": 0.008300834879690355,
+      "spearman_gain": 0.015498054142414008,
+      "training_groups": 596,
+      "training_rows": 1555,
+      "validation_groups": 149,
+      "validation_rows": 443
+    },
+    {
+      "baseline_pearson": 0.5213703313348277,
+      "baseline_rmse": 0.7198287687590866,
+      "baseline_spearman": 0.5375852617572388,
+      "candidate_pearson": 0.5348819457298777,
+      "candidate_rmse": 0.7126983060750426,
+      "candidate_spearman": 0.5507614769965896,
+      "fold": 1,
+      "rmse_gain": 0.007130462684044048,
+      "spearman_gain": 0.013176215239350864,
+      "training_groups": 596,
+      "training_rows": 1673,
+      "validation_groups": 149,
+      "validation_rows": 325
+    },
+    {
+      "baseline_pearson": 0.49438362366860494,
+      "baseline_rmse": 0.7522675362948616,
+      "baseline_spearman": 0.5218554036262939,
+      "candidate_pearson": 0.5069354507405923,
+      "candidate_rmse": 0.7457359085263647,
+      "candidate_spearman": 0.5321155443494017,
+      "fold": 2,
+      "rmse_gain": 0.006531627768496917,
+      "spearman_gain": 0.010260140723107769,
+      "training_groups": 596,
+      "training_rows": 1437,
+      "validation_groups": 149,
+      "validation_rows": 561
+    },
+    {
+      "baseline_pearson": 0.49733974374623063,
+      "baseline_rmse": 0.6791412499359148,
+      "baseline_spearman": 0.5105185607711045,
+      "candidate_pearson": 0.5109549720800948,
+      "candidate_rmse": 0.6731366340119386,
+      "candidate_spearman": 0.5263104005331803,
+      "fold": 3,
+      "rmse_gain": 0.006004615923976275,
+      "spearman_gain": 0.015791839762075877,
+      "training_groups": 596,
+      "training_rows": 1651,
+      "validation_groups": 149,
+      "validation_rows": 347
+    },
+    {
+      "baseline_pearson": 0.5295276632513809,
+      "baseline_rmse": 0.7347170343134743,
+      "baseline_spearman": 0.54108446913849,
+      "candidate_pearson": 0.5449748857234191,
+      "candidate_rmse": 0.7269807350317772,
+      "candidate_spearman": 0.5571073707653244,
+      "fold": 4,
+      "rmse_gain": 0.007736299281697168,
+      "spearman_gain": 0.016022901626834396,
+      "training_groups": 596,
+      "training_rows": 1676,
+      "validation_groups": 149,
+      "validation_rows": 322
+    }
+  ],
+  "gate_thresholds": {
+    "candidate_pearson": 0.3,
+    "candidate_spearman": 0.3,
+    "group_bootstrap_support_positive_spearman_gain": 0.9,
+    "improved_spearman_folds": 4,
+    "positive_candidate_spearman_folds": 5,
+    "quadratic_weighted_kappa": 0.15,
+    "rmse_gain_over_repetition": 0.015,
+    "spearman_gain_over_repetition": 0.05
+  },
+  "generated_at_utc": "2026-07-28T12:17:31.468961+00:00",
+  "group_bootstrap": {
+    "gain_mean": 0.01246965332917955,
+    "gain_q025": 0.00925561607987396,
+    "gain_q50": 0.012467348710222259,
+    "gain_q975": 0.01565182058394644,
+    "replicates": 2000,
+    "seed": 20260728,
+    "support_positive_spearman_gain": 1.0
+  },
+  "lineage": {
+    "baseline": "10 fixed repetition and length features + ridge",
+    "bootstrap_replicates": 2000,
+    "bootstrap_seed": 20260728,
+    "candidate": "role-prefixed unigram/bigram/shared/directional-cross hashing, fold-local TF-IDF, the same repetition controls, and ridge",
+    "group": "obs_id",
+    "hash_dimension": 131072,
+    "max_cross_tokens": 24,
+    "max_role_tokens": 48,
+    "ridge_alpha": 10.0,
+    "seed": 20260728,
+    "split": "five-fold shuffled GroupKFold",
+    "target": "expert uptake_zscore only"
+  },
+  "passes_external_gate": false,
+  "protocol_id": "E760_conversational_uptake_transfer_v1",
+  "runtime": {
+    "numpy": "2.5.1",
+    "python": "3.12.8",
+    "scikit_learn": "1.8.0",
+    "torch": "2.13.0+cpu",
+    "transformers": "5.14.1"
+  },
+  "runtime_metadata": {
+    "numpy": "2.5.1",
+    "pandas": "2.3.3",
+    "platform": "Windows-11-10.0.26200-SP0",
+    "python": "3.12.8",
+    "scikit_learn": "1.8.0"
+  },
+  "runtime_seconds": 9.356613000039943,
+  "source": {
+    "commit": "67fb30cf7c3ea6f619487e33d2f99692dca107d0",
+    "hashes": {
+      "LICENSE": "c4fcfe38abef13391b7546f3a3ec9f8c8fc7a480255f888655a57e49076c0429",
+      "README.md": "2a2895477a4308d4214a5010dfa162797bc236667f4b02a1e1f508cdc1bdc0a7",
+      "uptake_data.csv": "c6bb9e5ff69b6c8ae8981b9d613c41bda1c1ed5685e9e8a74f97d3c1bddb642d"
+    },
+    "hugging_face_checkpoint_used": false,
+    "license": "MIT repository root LICENSE; notice must be retained",
+    "repository": "https://github.com/ddemszky/conversational-uptake.git"
+  },
+  "summary": {
+    "baseline": {
+      "pearson": 0.5118547976052412,
+      "rmse": 0.7179900962093325,
+      "spearman": 0.5322159614494518
+    },
+    "candidate": {
+      "pearson": 0.5258183834551861,
+      "rmse": 0.7108781534379641,
+      "spearman": 0.5446826626169217
+    },
+    "improved_spearman_folds": 5,
+    "positive_candidate_spearman_folds": 5,
+    "quadratic_weighted_kappa": 0.3818263119838642,
+    "rmse_gain_over_repetition": 0.007111942771368396,
+    "spearman_gain_over_repetition": 0.01246670116746984
+  }
+}

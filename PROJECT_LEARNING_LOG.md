@@ -2975,3 +2975,33 @@ The participant supplied the full text of the forum question thread on 2026-07-1
   V_joint access, V_final access, or competition outcome access occurred. **Decision:** after commit and push of
   this frozen milestone, run exactly one E760 external grouped validation. Any failed clause closes E760 without
   rescue.
+
+## 2026-07-28 — E760 external grouped validation: rejected
+
+- Ran exactly one frozen external validation from pushed commit
+  `01f5c950d4884167d0f6824f70e81f8a873b8b9e`. Runtime was `9.356613` seconds in `.venv` Python `3.12.8`,
+  scikit-learn `1.8.0`, NumPy `2.5.1`, and pandas `2.3.3`. Source revision, cache hashes, five `obs_id`-grouped
+  folds, role-aware `2^17` hash, ten repetition controls, ridge alpha `10.0`, seed `20260728`, and all gates were
+  unchanged from `E760_PREREGISTRATION_2026-07-28.md`.
+- Pooled repetition baseline: Pearson `0.5118548`, Spearman `0.5322160`, RMSE `0.7179901`. Pooled E760 candidate:
+  Pearson `0.5258184`, Spearman `0.5446827`, RMSE `0.7108782`, quadratic-weighted kappa `0.3818263`.
+  Candidate Spearman was positive and beat repetition in all five folds. Its Spearman gains by fold were
+  `0.0154981`, `0.0131762`, `0.0102601`, `0.0157918`, and `0.0160229`; RMSE gains were `0.0083008`,
+  `0.0071305`, `0.0065316`, `0.0060046`, and `0.0077363`.
+- The 2,000-replicate `obs_id` bootstrap gave positive-gain support `1.0`, mean Spearman gain `0.0124697`, and
+  95% interval `[0.0092556, 0.0156518]`. This establishes a stable uptake signal but not enough incremental value
+  beyond the strong repetition comparator.
+- Six of eight frozen clauses passed. Two materiality clauses failed literally: pooled Spearman gain
+  `0.0124667 < 0.05` and pooled RMSE gain `0.00711194 < 0.015`. Report SHA-256:
+  `02bf2ebc84015e19749af31b658bd4ab2f8c6aa1b645f63b5b71ae769d10775e`; target-free benchmark SHA-256:
+  `3b78e80d372dacd9e52e52a2d6b7ae77695dc1d1710b4accd610cef676b12cbd`.
+- Competition log loss, AUROC, Brier, ECE, environment/fold gains, projected public loss, and rank bracket are not
+  applicable: no competition outcome was read. V_joint and V_final remained untouched. No cache, model,
+  validation, blend, ZIP, upload, or submission was created from E760.
+- Scheduler result: the harmless ACTIVE two-minute heartbeat never delivered its exact token during the session,
+  so it did not prove end-to-end wake execution and was deleted. No unattended task over one hour is authorized.
+  Sub-hour foreground work can continue.
+- Protected v0.5 ZIP SHA-256 was rechecked as
+  `65467003547fb62ec867733c6acf0a63e6f9fb0fed9533b61b9592e143b17186`.
+  **Decision: reject E760 and close the complete directional-uptake family without rescue. Proceed to the
+  independent E770 tutor-move by student-state target-free gate.**
