@@ -2936,3 +2936,42 @@ The participant supplied the full text of the forum question thread on 2026-07-1
   gain are not applicable because no model or outcome validation ran. Environment remains `.venv` Python
   `3.12.8` and scikit-learn `1.8.0`; elapsed model runtime is zero. **Decision:** preserve v0.5 and begin only
   the E760 source/legal and target-free gates next. No platform action is authorized.
+
+## 2026-07-28 — E760 source freeze, canonical cache, and target-free benchmark
+
+- Recorded the participant-provided live leaderboard screenshot: first place `0.6008`/AUROC `0.6283`, fifth
+  `0.6040`/`0.6229`, tenth `0.6053`/`0.6137`. Protected v0.5 at `0.6054` is therefore approximately eleventh.
+  The first-place gap is `0.0046`; the conservative `0.6005` target needs a `0.0049` public loss gain. These are
+  public-board observations, not promises or local evidence.
+- Pinned `ddemszky/conversational-uptake` to Git commit
+  `67fb30cf7c3ea6f619487e33d2f99692dca107d0`. SHA-256 values: source CSV
+  `c6bb9e5ff69b6c8ae8981b9d613c41bda1c1ed5685e9e8a74f97d3c1bddb642d`, root MIT license
+  `c4fcfe38abef13391b7546f3a3ec9f8c8fc7a480255f888655a57e49076c0429`, README
+  `2a2895477a4308d4214a5010dfa162797bc236667f4b02a1e1f508cdc1bdc0a7`. The separately non-commercial
+  Hugging Face checkpoint remains prohibited and unused.
+- Built the canonical external cache from 2,246 student-to-teacher exchanges, 774 `obs_id` groups, and 1,998
+  non-null expert `uptake_zscore` labels. Canonical ordered-content SHA-256 is
+  `c2ef8d92db3f22247e1a16ec8c81d5acb2058e3eec6aa889d65ead1629546d82`; Parquet SHA-256 is
+  `368b5cee4035251838bd50be09904374024c2e81f1cb2fe504df9acadb30d542`. Five shuffled GroupKFold splits,
+  seed `20260728`, have zero `obs_id` overlap.
+- Implemented and froze `E760_conversational_uptake_transfer_v1`: a ten-feature repetition ridge comparator and
+  one non-negative `2^17` role-aware unigram/bigram/shared/directional-cross hash with fold-local sublinear TF-IDF
+  and ridge alpha `10.0`. External gates, ordinal conversion, five folds, seed, 2,000 observation-group
+  bootstraps, and all thresholds are literal in `E760_PREREGISTRATION_2026-07-28.md`.
+- Failure/correction: the first target-free benchmark failed because signed feature hashing is incompatible with
+  the logarithm in sublinear TF-IDF. No external or competition outcome was scored. Hashing was corrected to
+  non-negative values and protected by a focused regression assertion.
+- Verification after correction: focused tests `4 passed`; 512-row synthetic benchmark passed all clauses in
+  `.venv` Python `3.12.8`, scikit-learn `1.8.0`. Feature runtime was `0.0597855` seconds, projected full-external
+  feature runtime `0.2622622` seconds, synthetic Spearman `0.9990861109`, with finite matrices/predictions.
+  Log loss, AUROC, Brier, ECE, outcome folds/environments, outcome bootstrap evidence, projected public loss, and
+  rank bracket are not applicable because neither external uptake outcomes nor competition outcomes were scored.
+- Scheduler safety: an ACTIVE short wake card was created, but a card is not proof of execution. Until its exact
+  token fires, no unattended run over one hour is authorized. The frozen external validation is sub-hour and will
+  remain in the active foreground turn.
+- Protected v0.5 ZIP remains
+  `submission_builds/final_ensemble_v05_bge_backup.zip`, expected SHA-256
+  `65467003547fb62ec867733c6acf0a63e6f9fb0fed9533b61b9592e143b17186`. No submission, upload, new ZIP,
+  V_joint access, V_final access, or competition outcome access occurred. **Decision:** after commit and push of
+  this frozen milestone, run exactly one E760 external grouped validation. Any failed clause closes E760 without
+  rescue.
