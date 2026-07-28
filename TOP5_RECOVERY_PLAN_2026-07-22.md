@@ -1254,3 +1254,34 @@ seconds (`0.024920` hours) for all 449 external rows. Peak RSS was `927,973,376`
 Benchmark SHA-256 is `f259ee1d75563fd7a7128c04ce04cb25ee5976a1f6e883855c19cb6784ca3bf0`. No label or prediction metric was
 accessed. Authorize exactly one external-cache build with one calculated active completion heartbeat and no
 worker/log inspection before it.
+
+### E640 completed external result and literal rejection
+
+The 449-row cache completed in `86.786697` seconds versus the measured `89.710453`-second projection. Its shape is
+`449 x 768` and SHA-256 is `e1ed9007a7076fcf1ff3bfc2f0b65bbf8d1b580ef7a9c9602d525b09460e4a1e`;
+all source/canonical/runtime bindings matched and no competition outcome was accessed.
+
+Frozen OOF metrics were log loss `0.665055158`, AUROC `0.416821233`, Brier `0.235266026`, ECE-10 `0.060792718`,
+accuracy `0.659242762`, and macro-F1 `0.397315436`. Versus legal fold priors, loss/Brier gains were only
+`0.001035734/0.000440221`. Four of five folds had positive loss gain, but fold 0 regressed by `0.000250800`.
+The 2,000-replicate worker bootstrap had mean gain `0.001697009`, 95% interval
+`[-0.000682468,0.003942501]`, and `0.9260` support; the problem bootstrap had mean gain `0.001276332`, interval
+`[-0.000501634,0.003000442]`, and `0.9280` support.
+
+Only ECE, positive-fold count, and both bootstrap-support clauses pass. AUROC, macro-F1, absolute loss,
+loss-gain, and Brier-gain clauses fail. Reject E640 exactly without row, label, prompt, truncation, pooling, fold,
+C, class-weight, threshold, calibration, checkpoint, or gate rescue. No competition cache, hardened validation,
+ZIP, public projection, upload, or submission is authorized. Prediction/fold-model/report SHA-256 values are
+`6f1f47f56dc7f3485dbfb4a83939b9f9547c24e4e1427f24ef64adc477811eac`,
+`b52737c8d7b50549e9ead9efbfc2f450479880e7c80632c91a5e27994df9c2d2`, and
+`5c2c72bac733b258ed553b170fa3c92c70ce9f3bd92d222865d882619fbc9a70`. `V_joint_accessed=false`;
+`V_final_accessed=false`.
+
+### Completion-heartbeat scheduling correction
+
+The E640 cache itself finished normally, but the app continued emitting the same three-minute heartbeat despite
+its `COUNT=2` RRULE until the task could execute and delete it. Treat `COUNT` as ineffective for suppressing
+already queued short-interval heartbeats in this environment. Never again use a minute-frequency recurrence for
+a completion checkpoint. Future calculated wakes must use one explicit DTSTART with a daily-frequency,
+single-count RRULE, must be verified persisted ACTIVE, and must self-delete before inspection. This operational
+correction changes no experiment result.
