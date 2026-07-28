@@ -1718,6 +1718,26 @@ five folds, with peak RSS 1,506,131,968 bytes. Training/held-out aligned cosine 
 `65122f6cf41186298422098d71f4e5583f9312525b099373d5799aa944bd3313`. This authorizes one immediate
 foreground validation; no long-run checkpoint is warranted. `V_joint` and `V_final` remain untouched.
 
+### E730 completed result and literal rejection
+
+Frozen run `20260728T083236Z_objective_alignment` completed in 18.672104 seconds. The raw BGE comparator
+loss/AUROC/Brier/ECE were `0.595607488/0.608965679/0.203578114/0.024219608`. The preregistered selection
+was the 10% blend, with absolute metrics `0.595675818/0.607563651/0.203612493/0.022143776`. Its changes
+versus BGE were loss `+0.000068330`, AUROC `-0.001402028`, Brier `+0.000034378`, and ECE `-0.002075832`.
+Fold loss changes were `-0.000039375/+0.000179475/+0.000204287/+0.000305253/-0.000281646`.
+
+The 5,000-session bootstrap mean gain/95% interval/support were
+`-0.000068568/[-0.000236768,0.000095912]/0.2164`. Only the fold-bound and ECE clauses pass; loss magnitude,
+AUROC, Brier, and bootstrap clauses fail. Reject E730 literally without map, feature, regularization, or
+blend rescue. Prediction/metrics/folds/bootstrap/report SHA-256 values are
+`36e45d356339a29f33185ae95ae18c48a853427fb9b77c9323552b19b6b22573`,
+`3230fc00e2bb279e6bfc6942ced2625e78b337280cebfebd49deeb56f50e2241`,
+`758248ae8f7370f04f51fd2d0262c7f4780156b390f2973d96faed638875f15c`,
+`c2a2166129878ef778f4ed56b8d490a192a7948ea33c0e9b44a62e5cbd001ffb`, and
+`ab9446eb2e2a8c9cbc2789a4f2b2ecb03ee6433480e6f66a0cf29a3305c9f78f`.
+Projected public loss remains verified v0.5 `0.6054`; the honest observed rank is approximately `#11`.
+No hardened evaluation, package, upload, or submission is authorized. `V_joint` and `V_final` remain sealed.
+
 ## E710 freeze after E700 rejection and before any target score
 
 The prize-safe external-source inventory is closed. The authorized v0.5 component audit shows that the raw

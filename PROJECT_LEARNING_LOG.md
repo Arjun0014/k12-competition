@@ -2741,3 +2741,19 @@ The participant supplied the full text of the forum question thread on 2026-07-1
 - **Decision:** the resource gate passes and authorizes exactly one immediate foreground E730 validation.
   No heartbeat is warranted for a measured single-digit-second run. No outcome score, `V_joint`, `V_final`,
   upload, or submission was accessed.
+- Frozen run `20260728T083236Z_objective_alignment` completed in 18.672104 seconds. Raw BGE comparator
+  loss/AUROC/Brier/ECE were `0.595607488/0.608965679/0.203578114/0.024219608`. The selected 10% blend
+  produced `0.595675818/0.607563651/0.203612493/0.022143776`; changes versus BGE were
+  `+0.000068330/-0.001402028/+0.000034378/-0.002075832`.
+- Fold loss changes were `-0.000039375/+0.000179475/+0.000204287/+0.000305253/-0.000281646`.
+  The 5,000-session bootstrap mean gain/95% interval/support were
+  `-0.000068568/[-0.000236768,0.000095912]/0.2164`.
+- Artifact SHA-256 values: predictions
+  `36e45d356339a29f33185ae95ae18c48a853427fb9b77c9323552b19b6b22573`; metrics
+  `3230fc00e2bb279e6bfc6942ced2625e78b337280cebfebd49deeb56f50e2241`; folds
+  `758248ae8f7370f04f51fd2d0262c7f4780156b390f2973d96faed638875f15c`; bootstrap
+  `c2a2166129878ef778f4ed56b8d490a192a7948ea33c0e9b44a62e5cbd001ffb`; report
+  `ab9446eb2e2a8c9cbc2789a4f2b2ecb03ee6433480e6f66a0cf29a3305c9f78f`.
+- **Decision:** only fold-bound and ECE clauses pass. Reject E730 literally without rescue. Projected public
+  loss remains verified v0.5 `0.6054`; honest observed rank is approximately `#11`. No hardened evaluation,
+  ZIP, upload, or submission is authorized; `V_joint_accessed=false`; `V_final_accessed=false`.
