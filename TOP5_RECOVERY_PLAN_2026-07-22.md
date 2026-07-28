@@ -1689,6 +1689,50 @@ Prediction, fold-model, and report SHA-256 values are
 `competition_outcomes_accessed=false`; `V_joint_accessed=false`; `V_final_accessed=false`. Projected public
 loss remains verified v0.5 `0.6054`; the honest observed rank bracket remains approximately `#8`.
 
+## E710 freeze after E700 rejection and before any target score
+
+The prize-safe external-source inventory is closed. The authorized v0.5 component audit shows that the raw
+BGE-base replacement improves all hardened environments, but its mean local gain is only `0.001272118`.
+The remaining public gap is approximately `0.0016`. Whole-session trajectory hashing/BGE, fixed feedback
+events, semantic attention, alternate pooling, nonlinear outcome heads, and session bagging are already
+closed. The only competition-side signal with independent positive evidence not represented by v0.5 is
+ordered tutor/student adjacency: its frozen word-window family improved six earlier protocols by about
+`0.001026` mean loss, but fixed supervised outcome blending was not stable enough on later seen/style
+environments.
+
+E710 therefore tests a genuinely new target-free representation rather than rescuing that outcome head.
+For each frozen 4,096-row pilot context, retain only chronological `[TUTOR]` followed immediately by
+`[STUDENT]` pairs. Each true pair is one positive self-supervised example. Its sole negative pairs the same
+tutor turn with the next available non-adjacent student turn in that response, wrapping deterministically;
+responses with fewer than two student turns contribute no self-supervised example and receive fixed zero/count
+aggregates. No outcome, response label, fold prior, old OOF prediction, or V environment identifier may enter
+pair construction or the coherence model.
+
+- Represent each pair with a fixed `2^18` signed feature hash over lowercased alphanumeric tutor tokens,
+  student tokens, shared tokens, and all tutor/student cross-token pairs after retaining at most the first
+  16 unique tokens per side. Add fixed numeric overlap, length, question, acknowledgement, and uncertainty
+  indicators. Fit `SGDClassifier(loss="log_loss", alpha=1e-5, penalty="l2", max_iter=20, tol=1e-4,
+  random_state=20260728, class_weight=None)` on the balanced self-supervised examples.
+- Produce honest target-free scores through five deterministic session folds
+  `SHA256("E710|ssl|" + session_id) mod 5`: every response is scored only by a coherence model that excluded
+  its complete session. Freeze exactly 12 response aggregates of true-pair probability: count, mean, standard
+  deviation, minimum, maximum, quartiles 25/75, first-half mean, second-half mean, late-minus-early, linear
+  chronological slope, and share at least 0.5. No self-supervised hyperparameter, negative, token cap, hash
+  size, or aggregate sweep exists.
+- On the frozen `semantic_k50_s0` pilot only, fit leakage-safe outer-fold logistic probes at `C=0.1` over the
+  12 fold-local-standardized aggregates plus the existing 35 legal dense controls at scale `0.08`. Purge every
+  validation session exactly as in the comparator. Compare only raw 10%, 20%, and 30% probability blends over
+  the identical raw BGE-base comparator.
+- Select the lowest pooled log loss, breaking exact ties by higher AUROC and then lower weight. Continuation
+  requires all of: log-loss gain at least `0.0016`, no fold loss regression above `0.0005`, AUROC
+  non-regression, Brier non-regression, ECE-10 regression no more than `0.001`, and at least `0.95` support
+  for positive paired session-bootstrap loss gain over 5,000 fixed-seed replicates. This magnitude is required
+  because anything smaller lacks a plausible top-five path.
+- Failure rejects E710 without negative-construction, token, interaction, alpha, epoch, regularization,
+  control, calibration, aggregate, model, seed, or weight rescue. Passing authorizes one full target-free
+  cache and only the frozen `V_seen`, `V_objective`, and `V_style` protocol. `V_joint` remains
+  confirmation-only after those three pass; `V_final` remains sealed. No upload or submission is authorized.
+
 ## E700 freeze after E690 rejection and before FairytaleQA candidate embedding
 
 E690 is closed and none of its EssayJudge data, target, head, coefficient, prediction, or threshold evidence may
