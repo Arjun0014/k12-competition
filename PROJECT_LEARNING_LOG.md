@@ -2772,3 +2772,10 @@ The participant supplied the full text of the forum question thread on 2026-07-1
 - Inference remains sample-independent: training-session aggregates are absorbed into fixed coefficients,
   while each test response uses only its own transcript. Failure rejects the exact branch without rescue.
   `V_joint_accessed=false`; `V_final_accessed=false`; no platform action occurred.
+- Two focused E740 tests pass and Ruff is clean under Python 3.12.8/scikit-learn 1.8.0. The frozen
+  synthetic-target benchmark fit 2,992 legal sessions in 1.749262 seconds for one fold, projects 8.746308
+  seconds for five folds, and peaked at 948,445,184 RSS bytes. Benchmark SHA-256 is
+  `d42fb0b7c4d642755c135a398e8e831c088a68380e71f1a61d763dbafa761ee7`.
+- **Decision:** the resource gate passes and authorizes one immediate foreground validation.
+  `competition_outcomes_accessed=false`; no checkpoint, `V_joint`, `V_final`, upload, or submission is
+  involved.

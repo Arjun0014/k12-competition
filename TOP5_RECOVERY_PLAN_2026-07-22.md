@@ -1767,6 +1767,12 @@ The model is deployable under the independent-sample rule: full-training session
 coefficients only; inference computes no statistic across test rows. `V_joint` is confirmation-only and
 `V_final` remains sealed. No upload or submission is authorized.
 
+Two focused E740 contract tests pass and Ruff is clean under Python 3.12.8/scikit-learn 1.8.0. The frozen
+synthetic-target one-fold benchmark fit 2,992 legal training sessions in 1.749262 seconds, projecting
+8.746308 seconds for five folds, with peak RSS 948,445,184 bytes. Benchmark SHA-256 is
+`d42fb0b7c4d642755c135a398e8e831c088a68380e71f1a61d763dbafa761ee7`.
+`competition_outcomes_accessed=false`; the resource gate authorizes one immediate foreground validation.
+
 ## E710 freeze after E700 rejection and before any target score
 
 The prize-safe external-source inventory is closed. The authorized v0.5 component audit shows that the raw
