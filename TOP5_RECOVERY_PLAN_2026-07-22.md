@@ -1639,3 +1639,12 @@ in a nonempty student utterance. The Guess/Question/Affirmation/Other positive c
 released Guess bit without reinterpretation. There are 225 exercise images, 123 concept triples, and three
 duplicate complete histories, all protected by group assignment. This audit authorizes canonicalization only.
 Bind ordered-content and Parquet hashes before the fixed first-32-row target-free resource benchmark.
+
+Canonicalization completed under Python 3.12.8 without accessing competition outcomes, `V_joint`, or
+`V_final`. The ordered-content SHA-256 is
+`2bef00ad2bb18eba376fcb70501a445d681395ccd3d76223e4a509bfd96c5a8a`; the canonical Parquet SHA-256 is
+`5c97d1bbec9302bedebbdda6d264ffa42ae574ef89b2aac1f0191d50ffe508c7`. Shape and target counts are exactly
+1,135 rows, 514 Guess-positive, and 621 Guess-negative. The exercise-disjoint validation fold row counts are
+`[250,199,180,249,257]`; concept-disjoint counts are `[177,280,208,272,198]`. All ten train/validation group
+intersections are empty and every split contains both classes. These hashes are now frozen and authorize only
+the preregistered first-32-row target-free benchmark.
