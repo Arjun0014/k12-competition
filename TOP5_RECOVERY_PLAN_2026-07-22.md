@@ -1813,6 +1813,11 @@ seconds. It projects 250.402460 seconds for construction plus all five material 
 Authorize one build/validation worker and exactly one non-minute calculated completion wake with a conservative
 runtime allowance; do not inspect the worker before that checkpoint.
 
+Operational leaderboard update: the participant reports that v0.5 remains at public loss `0.6054` but has
+drifted to rank `#11`, with two manual submission slots remaining this week. No gate changes: do not use those
+slots for tuning, and recommend a manual submission only after a locally verified candidate clears the frozen
+backup gate. Codex must never upload or submit.
+
 ## E700 freeze after E690 rejection and before FairytaleQA candidate embedding
 
 E690 is closed and none of its EssayJudge data, target, head, coefficient, prediction, or threshold evidence may
