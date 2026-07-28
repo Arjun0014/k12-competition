@@ -1689,6 +1689,58 @@ Prediction, fold-model, and report SHA-256 values are
 `competition_outcomes_accessed=false`; `V_joint_accessed=false`; `V_final_accessed=false`. Projected public
 loss remains verified v0.5 `0.6054`; the honest observed rank bracket remains approximately `#8`.
 
+## E700 freeze after E690 rejection and before FairytaleQA candidate embedding
+
+E690 is closed and none of its EssayJudge data, target, head, coefficient, prediction, or threshold evidence may
+enter E700. E700 tests answer support/correctness using FairytaleQA, an Apache-2.0 educational comprehension
+dataset authored by experts for kindergarten through eighth grade. Official repository commit is
+`a24ddc17364666b7c13a425b9970c87368b03417`; the fetched Apache-2.0 license SHA-256 is
+`335d2c093cbb191de9693d87c9935f832a2442a67615a6e47ac71f74ccb4bd5d`. Immutable local train/valid/test CSV
+SHA-256 values are `b778e56bfc9cd9337eed02a8a0216eb7c5ff9deef96edc2fe49911924c9a79ab`,
+`b2dfd4dc5e99cf903e412fa785357138f844202222771674c446a4e41acb9abf`, and
+`34acae1b2b62469fb616ed55ea049c25185838f2388c60ef28c3f810e512a54b`.
+
+- Preserve the official story-disjoint train/valid/test splits. Select exactly 4,096 positive train rows by
+  ascending `SHA256("E700|train|" + story_name + "|" + question + "|" + answer1)`; retain every official
+  valid and test row. Each positive uses released `answer1`. Create exactly one deterministic negative per
+  retained positive by rotating through rows of the same story by the nonzero offset
+  `1 + SHA256("E700|negative|" + split + "|" + source_index) mod (story_rows - 1)`, advancing cyclically
+  until the answer text differs. No answer generator, external model, target inspection, hard-negative mining,
+  or candidate filtering exists.
+- Canonical text is exactly
+  `Context: {story_section}\nQuestion: {question}\nStudent response: {candidate_answer}\nTask: determine whether
+  the student response is supported by the context and answers the question.` `answer2`, explicit/implicit,
+  local/summary, narrative attribute, split-derived statistics, and labels are forbidden from candidate text.
+- Encode all 12,256 examples once with the exact packaged MIT BGE-base normalized final-layer CLS
+  representation, 256-token left truncation, CPU float32, six threads, and batch 16. Fit only unweighted
+  `LogisticRegression(C=0.1, solver="lbfgs", max_iter=1000, random_state=20260728)` on the 8,192 balanced
+  selected-train examples. No C, weighting, prompt, context, negative, sample size, pooling, truncation,
+  threshold, calibration, or estimator sweep exists.
+- Evaluate official validation (2,050 balanced examples, 23 stories) and official test (2,014 balanced
+  examples, 23 different stories) separately. Every clause is mandatory on both: AUROC at least `0.70`,
+  macro-F1 at least `0.65`, log-loss gain over the legal 0.5 train prior at least `0.030`, Brier gain at least
+  `0.010`, ECE-10 at most `0.10`, and at least `0.95` support for positive log-loss gain in a 2,000-replicate
+  story bootstrap. Any failed clause rejects E700 without rescue.
+- A complete pass permits one all-source answer-support head and one target-free competition cache. For each
+  session, select at most eight student utterances using deterministic evenly spaced chronological indices
+  including first and last. For each selected turn, use the preceding nine transcript utterances as `Context:`,
+  the released learning objective as `Question:`, and only that student utterance as `Student response:`.
+  Aggregate exactly mean, standard deviation, minimum, maximum, first, last, least-squares chronological slope,
+  and fraction at least 0.5. No competition outcome enters this cache.
+- Competition outcomes may train only leakage-safe fold-local unweighted logistic probes over those eight
+  fixed aggregates. Evaluate `V_seen`, `V_objective`, and `V_style`; use `V_joint` only for allowed locked
+  confirmation. Candidate blends remain exactly 10%, 20%, and 30% over raw v0.5. Backup/top-five gates remain
+  literal, `V_final` remains sealed, and no upload or submission is authorized.
+
+### E700 source audit and canonicalization authorization
+
+The official train/valid/test rows are `8548/1025/1007` across `232/23/23` mutually disjoint stories, totaling
+10,580 QA pairs and 278 stories. Required fields have no missing values. Minimum rows and distinct `answer1`
+values per story are `5/5` in train, `13/13` in validation, and `12/12` in test, so every retained row admits
+a different within-story negative without dropping examples. Validation and test retain all seven narrative
+attributes, explicit and implicit questions, and local and summary questions. This audit authorizes
+canonicalization only; bind ordered-content and Parquet hashes before the fixed 32-row target-free benchmark.
+
 ## E690 freeze after E680 rejection and before EssayJudge candidate embedding
 
 E680 is closed. None of its CIMA rows, labels, head, coefficient, probability, threshold, or calibration
