@@ -1688,3 +1688,53 @@ Prediction, fold-model, and report SHA-256 values are
 `c635e558efd41e1a745251470b88454cd281118b7f572cf7cd3588e0a15db1a5`.
 `competition_outcomes_accessed=false`; `V_joint_accessed=false`; `V_final_accessed=false`. Projected public
 loss remains verified v0.5 `0.6054`; the honest observed rank bracket remains approximately `#8`.
+
+## E690 freeze after E680 rejection and before EssayJudge candidate embedding
+
+E680 is closed. None of its CIMA rows, labels, head, coefficient, probability, threshold, or calibration
+evidence may enter E690. E690 tests a genuinely different supervision family: human-scored written-response
+quality in EssayJudge. The platform catalog declares EssayJudge Apache-2.0; the official source repository
+currently resolves to commit `e5ee947e97231d03d1341092e187ef0384da219e`. The immutable local `data.csv`
+SHA-256 is `7998f78165f3b354f42333ad25dc75ee6a33bfa3aa6ffb8c07650fc53c29dea5`.
+
+- Use all 1,054 rows and all ten released ground-truth traits. The frozen continuous target is the unweighted
+  arithmetic mean of the ten scores divided by 5.0; no trait selection, weighting, binning, threshold, or
+  image-derived label is allowed. The observed target range/mean/population-standard-deviation audit is
+  `0.15/0.676423150/0.101169702`.
+- Canonical text is exactly `Prompt: {Question}\nStudent response: {Essay}\nTask: represent the overall quality
+  of this student response.` Graph URLs, images, `image_number`, chart `Type`, every ground-truth score, and
+  every derived target are forbidden from model input.
+- Encode once with the exact packaged MIT BGE-base normalized final-layer CLS representation, 256-token left
+  truncation, CPU float32, six threads, and batch 16. Fit only
+  `Ridge(alpha=10.0, fit_intercept=True, solver="lsqr", max_iter=1000, tol=1e-6)` and clip held-out
+  predictions to `[0,1]`. No alpha, prompt, context, pooling, token length, target, estimator, or clipping sweep
+  exists.
+- To prevent prompt and duplicate-response leakage, construct connected components of exact `Question` values
+  joined by any exactly duplicated `Essay`; assign the lexicographically smallest question in each component
+  as its immutable component ID. Assign components to five folds by
+  `SHA256("E690|prompt_component|" + component_id) mod 5`. This yields 123 components from 125 questions;
+  the two merged components each contain two questions. Fold row counts are `[262,216,183,174,219]`.
+- Compare with the legal training-fold target mean. Every clause is mandatory: Pearson at least `0.35`,
+  Spearman at least `0.35`, RMSE at most `0.10`, RMSE gain at least `0.005`, MAE gain at least `0.005`,
+  positive RMSE gain in every fold, and at least `0.95` support for positive squared-error gain in separate
+  2,000-replicate bootstraps over prompt components and chart type. Failure rejects E690 without any rescue.
+- A complete external pass permits one all-source response-quality head and one target-free competition cache.
+  For each competition session, select at most eight student utterances at deterministic evenly spaced
+  chronological indices including first and last. Encode each as the exact released learning objective in the
+  `Prompt:` field and that one utterance in `Student response:`. Aggregate exactly mean, standard deviation,
+  minimum, maximum, first, last, least-squares chronological slope, and fraction at least 0.6. No competition
+  outcome enters this cache.
+- Competition outcomes may train only leakage-safe fold-local unweighted logistic probes over those eight
+  fixed aggregates. Evaluate `V_seen`, `V_objective`, and `V_style`; use `V_joint` only for allowed locked
+  confirmation. Candidate blends remain exactly 10%, 20%, and 30% over raw v0.5. Backup/top-five gates remain
+  literal, `V_final` remains sealed, and no upload or submission is authorized.
+
+### E690 source audit and canonicalization authorization
+
+The source contains 1,054 complete rows, 1,051 unique essay texts, 125 prompts, and seven chart types with
+counts `flow_chart=305`, `bar_chart=211`, `table=153`, `line_chart=145`, `composite_chart=107`,
+`pie_chart=71`, and `map=62`. Essay character count ranges from 239 to 2,366 with mean 1,060.72. Six rows
+participate in exact essay duplication; no exact `(Question, Essay)` pair duplicates. Connected-component
+grouping reduces 125 prompts to 123 components and protects all duplicates. This audit authorizes
+canonicalization only; ordered-content and Parquet hashes must be bound before the fixed 32-row target-free
+resource benchmark.
