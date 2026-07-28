@@ -1803,6 +1803,16 @@ objective-conditioned lexical interaction.
   regularization, or weight rescue. Passing authorizes only the frozen three-environment evaluation;
   `V_joint` remains confirmation-only and `V_final` sealed. No upload or submission is authorized.
 
+### E720 implementation and measured benchmark
+
+All three focused tests pass and Ruff is clean under the frozen `.venv`. The fixed 512-row benchmark produced
+443,480 nonzeros in a `512 x 524288` matrix, fit one complete 20-iteration synthetic fold, and took 6.260062
+seconds. It projects 250.402460 seconds for construction plus all five material folds and peaked at
+1,530,957,824 RSS bytes. Benchmark SHA-256 is
+`08bfce8c63892e3d43c9bdaafad5338ac76a99ee53dda5bde2236170712cfcb2`. Both resource gates pass.
+Authorize one build/validation worker and exactly one non-minute calculated completion wake with a conservative
+runtime allowance; do not inspect the worker before that checkpoint.
+
 ## E700 freeze after E690 rejection and before FairytaleQA candidate embedding
 
 E690 is closed and none of its EssayJudge data, target, head, coefficient, prediction, or threshold evidence may
