@@ -1773,6 +1773,26 @@ synthetic-target one-fold benchmark fit 2,992 legal training sessions in 1.74926
 `d42fb0b7c4d642755c135a398e8e831c088a68380e71f1a61d763dbafa761ee7`.
 `competition_outcomes_accessed=false`; the resource gate authorizes one immediate foreground validation.
 
+### E740 completed result and literal rejection
+
+Frozen run `20260728T092346Z_session_mastery` completed in 30.339416 seconds. The selected 20% blend changed
+raw BGE loss/AUROC/Brier/ECE by
+`-0.000615881/-0.001421988/-0.000261258/-0.004928590`, reaching absolute metrics
+`0.594991607/0.607543691/0.203316857/0.019291018`. Fold loss changes were
+`-0.000066628/-0.002146258/+0.001753177/-0.001521805/-0.001187592`.
+
+The 5,000-session bootstrap mean gain/95% interval/support were
+`0.000602671/[-0.000731569,0.001855827]/0.8212`. Brier and ECE improve, but loss magnitude, AUROC,
+fold-bound, and bootstrap clauses fail. Reject E740 literally without target, alpha, estimator, feature, or
+blend rescue. Prediction/metrics/folds/bootstrap/report SHA-256 values are
+`a9ee502ec1ba751293019c96e541673eadcb9abd2bdddc603136b868211891ee`,
+`a09f84ce09398a8224e517860d105fded11bbde5db356b84cd1eb05f12178595`,
+`c29580ac637c2b9214dec87a3fb37df04e84ae6846726ce7429ce6a11a55cd3f`,
+`0180d793dee30aa6ed954962d236aee0c925ed30a8bc47433ff84d3670b3f9de`, and
+`388858089357b1a33e1f6da7ee2cbc3ab2415897bf37660303e123c2f417f033`.
+Projected public loss remains verified v0.5 `0.6054`; honest observed rank remains approximately `#11`.
+No hardened evaluation, ZIP, upload, or submission is authorized. `V_joint` and `V_final` remain sealed.
+
 ## E710 freeze after E700 rejection and before any target score
 
 The prize-safe external-source inventory is closed. The authorized v0.5 component audit shows that the raw

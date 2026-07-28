@@ -2779,3 +2779,20 @@ The participant supplied the full text of the forum question thread on 2026-07-1
 - **Decision:** the resource gate passes and authorizes one immediate foreground validation.
   `competition_outcomes_accessed=false`; no checkpoint, `V_joint`, `V_final`, upload, or submission is
   involved.
+- Frozen run `20260728T092346Z_session_mastery` completed in 30.339416 seconds. The selected 20% blend
+  changed raw BGE loss/AUROC/Brier/ECE by
+  `-0.000615881/-0.001421988/-0.000261258/-0.004928590`, with absolute metrics
+  `0.594991607/0.607543691/0.203316857/0.019291018`.
+- Fold loss changes were `-0.000066628/-0.002146258/+0.001753177/-0.001521805/-0.001187592`.
+  The 5,000-session bootstrap mean gain/95% interval/support were
+  `0.000602671/[-0.000731569,0.001855827]/0.8212`.
+- Artifact SHA-256 values: predictions
+  `a9ee502ec1ba751293019c96e541673eadcb9abd2bdddc603136b868211891ee`; metrics
+  `a09f84ce09398a8224e517860d105fded11bbde5db356b84cd1eb05f12178595`; folds
+  `c29580ac637c2b9214dec87a3fb37df04e84ae6846726ce7429ce6a11a55cd3f`; bootstrap
+  `0180d793dee30aa6ed954962d236aee0c925ed30a8bc47433ff84d3670b3f9de`; report
+  `388858089357b1a33e1f6da7ee2cbc3ab2415897bf37660303e123c2f417f033`.
+- **Decision:** Brier and ECE improve, but loss magnitude, AUROC, fold-bound, and bootstrap clauses fail.
+  Reject E740 literally without rescue. Projected public loss remains v0.5 `0.6054`; honest observed rank
+  remains approximately `#11`. No hardened evaluation, ZIP, upload, or submission is authorized;
+  `V_joint_accessed=false`; `V_final_accessed=false`.
