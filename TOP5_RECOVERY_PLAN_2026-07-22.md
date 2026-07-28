@@ -1585,3 +1585,57 @@ Prediction/fold-model/report SHA-256 values are
 `0.6054` and approximately `#8`; its protected ZIP remains unchanged at
 `65467003547fb62ec867733c6acf0a63e6f9fb0fed9533b61b9592e143b17186`.
 `competition_outcomes_accessed=false`; `V_joint_accessed=false`; `V_final_accessed=false`.
+
+## E680 freeze after E670 rejection and before CIMA candidate embedding
+
+E670 is closed and none of its Bridge data, pairwise checkpoint, coefficient, probability, or calibration
+evidence may enter E680. E680 uses a different supervision family from the independently released CIMA corpus:
+the student's own epistemic action after a tutoring exchange. The binary target is the released `Guess` action
+bit, distinguishing an attempted answer from help-seeking, affirmation, or other student behavior.
+
+- Immutable source: CIMA repository commit `3fa48593c001046893f5f1320ab031f7237e7998`, released under Creative
+  Commons Attribution 2.5. Dataset/README SHA-256 values are
+  `544dfc50dd05b14579e1a04b4751f4ffda8a72d3d398410d1aba0bcc2dd57405` and
+  `23680d5c37de5b69436172372f14f88ddc31376a27738256d07bcaa78642897b`.
+- Use all 1,135 `prepDataset` rows. Every history contains 2, 4, 6, 8, or 10 alternating turns beginning with
+  the tutor and ending with the student. The `Guess` bit is positive in 514 rows and negative in 621. Preserve
+  the complete chronological `past_convo` as alternating `Tutor:`/`Student:` lines and append exactly
+  `Task: represent whether the final student turn is an independent answer attempt rather than help-seeking or
+  acknowledgment.` All `studentActions`, `tutorActions`, candidate tutor responses, tutor keys, images, Italian
+  answer fields, grammar rules, and English concept fields are forbidden from model input.
+- Encode with the unchanged packaged MIT BGE-base normalized final-layer CLS representation, 256-token left
+  truncation, CPU float32, six threads, and batch 16. Fit only an unweighted
+  `LogisticRegression(C=0.1, solver="lbfgs", max_iter=1000, random_state=20260728)` on the released Guess bit.
+  No C, prompt, context, turn, pooling, weighting, target transform, threshold, calibration, or nonlinear-model
+  sweep exists.
+- Evaluate two frozen five-fold protocols. `exercise_disjoint` assigns the exact released `img` identifier by
+  `SHA256("E680|exercise|" + img) mod 5`. `concept_disjoint` assigns the exact
+  `(engPrep, engObj, engColor)` triple by `SHA256("E680|concept|" + compact_json_triple) mod 5`. All duplicate
+  histories and group identities remain together. Each fold comparator is the legal training-fold Guess prior.
+- Every clause is mandatory in both protocols: AUROC at least `0.70`; macro-F1 at least `0.65`; log-loss gain
+  at least `0.030`; Brier gain at least `0.010`; ECE-10 at most `0.10`; positive log-loss gain in every fold;
+  and at least `0.95` support for positive log-loss gain in a 2,000-replicate bootstrap over the held-out
+  grouping unit.
+- Any failed clause rejects E680 without row/action filtering, multilabel reinterpretation, source mixture,
+  history length, role order, task line, C, pooling, estimator, weighting, calibration, threshold, fold, or gate
+  rescue. A complete pass permits one all-source Guess head and one target-free competition student-state cache.
+- If permitted, select at most eight student utterances per competition session using deterministic evenly
+  spaced chronological indices including the first and last student utterance. For each selected utterance,
+  encode exactly the preceding nine transcript utterances plus that student utterance with their released roles
+  and the frozen task line. Score with the all-source CIMA head and aggregate exactly mean, standard deviation,
+  minimum, maximum, first, last, least-squares chronological slope, and fraction at least 0.5. No competition
+  outcome enters this cache.
+- Competition outcomes may train only leakage-safe fold-local unweighted logistic probes over those eight fixed
+  aggregates. Evaluate `V_seen`, `V_objective`, and `V_style`; use `V_joint` only for allowed locked
+  confirmation. Candidate blends remain exactly 10%, 20%, and 30% over raw v0.5. Backup/top-five gates remain
+  literal, `V_final` remains sealed, and no upload or submission is authorized.
+
+### E680 source audit and canonicalization authorization
+
+The immutable source contains 1,135 usable preparation contexts and an empty unused `shapeDataset`. Released
+history lengths are 2/4/6/8/10 turns with counts `[373,325,230,125,82]`; every history is even-length and ends
+in a nonempty student utterance. The Guess/Question/Affirmation/Other positive counts are
+`[514,551,162,2]`; 88 rows have two active actions and three have three, but the frozen target remains the
+released Guess bit without reinterpretation. There are 225 exercise images, 123 concept triples, and three
+duplicate complete histories, all protected by group assignment. This audit authorizes canonicalization only.
+Bind ordered-content and Parquet hashes before the fixed first-32-row target-free resource benchmark.
