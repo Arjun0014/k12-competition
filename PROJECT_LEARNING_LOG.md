@@ -3005,3 +3005,42 @@ The participant supplied the full text of the forum question thread on 2026-07-1
   `65467003547fb62ec867733c6acf0a63e6f9fb0fed9533b61b9592e143b17186`.
   **Decision: reject E760 and close the complete directional-uptake family without rescue. Proceed to the
   independent E770 tutor-move by student-state target-free gate.**
+
+## 2026-07-28 — E770 target-free tutor-move by student-state gate
+
+- Repository/log novelty audit reconfirmed that E220 contains broad affirmation/correction/reasoning/repair
+  aggregates and E530 is a rejected four-class MathDial move-text classifier. Neither implements the 2026 NTO
+  taxonomy plus explicit proximal student-state interactions. E770 consumes no E220/E530/E710/E760 artifact,
+  checkpoint, probability, score, or outcome result.
+- Primary-source definitions were frozen from the National Tutoring Observatory codebook: categorical/yes-no
+  probes are distinct from open prompts; self-explanation, self-correction, and next-step prompts are distinct;
+  revoicing is distinct from verbatim restating; hints/examples/conceptual explanation/procedural explanation/direct
+  answers are separate; process and outcome praise are separate. Abdelshiheed et al. motivates the fixed
+  rigorous-thinking-by-strong-state and revoicing-by-weak-state interactions.
+- Implemented 16 tutor moves, 10 preceding-student states, six predefined interactions, all/early/middle/late rates,
+  and six fixed coverage/length controls: exactly 134 competition-only continuous features over authorized
+  objective-relevant chronological dialogue. No generic tree, trajectory hash, learned attention, or outcome-aware
+  rule editing is present.
+- Pre-benchmark correction: the first synthetic test exposed four narrow lexical misses (`that is right`,
+  `let us say`, `no, instead`, and acceptance after a leading ASR filler/punctuation mark). The corresponding
+  definition-aligned patterns and an explicit answer-change pattern were corrected before any benchmark, cache,
+  or outcome access; no scientific category, feature, estimator, or gate changed.
+- Target-free verification: every move/state canonical example, paraphrase, ASR-noisy case, and negative passed;
+  six focused tests passed. A deterministic 1,024-row benchmark took `4.2205372` seconds and projected
+  `144.5533991` seconds for 35,072 rows. The full foreground build took `158.4250329` seconds in `.venv` Python
+  `3.12.8`, scikit-learn `1.8.0`.
+- The 35,072 x 134 cache is finite and every feature is nonconstant. Ordered-content SHA-256 is
+  `d4f0134c4aa57cf2822139f7d4f0f6c5fc93b7002f11e7846c4421ad7e54d675`; Parquet SHA-256 is
+  `bd1ccd1d84fabbcaf83ae6f0920530585b54657e050f6b91f78abd900c4f748d`. Overall student-to-tutor pair
+  coverage is `0.9925582`; all 20 target-free V_style cells meet the frozen `0.75` minimum, with style cell 12
+  exactly at `0.75`. Every move has at least 20 estimated events; observed counts range from 1,984
+  self-correction prompts to 65,053 correct-feedback events. All five target-free coverage/cache clauses pass.
+- The exact source/cache hashes, parser, feature order, `C=0.1` fold-local standardized logistic head, seed
+  `20260728`, raw v0.5 lineage, 10%/20%/30% blends, 5,000 session/family bootstraps, and literal proper-score gates
+  are frozen in `E770_PREREGISTRATION_2026-07-28.md` before any outcome score.
+- Competition log loss, AUROC, Brier, ECE, fold/environment gains, bootstrap outcome evidence, projected public
+  loss, and rank bracket remain not applicable because no competition outcome was read. V_joint and V_final remain
+  untouched; no ZIP, upload, or submission occurred. The failed heartbeat remains non-proof, but every E770 stage
+  is sub-hour foreground work. **Decision:** after full tests and commit/push of this immutable milestone, run
+  exactly one authorized E770 `V_seen`/`V_objective`/`V_style` selection validation. Any failed clause closes
+  E770 without rescue.
