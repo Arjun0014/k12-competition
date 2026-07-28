@@ -1416,3 +1416,13 @@ zero-overlap split. Ordered-content SHA-256 is
 mean/std are `0.588918/0.270404`; completeness mean/std are `0.625937/0.308970`. Bind both hashes in code
 before any embedding benchmark or candidate prediction. Authorize only the fixed 32-row target-free resource
 benchmark next.
+
+### E660 resource result and external-cache authorization
+
+The fixed 32-row benchmark completed in `6.491799` seconds and projects `432.921812` seconds
+(`0.120256` hours) for all 2,134 canonical rows. Peak RSS was `887,513,088` bytes. The frozen one-hour and
+8 GiB clauses pass under Python `3.12.8`, scikit-learn `1.8.0`, Torch `2.13.0+cpu`, and Transformers
+`5.14.1`. Benchmark SHA-256 is
+`45d4271f38fcbcb8af806ef41d34f2db0049003fc763dbecec84f5484e78fefb`. No rating, dimension, candidate
+prediction, competition outcome, `V_joint`, or `V_final` was accessed. Authorize exactly one external-cache build
+with one calculated ACTIVE completion heartbeat and no worker/log inspection before it.
