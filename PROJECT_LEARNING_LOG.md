@@ -3162,3 +3162,47 @@ The participant supplied the full text of the forum question thread on 2026-07-1
   `65467003547fb62ec867733c6acf0a63e6f9fb0fed9533b61b9592e143b17186`; no new ZIP, upload, or submission
   occurred. **Decision: reject exact E790 without parser, feedback lexicon, linkage, threshold, or subgroup
   rescue. E790 does not nominate an E800 competition candidate.**
+
+## 2026-07-28 - post-E790 source, novelty, and headroom audit
+
+- Reconfirmed that E800 is reserved for a final ensemble of independently passing components and is not an
+  experiment number. Audited a possible E810 only against source, license, use-suitability, reproducibility,
+  novelty, and headroom gates. No competition outcome, V_joint, or V_final evidence was accessed.
+- The only genuinely new aligned mechanism found was student/tutor text-personality complementarity from the
+  2025 LAK Math Nation study of 383 middle-school students, 2,157 QA records, 697 questions, and 15-item pre/post
+  tests. Its significant terms were student-extroversion × chatbot-openness `+3.2477`, student-openness ×
+  chatbot-openness `-2.7545`, and student-extroversion × chatbot-extroversion `-1.9708`.
+- Froze public model metadata without downloading weights. The subjectivity model
+  `cffl/bert-base-styleclassification-subjective-neutral` is Apache-2.0 at revision
+  `1339b8de703cb52c729475a89427078052af8595`. The Big-Five model
+  `Minej/bert-base-personality` is MIT-tagged at revision
+  `6f4d00d28093bdc2ba6cccec97acbf1805709ff1`, but its config preserves only generic `LABEL_0..4`, its card
+  reports no validation metrics or short-text reliability, says it is not intended for downstream use, and
+  explicitly excludes education judgments. The source Math Nation outcome data are not public.
+- **Decision:** reject the personality candidate before E810 preregistration. The published significant mechanism
+  cannot be reproduced without the use-inappropriate Big-Five model; VADER and subjectivity alone do not retain
+  the reported outcome interaction. No model weights, cache, outcome score, or ZIP were produced.
+- Audited remaining real outcome-linked sources. StudyChat is CC BY 4.0 but gated and anonymous access returned
+  HTTP 401; NCTE requires a Google access form and separate ICPSR metadata; APTA/Peer Chats require a CMU
+  DataShop request; AlgebraNation/Math Nation outcomes are unreleased. Codex accepted no terms, disclosed no user
+  information, and did not use a mirror. Eedi QATD is non-commercial and lacks a learning-gain outcome.
+  MathMentorDB is CC BY 4.0 and large but has no outcome. NTO's public MathEd-PII release contains PII labels,
+  not tutoring outcomes.
+- Other mechanisms were closed rather than relabeled: StudyChat response-strategy work overlaps E770; NCTE/Eedi
+  talk moves overlap E760/E770; directional lexical alignment was already inside failed E760; public 274-learner
+  ChatGPT/human math-help evidence overlaps the failed correctness family; JUSThink is only ten transcript teams.
+- A new harmless one-occurrence heartbeat was created at 18:57:56 IST for 19:01. At 19:02:43 there was no wake,
+  run record, or execution artifact—only the unchanged ACTIVE definition—so it was deleted. No unattended run over
+  one hour is authorized in this session.
+- Environment remained `.venv` Python 3.12.8 and scikit-learn 1.8.0. Model runtime, log loss, AUROC, Brier, ECE,
+  folds/environments, outcome bootstraps, and projected public gain are not applicable because this was a
+  source-only audit. Honest public reference remains v0.5 loss `0.6054`, approximately rank 11; first-place
+  `0.6008`, fifth `0.6040`, tenth `0.6053`; conservative target `0.6005`.
+- Full evidence and the literal reopening conditions are recorded in
+  `POST_E790_SOURCE_AND_NOVELTY_AUDIT_2026-07-28.md`. **Decision:** no E810 is preregistered or authorized.
+  Preserve v0.5, both manual submission slots, and sealed V_final; do not manufacture another outcome run from a
+  gated, non-commercial, unavailable, outcome-free, or closed mechanism.
+- Repository verification under the required `.venv` completed in `40.35` seconds: `209 passed, 8 subtests
+  passed`; Ruff and `git diff --check` were clean. The audit document SHA-256 is
+  `02a420077cb749fa30d3857777c20473299309daf5899e04595a78d35d83ed04`. The protected ZIP hash was
+  reverified unchanged as `65467003547fb62ec867733c6acf0a63e6f9fb0fed9533b61b9592e143b17186`.
