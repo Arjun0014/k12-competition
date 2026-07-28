@@ -1551,3 +1551,37 @@ The fixed 32-pair/64-text benchmark completed in `6.851101` seconds and projects
 `297f2a17fa3713b3f024d48cdba1df962a31f3020f7631b3aba8932ccd6ea1c7`. No preference label, candidate
 score, competition outcome, `V_joint`, or `V_final` was accessed. Authorize exactly one external-cache build
 with one calculated ACTIVE completion heartbeat and no worker/log inspection before it.
+
+### E670 completed external result and literal rejection
+
+The 1,400-text cache completed in `184.038498` seconds versus the measured `149.867837`-second projection. Its
+finite float32 shape is `1400 x 768`; SHA-256 is
+`661a2738eec75de96927a1f186c556d5987c3d41f4ffa91b3b692086d6dfd08e`. Runtime was Python `3.12.8`,
+scikit-learn `1.8.0`, Torch `2.13.0+cpu`, and Transformers `5.14.1`; every frozen source, canonical, encoder,
+and pairing contract matched.
+
+Session-disjoint accuracy/AUROC/log loss/Brier/ECE-10 were
+`0.824285714/0.890438776/0.612076049/0.210171626/0.269725834`. Against the fixed balanced prior, log-loss and
+Brier gains were `0.081071132/0.039828374`. All five fold log-loss gains were positive:
+`[0.097642705,0.077088901,0.087545607,0.070036514,0.074127649]`. The 2,000-replicate session-root
+bootstrap estimated mean gain `0.081085948`, 95% interval `[0.071528575,0.090445693]`, and support `1.0000`.
+
+Lesson-disjoint accuracy/AUROC/log loss/Brier/ECE-10 were
+`0.821428571/0.896487755/0.613850040/0.210980307/0.269271586`. Log-loss and Brier gains were
+`0.079297141/0.039019693`. All five fold log-loss gains were positive:
+`[0.072599614,0.084107513,0.080696261,0.079334278,0.086924506]`. The 2,000-replicate lesson bootstrap
+estimated mean gain `0.079034157`, 95% interval `[0.069725769,0.087187616]`, and support `1.0000`.
+
+Both protocols pass accuracy, AUROC, log-loss gain, Brier gain, every-fold gain, and bootstrap support, but both
+fail the frozen `ECE-10 <= 0.10` clause by a wide margin. Because every clause was mandatory, reject E670
+without Platt, temperature, isotonic, prior, scale, intercept, C, threshold, probability reinterpretation, or any
+other calibration/gate rescue. No all-source ranking vector, competition cache, hardened validation, blend, ZIP,
+public improvement, upload, or submission is authorized.
+
+Prediction/fold-model/report SHA-256 values are
+`b7692b100ae9c221499b6eb622289527956963b9046bcf183c329784a278d5f1`,
+`a087a568f1c2c9913176a82309129e3ea40785baae4e64646a4e9eb38590a4b4`, and
+`cb88571f457d4dd64f584c0b437feea7e152c05bcd7d906c7ac95c9196d8202f`. The v0.5 score/rank evidence remains
+`0.6054` and approximately `#8`; its protected ZIP remains unchanged at
+`65467003547fb62ec867733c6acf0a63e6f9fb0fed9533b61b9592e143b17186`.
+`competition_outcomes_accessed=false`; `V_joint_accessed=false`; `V_final_accessed=false`.
