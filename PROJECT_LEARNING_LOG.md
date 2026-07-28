@@ -3075,3 +3075,54 @@ The participant supplied the full text of the forum question thread on 2026-07-1
   `65467003547fb62ec867733c6acf0a63e6f9fb0fed9533b61b9592e143b17186`. No new ZIP, upload, or submission
   occurred. **Decision: reject E770 completely. Do not alter rules, features, C, weight, calibration, or
   environment aggregation. Proceed to independent E780 ability-demand/optimal-challenge target-free design.**
+
+## 2026-07-28 - E780 ability-demand target-free gate: rejected before outcomes
+
+- Novelty audit confirmed E780 is an independent observable task-episode construct: E570 ranks across sessions
+  within objectives, E740 predicts session means, E750 ranks objectives within sessions, while E780 estimates
+  chronological ability-versus-demand mismatch and under/optimal/over challenge states. It consumes none of
+  their caches, probabilities, checkpoints, or scores.
+- Primary definitions came from *Measuring Optimal Challenge for Student Learning in AI-Assisted Tutoring*
+  (<https://aclanthology.org/2026.bea-1.46/>); the identifiable scalar-gap form was informed by
+  *Interpretable Difficulty-Aware Knowledge Tracing* (<https://aclanthology.org/2026.bea-1.43/>). The linked
+  `umass-ml4ed/Difficulty-Aware-DialogKT` repository was inspected at
+  `3a9362e12eb51675897a5b5b458b0fc709d2ff63`, but contained only a 73-byte README, no license/code/data/model,
+  and supplied no E780 asset.
+- Immutable input SHA-256 values were `ea49463819e387b3a61aeafda5007938e39948940eac5b134f607ab13e3d6ede`
+  (`modeling_base`), `218d5b041f78c6803f28078c35b7fa9e37b725f456c4052974e5150b2afa43f6`
+  (objective context), `600664b9ce6c3809ff4b17206397285cfdd905a203a5c5f4d6969b403dfc9b40`
+  (selection assignments), and
+  `1e53a9974d45e00ab86cf44ba79a4e435965dfc0c75b8c4a76fc7f69778e82af` /
+  `c6e7a586c9b45ff88b8bac169bc85f36306569cde813320f6997e95a1fc939a7` /
+  `6b6895214173be7343801d1152452099d0590fe1a3186fe6d0bc27908ee43038`
+  for the three raw-v0.5 component OOF files.
+- The target-free design fixed a 10-turn task-episode horizon and exactly 25 continuous ability, demand, gap,
+  struggle, recovery, direct-answer, unresolved, and challenge-state aggregates. Intended but never authorized
+  outcome fitting was a fold-local intercept plus nonnegative scalar Rasch slope, L2 `0.1`, maximum slope `5`,
+  L-BFGS-B maximum 200 iterations, seed `20260728`, and only `0.10/0.20/0.30` raw-v0.5 blends. Intended
+  proper-score gates remained at least `0.0016` robust mean loss gain, all environments improving, no environment
+  regression, worst fold regression at most `0.0005`, AUROC/Brier/ECE non-regression, and at least `0.95`
+  support in separate 5,000-session and semantic-family bootstraps.
+- Two corrections occurred before any outcome access: the synthetic medium-demand item was changed from
+  answer-only to an equation request so it actually exercised the frozen representation-demand rule; then two
+  NumPy booleans were converted to native booleans at the JSON report boundary. Neither correction changed a
+  model or gate. Focused verification then passed `7/7`.
+- The 1,024-row target-free benchmark took `3.6710772` seconds and projected `125.7343941` seconds for all rows.
+  The one foreground full build took `128.2319289` seconds in `.venv` Python `3.12.8`, scikit-learn `1.8.0`,
+  NumPy `2.5.1`; produced 35,072 x 25 finite, nonconstant features; and achieved overall episode coverage
+  `0.9871977646`. State counts were 74,827 under-challenged, 3,309 optimally challenged, and 321,407
+  over-challenged, all above the frozen minimum 50.
+- The exact target-free gate failed because V_style cell 19 episode coverage was
+  `0.6190476190 < 0.70`; all other target-free clauses passed. Ordered-content SHA-256 is
+  `d30c40b1e4366fc09a29a38a081166cde9c9456ccc68e142fa49292f83d42dde`; Parquet SHA-256 is
+  `e61756de0744e34aba1b0ec16fda7984f0ae036f80cdfb4c5e10aa5c6ae36219`; benchmark/metadata report SHA-256
+  values are `4d42ef2aa74170a2e4acb1ae461b39393a12356960baa898316f08a7d04496a9` and
+  `d1719d556773ace22158f5478878e681e8a3623e0298054256e8b2d17e0d86b0`.
+- Log loss, AUROC, Brier, ECE, outcome folds/environments, outcome bootstrap evidence, and an E780 public
+  projection are not applicable: no competition outcome was read, no bootstrap ran, and V_joint/V_final
+  remained untouched. The feature hashes remain intentionally unfrozen in code, safety-locking validation.
+- Protected v0.5 remains public `0.6054`, honestly approximately rank 11 in the participant-provided snapshot.
+  Its ZIP SHA-256 was rechecked as
+  `65467003547fb62ec867733c6acf0a63e6f9fb0fed9533b61b9592e143b17186`. No candidate ZIP, upload, or
+  submission occurred. **Decision: reject exact E780 without parser, threshold, feature, model, or gate rescue.
+  No E780 preregistration or competition validation is authorized.**
