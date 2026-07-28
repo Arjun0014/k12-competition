@@ -1330,3 +1330,31 @@ The fixed 32-row benchmark completed in `7.220233` seconds and projects `101.534
 for all 450 rows. Peak RSS was `1,023,414,272` bytes; the frozen one-hour/8 GiB clauses pass. Benchmark SHA-256
 is `c35ccfda504420f8a477f08080bbb0b1fa41087bfc9638aeb89e1e5cb5ce1186`. No quality target or prediction
 metric was accessed. Authorize one clean external-cache build and one explicit-DTSTART completion heartbeat.
+
+### E650 completed external result and literal rejection
+
+The 450-row quality cache completed in `90.711856` seconds versus the measured `101.534532`-second projection.
+Its finite float32 shape is `450 x 768`; cache and metadata SHA-256 values are
+`1d7cbb544d4a71acbcf9bb6826f632a38f3fb3d187cf7a4a00b80205a604916e` and
+`181ed305c658da5526bd85832ee55334d934e6e984288973ad939a31add189c1`. Runtime was Python `3.12.8`,
+scikit-learn `1.8.0`, Torch `2.13.0+cpu`, and Transformers `5.14.1`; all frozen source, canonical, and encoder
+bindings matched.
+
+Frozen OOF RMSE/MAE were `0.280129688/0.232232784`, with Pearson/Spearman only
+`0.076133341/0.081796906`. Against the legal fold-training-mean baseline (`0.282441971/0.234790075`), RMSE and
+MAE gains were only `0.002312282/0.002557291`. All five folds had small positive RMSE gains:
+`[0.000612010,0.004783110,0.002687334,0.001674522,0.003661786]`.
+
+The 2,000-replicate worker bootstrap estimated mean squared-error gain `0.001144557`, 95% interval
+`[-0.000215033,0.002596338]`, and `0.9515` support. The problem bootstrap estimated `0.001708759`,
+`[0.000684896,0.002749808]`, and `0.9995` support. Positive-fold count and both bootstrap-support clauses pass,
+but Pearson, Spearman, absolute RMSE, RMSE-gain, and MAE-gain clauses fail.
+
+Reject E650 literally without target binning, row/prompt/view, alpha, clipping, fold, weighting, nonlinear head,
+calibration, checkpoint, or gate rescue. No all-source fit, competition cache, hardened validation, blend, ZIP,
+public projection, upload, or submission is authorized. Prediction/fold-model/report SHA-256 values are
+`4b826055f534f9713017337c112fee6227ecbd7188724a5e9e56b5ee967aac01`,
+`0bdd526cf17535d13181681f6d9e853747844d711e8075b751419c816087de2c`, and
+`7581e2f3478c705e50f32985753137d5bde6a85e10274dc89fabdc2f74e6193b`. The v0.5 backup ZIP remains unchanged
+at SHA-256 `65467003547fb62ec867733c6acf0a63e6f9fb0fed9533b61b9592e143b17186`;
+`V_joint_accessed=false`; `V_final_accessed=false`.
