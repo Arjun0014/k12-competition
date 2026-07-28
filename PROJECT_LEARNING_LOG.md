@@ -2868,3 +2868,41 @@ The participant supplied the full text of the forum question thread on 2026-07-1
   `V_joint_accessed=false`; `V_final_accessed=false`. **Decision:** authorize exactly one foreground
   `V_seen`/`V_objective`/`V_style` validation after the frozen implementation and this preregistration are
   committed and pushed.
+
+### E750 completed selection validation and literal rejection
+
+- The frozen implementation/preregistration was committed and pushed as `162eff6` before any E750 outcome
+  score. Exactly one authorized run, `20260728T110308Z_session_conditional_objective`, then evaluated only
+  `V_seen`, `V_objective`, and `V_style` under `.venv` Python 3.12.8, scikit-learn 1.8.0, NumPy 2.5.1,
+  pandas 2.3.3, Torch 2.13.0+cpu, and Transformers 5.14.1. It completed in `38.156235` seconds with peak
+  RSS 1,332,215,808 bytes. All 15 fits converged in five or six iterations; no failure or correction occurred.
+- All three preregistered weights regressed equal-environment macro log loss. Candidate gains versus raw v0.5
+  were `-0.001437298/-0.003323228/-0.005661973` at 10/20/30%, so the deterministic rule selected 10%.
+  Its mean absolute loss was `0.564768393`; mean AUROC/Brier/ECE changes were
+  `-0.000202409/+0.000628759/+0.003492013`.
+- At selected 10%, `V_objective` loss changed from `0.593129391` to `0.593274536`
+  (`+0.000145145` worse), `V_seen` from `0.548199263` to `0.550275577`
+  (`+0.002076314` worse), and `V_style` from `0.548664632` to `0.550755068`
+  (`+0.002090436` worse). `V_objective` ECE improved `0.002651437`, but its AUROC/Brier regressed; both
+  seen/style environments regressed all four metrics.
+- Selected fold candidate-minus-raw-v0.5 loss changes were:
+  `V_objective=[+0.000663700,-0.001680289,+0.001325344,-0.001486171,+0.001903141]`,
+  `V_seen=[+0.002307949,+0.002394717,+0.002306685,+0.001816291,+0.001555926]`, and
+  `V_style=[+0.002356593,+0.002292435,+0.001804632,+0.002037275,+0.001961242]`.
+  Worst fold regression was `0.002394717`.
+- The selected 5,000-session bootstrap estimated mean gain `-0.001438778`, 95% interval
+  `[-0.001570344,-0.001305156]`, support `0.0000`. The independent 5,000-semantic-family bootstrap estimated
+  `-0.001417993`, interval `[-0.001893675,-0.000941879]`, support `0.0000`. All nine frozen continuation
+  clauses fail.
+- Artifact SHA-256 values are predictions
+  `77dc10632a2f6dbdae4f808bc141fed588006e5e524aa5926cc2c893c2e44690`; fold metrics
+  `3af6d224db483d6f56666b2fb70ec3bd1f4bb268e587d0547c72f5ac8f358a0f`; environment metrics
+  `02b50b3cd777fb963465ceb0814f1d02774b206b6e06a503e209b2cdc60a9210`; selection
+  `8f44be9f90d3cb3742490e4c01a6b792cc7e0b897d8b0efa5342120c2944eef7`; bootstraps
+  `aebb66ab1c16ff069e261505627e1f46be874a95a4b5e43f1dc2b0f000ba79f2`; report
+  `6a21fe439d0ad749889f709d74b6b82d72fd8bf305d8105dcb5ddc0161442da6`.
+- **Decision:** reject E750 literally without pair, weight, C, feature, prior, calibration, blend, environment,
+  or gate rescue. No `V_joint`, `V_final`, hardened continuation, checkpoint, new ZIP, upload, or submission
+  is authorized. The protected v0.5 ZIP and its hash remain unchanged. Projected public loss remains verified
+  v0.5 `0.6054`; honest observed rank remains approximately `#11`; two manual submission slots remain, and
+  neither is recommended for E750.

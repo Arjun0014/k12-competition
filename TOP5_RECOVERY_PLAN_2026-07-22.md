@@ -2215,3 +2215,25 @@ The one-hour/8 GiB gate passes. No competition outcome, `V_joint`, or `V_final` 
 exactly one foreground E750 selection validation after the implementation and freeze are committed and
 pushed. The scheduler proof failed to wake in this session and was deleted, so no unattended long run is
 authorized.
+
+### E750 completed result and rejection
+
+Implementation and freeze commit `162eff6` was pushed before scoring. Frozen run
+`20260728T110308Z_session_conditional_objective` then completed all 15 selection folds in
+`38.156235` seconds with 1,332,215,808 peak RSS bytes.
+
+The selected preregistered 10% blend regressed every environment. Mean loss gain versus raw v0.5 was
+`-0.001437298`; mean AUROC, Brier, and ECE changes were
+`-0.000202409/+0.000628759/+0.003492013`. Environment loss changes were
+`V_objective=+0.000145145`, `V_seen=+0.002076314`, and `V_style=+0.002090436`. Worst fold regression was
+`0.002394717`. The 5,000-draw session and semantic-family bootstraps both had `0.0000` positive-gain
+support; their mean gains and intervals were
+`-0.001438778/[-0.001570344,-0.001305156]` and
+`-0.001417993/[-0.001893675,-0.000941879]`.
+
+All nine continuation clauses fail. Reject E750 exactly without pair construction, equal-session weight,
+feature, C, solver, prior, calibration, blend, fold, or gate rescue. No `V_joint`, `V_final`, new ZIP,
+upload, or submission is authorized. Report SHA-256 is
+`6a21fe439d0ad749889f709d74b6b82d72fd8bf305d8105dcb5ddc0161442da6`; the remaining artifact hashes
+are recorded in `PROJECT_LEARNING_LOG.md`. Public champion v0.5 remains `0.6054`, honest observed rank
+approximately `#11`, with two participant-only submission slots still unused.
