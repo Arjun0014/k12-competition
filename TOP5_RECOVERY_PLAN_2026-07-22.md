@@ -1541,3 +1541,13 @@ lessons. Every fold has zero held-out-group or pair overlap. Ordered-content SHA
 `a460bfa5d864c29dfd02e08e9b92e8173bfad9829fc69ebd1fa205707aa734f1`. Bind both hashes in code before
 any candidate embedding or preference score. Authorize only the frozen first-32-pair target-free resource
 benchmark next.
+
+### E670 resource result and external-cache authorization
+
+The fixed 32-pair/64-text benchmark completed in `6.851101` seconds and projects `149.867837` seconds
+(`0.041630` hours) for all 1,400 candidate texts. Peak RSS was `861,392,896` bytes, so the frozen one-hour and
+8 GiB gates pass under Python `3.12.8`, scikit-learn `1.8.0`, Torch `2.13.0+cpu`, and Transformers
+`5.14.1`. Benchmark SHA-256 is
+`297f2a17fa3713b3f024d48cdba1df962a31f3020f7631b3aba8932ccd6ea1c7`. No preference label, candidate
+score, competition outcome, `V_joint`, or `V_final` was accessed. Authorize exactly one external-cache build
+with one calculated ACTIVE completion heartbeat and no worker/log inspection before it.
