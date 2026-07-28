@@ -3044,3 +3044,34 @@ The participant supplied the full text of the forum question thread on 2026-07-1
   is sub-hour foreground work. **Decision:** after full tests and commit/push of this immutable milestone, run
   exactly one authorized E770 `V_seen`/`V_objective`/`V_style` selection validation. Any failed clause closes
   E770 without rescue.
+
+## 2026-07-28 — E770 selection validation: rejected
+
+- Ran exactly one frozen competition selection validation from pushed commit
+  `d227462eb2e0f3fcb73b77517f51dd71a7306127`. Run
+  `20260728T123253Z_tutor_move_state` completed in approximately 30 foreground seconds under `.venv` Python
+  `3.12.8` and scikit-learn `1.8.0`; all three authorized selection environments and their five folds were used.
+  V_joint and V_final were not accessed.
+- The minimum equal-environment mean-loss row was the smallest preregistered 10% E770 blend. Raw v0.5
+  equal-fold-macro environment losses were V_objective `0.593129391`, V_seen `0.548199263`, and V_style
+  `0.548664632`. The 10% blend produced `0.593013637`, `0.551191718`, and `0.551568960`: only V_objective
+  improved (`0.000115754`), while V_seen/V_style regressed by `0.002992455/0.002904327`.
+- Selected 10% equal-environment mean log loss was `0.565258105`, a **negative gain** of `-0.001927010` versus
+  raw v0.5. Worst fold regression was `0.003348798`. Macro AUROC changed by `+0.000156759`, but Brier regressed
+  `+0.000742809` and ECE-10 regressed `+0.005237166`. Session and semantic-family 5,000-replicate positive-gain
+  support were both `0.0`.
+- Only the macro-AUROC non-regression clause passed. The magnitude, three-environment, no-environment-regression,
+  worst-fold, Brier, ECE, session-bootstrap, and semantic-family-bootstrap clauses all failed. Increasing the
+  fixed weight worsened mean loss further: 20% gain `-0.004435532`; 30% gain `-0.007501426`.
+- Artifact SHA-256 values: predictions
+  `d42399787658bc31038ebd6fb8adbb8e508b5a687ca4a4c886f8412b44667be3`; fold metrics
+  `c41952d7c2bd4c3b0e9bb59cf7b1ebc018eb81a122d14c88d9291035a5d7f5a5`; environment metrics
+  `4b80ece40e295513d0b6c6003d12275d212103820c75c40aaf8594f141903beb`; selection
+  `70317aa2076c5efb613f1222f301a014db6e84c5da6157e150392815ef50ef82`; bootstraps
+  `51b14f60244818399efa54e9eb1ce93a0623c79f89269ce5f9e6c0bb893fc215`; report
+  `15387919d3a770805223146b326f17f8766e4e68bf593e819d3d103feedfe77a`.
+- A public improvement is not projected; the honest bracket remains approximately eleventh at public `0.6054`,
+  subject to leaderboard drift. Protected v0.5 ZIP SHA-256 was rechecked as
+  `65467003547fb62ec867733c6acf0a63e6f9fb0fed9533b61b9592e143b17186`. No new ZIP, upload, or submission
+  occurred. **Decision: reject E770 completely. Do not alter rules, features, C, weight, calibration, or
+  environment aggregation. Proceed to independent E780 ability-demand/optimal-challenge target-free design.**

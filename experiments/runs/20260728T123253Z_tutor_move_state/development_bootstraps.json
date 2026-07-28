@@ -1,0 +1,74 @@
+{
+  "0.10": {
+    "semantic_family": {
+      "baseline": "pred_v05_raw",
+      "bootstrap_mean_gain": -0.0019416506588808826,
+      "ci_lower": -0.002512816083720891,
+      "ci_upper": -0.0013840188261719081,
+      "environments": 3,
+      "group_column": "semantic_family",
+      "observed_mean_gain": -0.001927338490694459,
+      "replicates": 5000,
+      "support_positive_gain": 0.0
+    },
+    "session": {
+      "baseline": "pred_v05_raw",
+      "bootstrap_mean_gain": -0.001926862649077149,
+      "ci_lower": -0.0020766972581501585,
+      "ci_upper": -0.0017746384780621541,
+      "environments": 3,
+      "group_column": "session_id",
+      "observed_mean_gain": -0.0019273384906944588,
+      "replicates": 5000,
+      "support_positive_gain": 0.0
+    }
+  },
+  "0.20": {
+    "semantic_family": {
+      "baseline": "pred_v05_raw",
+      "bootstrap_mean_gain": -0.004473554104585136,
+      "ci_lower": -0.005684045941582703,
+      "ci_upper": -0.003280639663938905,
+      "environments": 3,
+      "group_column": "semantic_family",
+      "observed_mean_gain": -0.004436182676847506,
+      "replicates": 5000,
+      "support_positive_gain": 0.0
+    },
+    "session": {
+      "baseline": "pred_v05_raw",
+      "bootstrap_mean_gain": -0.004437717674760419,
+      "ci_lower": -0.004728094518123399,
+      "ci_upper": -0.004138020111476275,
+      "environments": 3,
+      "group_column": "session_id",
+      "observed_mean_gain": -0.004436182676847506,
+      "replicates": 5000,
+      "support_positive_gain": 0.0
+    }
+  },
+  "0.30": {
+    "semantic_family": {
+      "baseline": "pred_v05_raw",
+      "bootstrap_mean_gain": -0.007546410186031394,
+      "ci_lower": -0.009310838119034881,
+      "ci_upper": -0.005816064790093667,
+      "environments": 3,
+      "group_column": "semantic_family",
+      "observed_mean_gain": -0.007502400066925342,
+      "replicates": 5000,
+      "support_positive_gain": 0.0
+    },
+    "session": {
+      "baseline": "pred_v05_raw",
+      "bootstrap_mean_gain": -0.007503373075389894,
+      "ci_lower": -0.007940044401806495,
+      "ci_upper": -0.007064262501748364,
+      "environments": 3,
+      "group_column": "session_id",
+      "observed_mean_gain": -0.007502400066925342,
+      "replicates": 5000,
+      "support_positive_gain": 0.0
+    }
+  }
+}
