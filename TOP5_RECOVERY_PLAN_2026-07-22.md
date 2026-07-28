@@ -1845,6 +1845,36 @@ values for prediction/metrics/folds/bootstrap/report are
 No hardened validation, ZIP, upload, or submission is authorized. `V_joint_accessed=false`;
 `V_final_accessed=false`.
 
+## E730 freeze after E720 rejection and before any aligned outcome score
+
+E720 is closed. The next independent branch returns to the one representation family with verified public and
+hardened value, BGE-base, but changes its target-free geometry rather than encoder, pooling, text, outcome loss,
+or calibration. Existing context and objective embeddings share a highly anisotropic space. A centered,
+orthogonal Procrustes map can use only matched context/objective pairs to remove common-direction dominance and
+align tutoring evidence to the objective without any outcome.
+
+A label-free five-way session audit on all 4,096 frozen rows used
+`SHA256("E730|" + session_id) mod 5`. Mean true-pair minus within-fold one-position-shuffled cosine gap increased
+from `0.159612214` in raw BGE space to `0.706424700` after train-fold-centered Procrustes alignment. Every fold
+showed aligned true-pair cosine `0.7039-0.7143` and shuffled cosine within `-0.0041-0.0077`. Five 768-dimensional
+SVDs took 1.528807 seconds. This large honest target-free separation gives a plausible path to the required
+0.0016 loss improvement.
+
+- Use the immutable BGE-base context/objective caches and frozen pilot/folds only. In each outcome outer fold,
+  fit context and objective means and the orthogonal Procrustes map from legal session-purged training rows
+  only. Center and map context; center objective; L2-normalize both. Apply that fixed fold map to held-out rows.
+- The aligned candidate interaction is exactly mapped context and centered objective at `0.7`, their elementwise
+  product at `6.0`, and absolute difference at `0.7`; replace the dense cosine with aligned cosine. Fit the
+  unchanged fold-local `C=0.1` logistic probe with the existing 35 legal controls. No rank truncation,
+  regularization, whitening, scaling, diagonal map, centering, feature, C, or solver sweep.
+- Compare only raw 10%, 20%, and 30% probability blends over the identical raw BGE-base comparator. Select
+  minimum loss with AUROC then smaller-weight tie breaks.
+- Continuation requires loss gain at least `0.0016`, maximum fold regression `0.0005`, AUROC/Brier
+  non-regression, ECE regression at most `0.001`, and 5,000-session bootstrap support at least `0.95`.
+  Failure rejects E730 without map, rank, feature, optimizer, calibration, or weight rescue. Passing authorizes
+  only `V_seen`, `V_objective`, and `V_style`; `V_joint` remains confirmation-only and `V_final` sealed.
+  No upload or submission is authorized.
+
 ## E700 freeze after E690 rejection and before FairytaleQA candidate embedding
 
 E690 is closed and none of its EssayJudge data, target, head, coefficient, prediction, or threshold evidence may
