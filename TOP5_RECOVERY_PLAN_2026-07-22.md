@@ -1738,6 +1738,35 @@ blend rescue. Prediction/metrics/folds/bootstrap/report SHA-256 values are
 Projected public loss remains verified v0.5 `0.6054`; the honest observed rank is approximately `#11`.
 No hardened evaluation, package, upload, or submission is authorized. `V_joint` and `V_final` remain sealed.
 
+## E740 frozen session-mastery decomposition
+
+E720 and E730 are closed. The remaining audit found no prior model trained against a legal training-session
+correctness fraction. Existing full-transcript heads repeat a session once per response and optimize noisy
+binary response labels; inverse multiplicity weighting changed weights but did not change the target. E740
+instead asks whether the transcript supports a transferable session-level mastery probability.
+
+Before any E740 outcome score, freeze this exact protocol:
+
+- Use the immutable 4,096-row BGE pilot and its five existing session-purged objective folds. For each outer
+  fold, purge every validation session first. Within legal training rows only, aggregate the binary labels to
+  one mean-correct soft target per session. Validation labels never enter an aggregate.
+- Represent every session only by the existing normalized full-transcript word 1-2 gram hash with `2^17`
+  dimensions. Fit one equal-session soft-label log-loss head by duplicating each unique training-session row
+  with labels one and zero and sample weights `session_mean` and `1-session_mean`.
+- Fix `SGDClassifier(loss="log_loss", penalty="l2", alpha=3e-5, max_iter=200, tol=1e-4, shuffle=True,
+  average=True)` and seed `20260728 + fold`. No objective text/ID, response-level label, old prediction,
+  provider ID, test aggregate, estimator, alpha, or calibration sweep enters this head.
+- Predict each held-out response from its own session transcript only. Evaluate only 10%, 20%, and 30%
+  blends over the same raw BGE-base comparator. Selection is lowest loss, then highest AUROC, then smallest
+  weight.
+- Promotion requires loss gain at least `0.0016`, maximum fold regression at most `0.0005`, AUROC and Brier
+  non-regression, ECE regression at most `0.001`, and at least `0.95` support in the fixed 5,000-session
+  paired bootstrap. Failure rejects E740 without target, alpha, feature, estimator, or blend rescue.
+
+The model is deployable under the independent-sample rule: full-training session means affect fitted
+coefficients only; inference computes no statistic across test rows. `V_joint` is confirmation-only and
+`V_final` remains sealed. No upload or submission is authorized.
+
 ## E710 freeze after E700 rejection and before any target score
 
 The prize-safe external-source inventory is closed. The authorized v0.5 component audit shows that the raw

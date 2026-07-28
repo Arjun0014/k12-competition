@@ -2757,3 +2757,18 @@ The participant supplied the full text of the forum question thread on 2026-07-1
 - **Decision:** only fold-bound and ECE clauses pass. Reject E730 literally without rescue. Projected public
   loss remains verified v0.5 `0.6054`; honest observed rank is approximately `#11`. No hardened evaluation,
   ZIP, upload, or submission is authorized; `V_joint_accessed=false`; `V_final_accessed=false`.
+
+### E740 session-mastery decomposition audit and preregistration
+
+- E720 and E730 are closed. No prior branch changes the supervised target from repeated noisy response labels
+  to a legal training-session correctness fraction; prior session weighting changed weights only.
+- Freeze one equal-session soft-label log-loss head on the existing `2^17` full-transcript word hash. Within
+  each outer fold, validation sessions are purged before calculating one mean-correct target per legal
+  training session. The soft target is implemented as duplicated positive/negative session rows weighted by
+  `mean` and `1-mean`.
+- Fix averaged SGD log loss, `alpha=3e-5`, 200 iterations, no objective/provider/test aggregate, and only
+  10/20/30% blends over raw BGE-base. The literal E730 proper-score, fold, and 5,000-session bootstrap gates
+  apply, including at least `0.0016` loss gain.
+- Inference remains sample-independent: training-session aggregates are absorbed into fixed coefficients,
+  while each test response uses only its own transcript. Failure rejects the exact branch without rescue.
+  `V_joint_accessed=false`; `V_final_accessed=false`; no platform action occurred.
