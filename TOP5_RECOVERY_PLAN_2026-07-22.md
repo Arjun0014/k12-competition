@@ -1466,3 +1466,63 @@ fold-model, and report SHA-256 values are
 `0.6054` and approximately `#8`; the preserved ZIP remains unchanged at
 `65467003547fb62ec867733c6acf0a63e6f9fb0fed9533b61b9592e143b17186`. `competition_outcomes_accessed=false`;
 `V_joint_accessed=false`; `V_final_accessed=false`.
+
+## E670 freeze after E660 rejection and before Bridge candidate embedding
+
+E640-E660 tested outcome, satisfaction, and generic pedagogical-quality targets. E670 does not rescue any of
+those sources, labels, representations, estimators, or gates. It uses Bridge's paired cognitive-task-analysis
+supervision: for the same demonstrated student math mistake, a real novice tutor response is paired with an
+experienced teacher's rewritten remediation response. This directly targets response choice at a learning
+opportunity rather than dialogue-level quality or released correctness.
+
+- Immutable source: `rose-e-wang/bridge` Hugging Face dataset commit
+  `8f469883aa7d7a5c1d64e5c961a033ce71d21f5e`, licensed CC BY-NC 4.0. Source-card SHA-256 is
+  `279b838af2dc1b73fe69d2757ccb4b8e00251708621d1f66d69ce78703584e63`. Local train/validation/test
+  JSON SHA-256 values are `870fa10d299711d315718d1995f234988582d7168fa9c054c267ededd89ba260`,
+  `1d87ffece5fba05b6f5e91a2bcd0e5d556afb00973dd47e09969c875576bf327`, and
+  `7c1f5eccce6f635924ca495439c7a9d70885c73122dd4caf8ad9066c657265e9`.
+- Use all 700 paired rows: 419 released train, 71 validation, and 210 test rows; 459 unique `c_id` values,
+  383 session roots, and 208 lesson topics. Every row has exactly four history turns and nonempty original
+  novice `c_r` and expert `c_r_` responses; no pair is text-identical. Released error, strategy, intention,
+  split, `c_revision`, and all later student/tutor turns are forbidden as features.
+- Construct two target-free texts per pair. Preserve the four `c_h` turns chronologically as `Student:` or
+  `Tutor:` lines, append either the full original or expert response as chronological `Tutor:` lines, and append
+  exactly `Task: assess how effectively the candidate tutor response remediates the demonstrated mathematical
+  misunderstanding.` Encode with the unchanged packaged MIT BGE-base normalized final-layer CLS representation,
+  256-token left truncation, CPU float32, six threads, and batch 16.
+- For each pair form `d = expert_embedding - novice_embedding`. Fit the fixed antisymmetric model by stacking
+  `d` with label 1 and `-d` with label 0 and using unweighted
+  `LogisticRegression(C=0.1, solver="lbfgs", fit_intercept=False, max_iter=1000,
+  random_state=20260728)`. No C, prompt, context, turn, pooling, normalization, weighting, calibration,
+  threshold, or nonlinear-model sweep exists.
+- Evaluate two frozen five-fold protocols. `session_disjoint` assigns the `c_id` prefix before the final
+  underscore by `SHA256("E670|session|" + session_root) mod 5`. `lesson_disjoint` assigns the exact
+  `lesson_topic` by `SHA256("E670|lesson|" + lesson_topic) mod 5`. All duplicate `c_id` and lesson rows remain
+  together. Compare with the fixed 0.5 preference prior: log loss `0.693147181` and Brier `0.25`.
+- Every external clause is mandatory in both protocols: expert-preference accuracy at least `0.60`; balanced
+  AUROC at least `0.65`; log-loss gain at least `0.025`; Brier gain at least `0.010`; ECE-10 at most `0.10`;
+  positive log-loss gain in every fold; and at least `0.95` support for positive log-loss gain in a
+  2,000-replicate bootstrap over the held-out grouping unit.
+- Any failed clause rejects E670 without row filtering, expert-label reinterpretation, response selection,
+  source mixture, context window, task line, C, pooling, estimator, weighting, calibration, fold, threshold, or
+  gate rescue. A complete pass permits one all-source ranking vector and one target-free competition cache.
+- If permitted, select at most eight tutor utterances per competition session using deterministic evenly spaced
+  chronological indices including the first and last tutor utterance. For each selected utterance, use exactly
+  the preceding four transcript utterances plus that candidate tutor utterance and the frozen task line. Score
+  its normalized BGE-base CLS embedding with the all-source Bridge vector and aggregate exactly mean, standard
+  deviation, minimum, maximum, first, last, least-squares chronological slope, and fraction of positive logits.
+  No competition outcome enters this cache.
+- Competition outcomes may train only leakage-safe fold-local unweighted logistic probes over those eight fixed
+  aggregates. Evaluate `V_seen`, `V_objective`, and `V_style`; use `V_joint` only for the plan's allowed locked
+  confirmation. Candidate blends remain exactly 10%, 20%, and 30% over raw v0.5. The backup/top-five gates
+  remain literal, `V_final` remains sealed, and no upload or submission is authorized.
+
+### E670 source audit and canonicalization authorization
+
+The immutable source audit found 700 complete pairs, 383 distinct session roots, 208 lessons, no empty candidate
+response, no identical novice/expert pair, and one duplicated response pair. Novice responses contain
+`2/17/92` minimum/median/maximum whitespace tokens; expert responses contain `1/16/79`. The 241 repeated
+four-turn contexts are expected multiple expert annotations and are protected by both frozen grouping schemes.
+This audit authorizes canonicalization only. Bind the ordered canonical-content and Parquet hashes before any
+embedding benchmark or candidate prediction, then run only the fixed first-32-pair target-free resource
+benchmark. The resource gate is projected full-cache runtime at most one hour and peak RSS at most 8 GiB.
