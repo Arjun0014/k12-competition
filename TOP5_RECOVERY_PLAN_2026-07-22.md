@@ -1749,6 +1749,14 @@ counts are train `4096/4096`, validation `1025/1025`, and test `1007/1007`, tota
 answer-support labels are absent from text. No competition outcome, `V_joint`, or `V_final` was accessed.
 Both hashes are frozen and authorize only the preregistered fixed first-32-row target-free benchmark.
 
+The fixed benchmark encoded 32 rows in 8.022755 seconds, projecting 3,072.715242 seconds (51.211921 minutes)
+for all 12,256 rows. It produced a finite `32 x 768` float32 matrix, peaked at 1,108,893,696 RSS bytes, and
+passed the frozen one-hour/8 GiB resource gate under Python 3.12.8, scikit-learn 1.8.0, Torch 2.13.0+cpu, and
+Transformers 5.14.1. Benchmark SHA-256 is
+`648297f3b5492350c75dcb2a20ff5c3c5cf3d88e0fd549fa360402fe96ed18e9`. No candidate target, prediction
+metric, competition outcome, `V_joint`, or `V_final` was accessed. This authorizes exactly one E700
+external-cache worker and one calculated non-repeating completion checkpoint.
+
 ## E690 freeze after E680 rejection and before EssayJudge candidate embedding
 
 E680 is closed. None of its CIMA rows, labels, head, coefficient, probability, threshold, or calibration
