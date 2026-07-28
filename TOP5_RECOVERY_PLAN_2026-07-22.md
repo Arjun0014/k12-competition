@@ -1358,3 +1358,53 @@ public projection, upload, or submission is authorized. Prediction/fold-model/re
 `7581e2f3478c705e50f32985753137d5bde6a85e10274dc89fabdc2f74e6193b`. The v0.5 backup ZIP remains unchanged
 at SHA-256 `65467003547fb62ec867733c6acf0a63e6f9fb0fed9533b61b9592e143b17186`;
 `V_joint_accessed=false`; `V_final_accessed=false`.
+
+## E660 freeze after E650 rejection and before ConvoLearn scoring
+
+E650 showed that a 450-row post-hoc satisfaction rating does not yield a transferable dialogue-quality boundary.
+E660 does not rescue that dataset, target, representation, fold, or estimator. It uses the independently released
+MIT ConvoLearn corpus: 2,134 unique tutor-student dialogues collected from credentialed teachers interacting with
+a simulated seventh-grade student, with explicit pedagogical effectiveness, completeness, and knowledge-building
+dimension annotations.
+
+- Immutable source: `masharma/convolearn` commit `f250e930356f2092462c4d1cd6bb2aae85689b1f`; Parquet SHA-256
+  `c1599655c3a2a3ef5fd199906200f02afd6b26a1bd4b5fbc16a18d6b784d5c04`; MIT dataset-card SHA-256
+  `63d12a3c43645e188d03599f4e500a49309048f77670e17209628cdea56f3c09`. Use all 2,134 rows, all four
+  released science topics, all 21 pedagogical subdimensions, and all six broad dimensions. No competition row or
+  outcome enters canonicalization or embedding.
+- Canonical text is target-free. Collapse each non-empty `Student:`/`Teacher:` line, split the chronological line
+  indices into five contiguous bins, retain the first and last line of every bin without duplication, truncate
+  each retained line to its first 16 whitespace tokens, and append exactly
+  `Task: represent the demonstrated tutoring quality and pedagogical approach.` Encode with the unchanged
+  packaged MIT BGE-base normalized final-layer CLS representation, 256-token left truncation, CPU float32, six
+  threads, and batch 16. Ratings, dimension names, subdimension names, topic, exchange count, and source metadata
+  are forbidden from model input.
+- Fit three fixed fold-local heads from the same embedding: Ridge `alpha=10` for normalized effectiveness
+  `(rating-1)/4`; Ridge `alpha=10` for normalized completeness `(rating-1)/2`; and unweighted multinomial
+  `LogisticRegression(C=0.1, solver="lbfgs", max_iter=1000, random_state=20260728)` for the six broad
+  pedagogical dimensions. No alpha/C, prompt, pooling, compaction, clipping, transform, weighting, calibration, or
+  threshold sweep exists.
+- Evaluate two separately frozen shift protocols. `subdimension_disjoint` assigns each of the 21 released
+  subdimensions by `SHA256("E660|subdimension") mod 5`, so validation subdimensions never enter training.
+  `topic_disjoint` uses four leave-one-science-topic-out folds. Compare regression with each fold's legal training
+  mean and dimension classification with its legal smoothed training prior.
+- Every external clause is mandatory in both protocols: effectiveness Pearson and Spearman at least `0.25`,
+  effectiveness RMSE gain at least `0.015`; completeness Pearson and Spearman at least `0.20`, completeness RMSE
+  gain at least `0.010`; dimension macro-F1 at least `0.45`, dimension log-loss gain at least `0.10`; positive
+  effectiveness and completeness RMSE gain in every fold; and at least `0.90` support for positive effectiveness
+  squared-error gain in a 2,000-replicate bootstrap over the held-out grouping unit.
+- Any failed clause rejects E660 without label binning, source mixture, row/view, task line, segment rule, alpha,
+  C, pooling, classifier, weighting, calibration, or gate rescue. A complete pass permits one all-source
+  multi-head fit and one target-free competition session cache. Competition labels may train only leakage-safe
+  fold-local linear probes. Candidate blends remain exactly 10%, 20%, and 30% over raw v0.5; selection uses only
+  `V_seen`, `V_objective`, and `V_style`, while `V_joint` remains confirmation-only. The backup and top-five gates
+  remain literal, `V_final` remains sealed, and no upload or submission is authorized.
+
+### E660 source audit and canonical authorization
+
+The immutable source has no missing fields or duplicated conversation text. Effectiveness uses nine half-point
+values from 1-5; completeness uses five half-point values from 1-3. Topic counts are 794, 604, 371, and 365;
+the six broad-dimension counts range from 189 to 589. Raw dialogues have 13/21/106 minimum/median/maximum lines
+and 141/456/9,557 minimum/median/maximum whitespace tokens. The frozen subdimension folds contain
+`[520,565,385,374,290]` rows from `[5,5,4,4,3]` held-out subdimensions. This audit authorizes canonical-cache
+construction only; no candidate prediction metric has been generated.
