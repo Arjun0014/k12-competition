@@ -1738,3 +1738,12 @@ participate in exact essay duplication; no exact `(Question, Essay)` pair duplic
 grouping reduces 125 prompts to 123 components and protects all duplicates. This audit authorizes
 canonicalization only; ordered-content and Parquet hashes must be bound before the fixed 32-row target-free
 resource benchmark.
+
+Canonicalization completed under Python 3.12.8. Ordered-content and canonical Parquet SHA-256 values are
+`9a88708f39ba9230a6315a088e5693b55111d7e51c9664732ab4ba49da00ef3b` and
+`a5f57aef306add56855d3411710552f5e4d48776c92c3ed3e3e5f07907cd7fad`. Shape and target statistics remain
+exactly 1,054 rows and `0.15/0.676423150/0.101169702/0.98` minimum/mean/population-standard-deviation/maximum.
+Fold row counts are `[262,216,183,174,219]`; all component and exact-essay train/validation intersections are
+empty. Scores, graphs, images, and chart types are absent from candidate text. No competition outcome,
+`V_joint`, or `V_final` was accessed. Both hashes are frozen and authorize only the preregistered fixed
+first-32-row target-free benchmark.
