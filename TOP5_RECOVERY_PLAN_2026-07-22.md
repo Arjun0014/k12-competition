@@ -1747,3 +1747,10 @@ Fold row counts are `[262,216,183,174,219]`; all component and exact-essay train
 empty. Scores, graphs, images, and chart types are absent from candidate text. No competition outcome,
 `V_joint`, or `V_final` was accessed. Both hashes are frozen and authorize only the preregistered fixed
 first-32-row target-free benchmark.
+
+The fixed benchmark encoded 32 rows in 7.691140 seconds, projecting 253.326914 seconds for all 1,054 rows.
+It produced a finite `32 x 768` float32 matrix, peaked at 1,007,497,216 RSS bytes, and passed the one-hour/8
+GiB resource gate under Python 3.12.8, scikit-learn 1.8.0, Torch 2.13.0+cpu, and Transformers 5.14.1.
+Benchmark SHA-256 is `6402e76279a9161ab405fec844ca31fee7c133152148b92dd1e3a54f424758cb`.
+No candidate target, prediction metric, competition outcome, `V_joint`, or `V_final` was accessed. This
+authorizes exactly one E690 external-cache worker and one calculated non-repeating completion checkpoint.
