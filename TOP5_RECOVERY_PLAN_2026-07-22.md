@@ -1285,3 +1285,48 @@ already queued short-interval heartbeats in this environment. Never again use a 
 a completion checkpoint. Future calculated wakes must use one explicit DTSTART with a daily-frequency,
 single-count RRULE, must be verified persisted ACTIVE, and must self-delete before inspection. This operational
 correction changes no experiment result.
+
+## E650 freeze after E640 rejection and before SimulatorArena quality scoring
+
+E640 established that a dialogue-only BGE head does not robustly predict mathematical correctness. E650 is not a
+correctness-label rescue: it tests a different, independently released supervision target from the same
+MIT-licensed real interactions—the human student's 1-10 overall assessment of tutoring quality. This directly
+targets the pedagogical-quality signal that v0.5 semantic similarity does not explicitly model.
+
+- Use all 450 immutable SimulatorArena rows at commit `e9f677c4975496fdd37f28bb6343ec3c1c54c8b4`, source
+  SHA-256 `b2909d037da14ebfafd72e66ad8985ab700f0f164bc5d94713ca6fc43aaf651a`. Target is exactly
+  `(overall_rating - 1) / 9`, with released ratings 1-10; mean/std are `0.703457/0.280880`.
+- Input is exactly E640's chronological first-problem `Student:`/`Tutor:` dialogue and fixed task line, except the
+  task line becomes `Task: represent the pedagogical quality of this tutoring interaction.` The rating itself,
+  final answer/solution, correctness, self-report, feedback, identities, model, problem/difficulty, profiles, and
+  second problem remain forbidden as inputs.
+- Use the exact packaged v0.5 BGE-base normalized CLS encoder, 256-token left truncation, CPU float32, and no
+  rejected E640 fold head. Build a new target-free cache because the fixed quality task line differs from E640's
+  correctness task line. No competition target or rejected external checkpoint enters.
+- Assign workers with `int(SHA256("E650|" + workerId)[:16],16) mod 5`; validate each worker fold and purge every
+  training row sharing a validation `problem_id`. Fit one unweighted
+  `Ridge(alpha=10.0, fit_intercept=True, solver="lsqr", max_iter=1000, tol=1e-6)` per fold on normalized
+  embeddings; clip predictions to `[0,1]`. No alpha, transform, prompt, pooling, threshold, or calibration sweep.
+- Compare with each fold's legal training-mean rating. Every clause is mandatory: Pearson and Spearman correlation
+  at least `0.25`; normalized RMSE at most `0.27`; RMSE and MAE gains versus the fold mean at least `0.01` each;
+  positive RMSE gain in at least four of five folds; and at least `0.90` positive squared-error-gain support in
+  separate 2,000-replicate worker and problem bootstraps.
+- Any failed clause rejects E650 without target binning, row/prompt/view, alpha, clipping, fold, weighting,
+  nonlinear head, calibration, checkpoint, or gate rescue. A complete pass permits an all-source quality head,
+  one target-free competition session cache, leakage-safe fold-local probes, and only the frozen 10%, 20%, and
+  30% blends over v0.5. Selection remains `V_seen`/`V_objective`/`V_style`; `V_joint` is confirmation-only and
+  `V_final` remains sealed. No upload or submission is authorized.
+
+### E650 canonical-source authorization
+
+The canonical builder reproduces all 450 rows and every frozen zero-overlap fold count. Ordered-content SHA-256
+is `0d493508458104eebf05810762b704397052841b28e785bae5eac12fe12bc202`; Parquet SHA-256 is
+`85b27544e041459e038ed6d302fec112c5d870873b450d0a05e6a656eed4c0de`. These hashes are bound before any
+quality-model prediction. Authorize only the fixed 32-row, target-free resource benchmark next.
+
+### E650 resource result and cache authorization
+
+The fixed 32-row benchmark completed in `7.220233` seconds and projects `101.534532` seconds (`0.028204` hours)
+for all 450 rows. Peak RSS was `1,023,414,272` bytes; the frozen one-hour/8 GiB clauses pass. Benchmark SHA-256
+is `c35ccfda504420f8a477f08080bbb0b1fa41087bfc9638aeb89e1e5cb5ce1186`. No quality target or prediction
+metric was accessed. Authorize one clean external-cache build and one explicit-DTSTART completion heartbeat.
