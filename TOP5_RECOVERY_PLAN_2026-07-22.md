@@ -1689,6 +1689,35 @@ Prediction, fold-model, and report SHA-256 values are
 `competition_outcomes_accessed=false`; `V_joint_accessed=false`; `V_final_accessed=false`. Projected public
 loss remains verified v0.5 `0.6054`; the honest observed rank bracket remains approximately `#8`.
 
+### E720 completion, wake failure, and literal rejection
+
+The E720 worker completed before 13:34 IST, but its persisted ACTIVE hourly heartbeat did not deliver at
+13:40. It was deleted at 13:54 before the exact worker/artifact inspection. Future long jobs must use and
+verify an explicitly anchored one-time next-run timestamp; the ambiguous hourly pattern is prohibited.
+The cache shape/nnz/build seconds/peak RSS were `4096 x 524288`/`3611435`/`3.330960`/`848953344`;
+cache SHA-256 is `6af9535a45e605ee3c8e98b191b46243ba8bace1dd76476a6b3dee9c6aacfe31`.
+
+The selected 10% blend regressed loss/AUROC/Brier/ECE by
+`0.001834117/0.005349205/0.000869603/0.001825527`. Fold loss changes were
+`+0.006697702/+0.006517232/+0.001785007/-0.004661570/-0.001288230`; bootstrap
+mean/interval/support were `-0.001848706/[-0.004220268,0.000555910]/0.0626`.
+Every gate fails; E720 is rejected literally without rescue.
+
+### E730 target-free centered objective alignment
+
+E730 was preregistered before outcome scoring. Each outer fold fits a centered orthogonal Procrustes map
+from context to objective embeddings on legal purged training rows only, then uses the frozen aligned
+interaction block, 35 legal controls, `C=0.1`, and only 10/20/30% blends over raw v0.5. Acceptance requires
+at least `0.0016` loss gain, maximum fold regression `0.0005`, AUROC/Brier non-regression, ECE regression at
+most `0.001`, and bootstrap support at least `0.95`.
+
+Implementation verification used Python 3.12.8 and scikit-learn 1.8.0; two focused tests pass and Ruff is
+clean. The target-free one-fold benchmark completed in 1.282712 seconds, projecting 6.413560 seconds for
+five folds, with peak RSS 1,506,131,968 bytes. Training/held-out aligned cosine means were
+`0.732931197/0.537957013`. Benchmark SHA-256 is
+`65122f6cf41186298422098d71f4e5583f9312525b099373d5799aa944bd3313`. This authorizes one immediate
+foreground validation; no long-run checkpoint is warranted. `V_joint` and `V_final` remain untouched.
+
 ## E710 freeze after E700 rejection and before any target score
 
 The prize-safe external-source inventory is closed. The authorized v0.5 component audit shows that the raw
