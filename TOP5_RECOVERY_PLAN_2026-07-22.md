@@ -1754,3 +1754,31 @@ GiB resource gate under Python 3.12.8, scikit-learn 1.8.0, Torch 2.13.0+cpu, and
 Benchmark SHA-256 is `6402e76279a9161ab405fec844ca31fee7c133152148b92dd1e3a54f424758cb`.
 No candidate target, prediction metric, competition outcome, `V_joint`, or `V_final` was accessed. This
 authorizes exactly one E690 external-cache worker and one calculated non-repeating completion checkpoint.
+
+### E690 completed external result and literal rejection
+
+The target-free cache completed all 1,054 rows in 213.905256 seconds versus the 253.326914-second projection.
+Its finite float32 shape is `1054 x 768`; embedding and metadata SHA-256 values are
+`faef66f0031ac9c0baae1741bb9d6c72e2bd17115dab50ca313994c349a65a68` and
+`7419b0beb75771c3667288904848afcbce9b12ba511acf629555f4b781d8da76`. Runtime remained Python 3.12.8,
+scikit-learn 1.8.0, Torch 2.13.0+cpu, and Transformers 5.14.1.
+
+Frozen OOF RMSE/MAE/Pearson/Spearman were
+`0.097780051/0.077423379/0.275378820/0.254394280`. Against the legal fold-training-mean comparator
+(`0.101333631/0.079653234`), RMSE and MAE gains were `0.003553580/0.002229855`. Every fold had positive RMSE
+gain: `[0.004540685,0.004053204,0.004184463,0.000915065,0.003257363]`.
+
+The 2,000-replicate prompt-component bootstrap estimated mean squared-error gain `0.000676974`, 95% interval
+`[0.000439316,0.000918783]`, and support `1.0000`. The seven-type bootstrap estimated `0.000627960`, interval
+`[0.000271292,0.000934855]`, and support `0.9990`. Absolute RMSE, every-fold gain, and both bootstrap clauses
+pass. Pearson, Spearman, RMSE gain, and MAE gain fail their frozen thresholds of `0.35/0.35/0.005/0.005`.
+Reject E690 without alpha, trait, target, prompt, length, pooling, estimator, clipping, weighting, fold, or gate
+rescue. No all-source head, competition cache, hardened validation, blend, ZIP, upload, or submission is
+authorized.
+
+Prediction, fold-model, and report SHA-256 values are
+`709fde41553f14b41ced0fb96cc0ceab8becbbb6a45b218a10e47f9481f7ad9d`,
+`2ee2947742496167ea31f5533ee446bb0b48eb1c6ce9da747bce246fa90f7a15`, and
+`ed2999e50fe83802dee17880be08ede8ace6fc37883ccf32a969a3d70af764fc`.
+`competition_outcomes_accessed=false`; `V_joint_accessed=false`; `V_final_accessed=false`. Projected public
+loss remains verified v0.5 `0.6054`; the honest observed rank bracket remains approximately `#8`.
