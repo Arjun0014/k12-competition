@@ -1655,3 +1655,36 @@ resource gate under Python 3.12.8, scikit-learn 1.8.0, Torch 2.13.0+cpu, and Tra
 SHA-256 is `d835b51b87cb1405c4f6347361162ef772eb4d5587b8123d22974f4820bd762e`. No action label,
 competition outcome, `V_joint`, or `V_final` was accessed. This authorizes exactly one E680 external-cache
 worker and one calculated non-repeating completion checkpoint.
+
+### E680 completed external result and rejection
+
+The target-free cache completed all 1,135 rows in 220.273291 seconds versus the 195.132899-second projection.
+Its finite float32 shape is `1135 x 768`; embedding and metadata SHA-256 values are
+`d3773b92514ce87e0da7b8d240806e266a3ce4a8c6de9c255e481b087d5f3937` and
+`23a47010cfb7e13a9ab8555cdd1e223e470d2de0bdf4f970e596597cde0e1ca5`. Runtime remained Python 3.12.8,
+scikit-learn 1.8.0, Torch 2.13.0+cpu, and Transformers 5.14.1.
+
+- `exercise_disjoint`: AUROC `0.795951678`, macro-F1 `0.494637582`, log loss `0.653553626`, Brier
+  `0.230453807`, ECE-10 `0.055249773`, fixed-prior log-loss gain `0.036154929`, and Brier gain
+  `0.017825471`. Fold log-loss gains were
+  `[0.037325484,0.045989832,0.045048280,0.034824266,0.022461336]`. The 2,000-replicate exercise bootstrap
+  estimated mean gain `0.036187909`, 95% interval `[0.031894459,0.040515952]`, support `1.0000`.
+- `concept_disjoint`: AUROC `0.780255895`, macro-F1 `0.510018796`, log loss `0.654773391`, Brier
+  `0.231074440`, ECE-10 `0.082665049`, fixed-prior log-loss gain `0.036051855`, and Brier gain
+  `0.017759525`. Fold log-loss gains were
+  `[0.035803672,0.035102705,0.039070713,0.032843452,0.038852124]`. The 2,000-replicate concept bootstrap
+  estimated mean gain `0.036085519`, 95% interval `[0.032001507,0.040198207]`, support `1.0000`.
+
+Both protocols pass the frozen AUROC, aggregate log-loss gain, aggregate Brier gain, aggregate ECE, every-fold
+gain, and grouped-bootstrap clauses. Both fail the mandatory macro-F1 threshold `>= 0.65`, by `0.155362418`
+and `0.139981204`. The exercise fifth fold also has gain `0.022461336`, but only positivity was required per
+fold and it passes that literal clause. The conjunctive external gate therefore fails. Reject E680 without
+threshold, calibration, C, class weight, estimator, prompt, pooling, fold, label, or other rescue. No all-source
+head, competition cache, hardened validation, blend, ZIP, upload, or submission is authorized.
+
+Prediction, fold-model, and report SHA-256 values are
+`7c8e88bf44b1ae97af9e8d0b106a65fcfb32a37fc7512d8cc7f15a229749dca7`,
+`fbafd945c666af7da80b28f4f6b0bbb338efb8e3e1bcacda6d0aea248b9379ce`, and
+`c635e558efd41e1a745251470b88454cd281118b7f572cf7cd3588e0a15db1a5`.
+`competition_outcomes_accessed=false`; `V_joint_accessed=false`; `V_final_accessed=false`. Projected public
+loss remains verified v0.5 `0.6054`; the honest observed rank bracket remains approximately `#8`.
