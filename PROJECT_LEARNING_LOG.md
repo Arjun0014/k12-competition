@@ -4161,3 +4161,37 @@ The participant supplied the full text of the forum question thread on 2026-07-1
   rank have not run. No competition text has been encoded; `V_joint` and
   `V_final` remain sealed; no cache, model, ZIP, upload, or submission was
   produced.
+
+## 2026-07-30 - E870 rejected at the external misconception gate
+
+- Executed the exact frozen external screen once as run
+  `20260729T205857Z_misconception_atlas` from pre-score commit `ad6b82a`.
+  It completed in `67.3636` seconds in the foreground under `.venv` Python
+  3.12.8, NumPy 2.5.1, pandas 2.3.3, and scikit-learn 1.8.0.
+- The screen used all 220 MaE examples and 55 misconception labels. Queries
+  contained only question and incorrect answer; they excluded the source's
+  educator explanation, correct answer, label, topic, competition text, and
+  outcomes. Every held-out true prototype retained at least two examples after
+  normalized-question duplicate exclusion.
+- All-label top-1/top-3/top-5 were
+  `0.195455 / 0.436364 / 0.527273`, with MRR `0.357842`. Within-topic
+  top-1/top-3/MRR were `0.390909 / 0.731818 / 0.589827`. Median
+  true-versus-hardest-false margin was `-0.0213801`; the minimum topic
+  all-label top-5 was `0.25`, and minimum topic within-topic top-3 was
+  `0.588235`.
+- The 5,000-replicate misconception-ID bootstrap had mean top-5 `0.526752`,
+  95% interval `[0.427273, 0.627273]`, and only `0.3412` support for top-5 at
+  least `0.55`. Three of twelve clauses passed; all frozen all-label accuracy/
+  MRR, within-topic accuracy/MRR, minimum-topic top-5, and bootstrap clauses
+  failed. Reject exact E870 without educator/correct-answer leakage,
+  duplicate-template retention, topic selection, model/prototype/threshold
+  changes, fine-tuning, or any other rescue.
+- Artifact SHA-256 values: report
+  `b8bfbb4df920b619729f68fa244b47a23ded8fc82b38491e887a614ad14339e3`;
+  external scores
+  `7f0018e64841de4f5e84f6e690d32b6bba4334373cd8c9d8cd663b45d5d27e6c`.
+- Competition log loss, AUROC, Brier, ECE, validation folds/environments,
+  outcome bootstrap, projected public loss, and rank are not applicable.
+  `competition_outcomes_accessed=false`; no competition text was encoded.
+  `V_seen`, `V_objective`, `V_style`, `V_joint`, and `V_final` were not
+  accessed; no cache, model, ZIP, upload, or submission was produced.
