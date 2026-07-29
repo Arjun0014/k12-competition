@@ -3470,3 +3470,36 @@ The participant supplied the full text of the forum question thread on 2026-07-1
   `E810_REJECTION_2026-07-29.md`.
 - The protected v0.5 ZIP remains unchanged at SHA-256
   `65467003547fb62ec867733c6acf0a63e6f9fb0fed9533b61b9592e143b17186`.
+
+## 2026-07-29 - mailed NCTE transcript ZIP verified as exact duplicate
+
+- Inspected the participant-supplied raw archive
+  `NCTE Transcripts - Release-20260729T173920Z-1-001.zip` in place without
+  extracting, moving, or altering it. The archive is 27,734,379 bytes with
+  SHA-256
+  `9a3f01481c634466c339937c9e86e7899a08a832afbd628bf8709973c5aeb088`.
+  It opens cleanly and contains exactly three CSV members totaling 114,571,649
+  uncompressed bytes.
+- Directly hashed every decompressed ZIP member and compared it with the
+  authenticated Drive release already preserved under
+  `Datasets/NCTE/release_19LzXF0IRtOGO62ZUnJeX6rBTjynuW6RR`. All three CSVs are
+  byte-for-byte identical:
+  `ncte_single_utterances.csv`, 113,819,937 bytes, SHA-256
+  `bbfa37ac857991e5d12b1677216896f32d7cf4c2d95b618b67afa7b3bf23b3d7`;
+  `paired_annotations.csv`, 547,485 bytes, SHA-256
+  `acb81f02dfd00e8e5426af74525fb1f629c7f880cdb1646d533a1852bc6e3ae7`;
+  and `student_reasoning.csv`, 204,227 bytes, SHA-256
+  `16bc7eb53e1955f9ecf28b8f02d9727659fdd1a138782355243e0754a3633384`.
+- **Decision:** do not extract or re-audit the duplicate. It adds no rows,
+  labels, fields, lineage, or new experiment evidence beyond the already
+  completed NCTE audit. NCTE uptake, focusing-question/tutor-move, and student
+  reasoning branches remain closed as documented; this archive does not
+  authorize a new score or rescue.
+- Environment verification remained `.venv` Python `3.12.8` and scikit-learn
+  `1.8.0`. Competition log loss, AUROC, Brier, ECE, folds/environments,
+  bootstrap evidence, projected public loss, and rank are not applicable
+  because no competition outcome was accessed. `V_joint_accessed=false`;
+  `V_final_accessed=false`; no cache, checkpoint, model, ZIP, upload, or
+  competition submission was created.
+- The protected v0.5 ZIP was reverified unchanged at SHA-256
+  `65467003547fb62ec867733c6acf0a63e6f9fb0fed9533b61b9592e143b17186`.
