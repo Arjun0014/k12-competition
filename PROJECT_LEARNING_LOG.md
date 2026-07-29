@@ -4120,3 +4120,44 @@ The participant supplied the full text of the forum question thread on 2026-07-1
   bootstraps, projected public loss, and rank are not applicable because
   `competition_outcomes_accessed=false`. `V_joint` and `V_final` remain sealed;
   no competition cache, estimator, ZIP, upload, or submission was produced.
+
+## 2026-07-30 - E870 MaE misconception-atlas external gate frozen
+
+- A fresh audit rejected an alternate StudyChat assignment score/embedding
+  branch because E840 explicitly closed alternate grade-target and embedding
+  rescue. Repository/log search then found no prior misconception description,
+  diagnostic-example atlas, or misconception-retrieval component. E870 targets
+  systematic mathematical error rather than generic correctness, tutor move,
+  state, quality, difficulty, aggregation, calibration, or ASR normalization.
+- Acquired the public MIT
+  `nancyotero-projects/math-misconceptions` repository into ignored
+  `Datasets/MaE` at immutable revision
+  `12bee142d49dfb3c874149035cfbad28547a818b`. Raw hashes are data
+  `8223b3a6222c02f4efe8519c4e6abaa2e8e35d96a380bda3882b4f1cdd1fe4e1`,
+  license
+  `cca1a8c2bc40c9e58cddec5c88da0330384dafd6600059a063f2ea2cba1d35e4`,
+  and README
+  `c91fc759503a5d4c9117e8fe8595026f8528b16b6a8bee15e82f2ffe5dcd8087`.
+- Schema audit confirms 220 examples, 55 misconception IDs, exactly four
+  examples per ID, and one description/topic per ID. The source paper reports
+  a nontrivial expert-designed task; acquisition required no gate, account,
+  disclosure, or new terms.
+- Froze leave-one-example retrieval with the packaged MIT BGE-base model. A
+  query uses only the observable question and incorrect learner answer—never
+  the source's educator-authored explanation, correct answer, or label. The
+  true prototype excludes every exact normalized-question duplicate to block
+  template leakage and must retain at least two examples. All 55 labels and
+  released-topic candidate sets are scored without training or tuning.
+- Twelve literal external clauses bind all-label and within-topic top-k/MRR,
+  per-topic minima, and a 5,000-replicate misconception-ID bootstrap. Any
+  failure rejects exact E870 before any competition text or outcome, without
+  adding correct answers, retaining duplicate questions, changing fields,
+  prototype/model/pooling/length, topic selection, or threshold rescue.
+- Focused tests passed `3/3`, Ruff was clean, source/model lineage verification
+  passed, and the full project suite passed `247` tests plus `8` subtests in
+  `45.02` seconds under `.venv` Python 3.12.8 and scikit-learn 1.8.0.
+  Resource/model runtime, retrieval metrics, competition log loss/AUROC/Brier/
+  ECE, outcome folds/environments, outcome bootstrap, public projection, and
+  rank have not run. No competition text has been encoded; `V_joint` and
+  `V_final` remain sealed; no cache, model, ZIP, upload, or submission was
+  produced.
