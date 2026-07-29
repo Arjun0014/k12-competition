@@ -4195,3 +4195,50 @@ The participant supplied the full text of the forum question thread on 2026-07-1
   `competition_outcomes_accessed=false`; no competition text was encoded.
   `V_seen`, `V_objective`, `V_style`, `V_joint`, and `V_final` were not
   accessed; no cache, model, ZIP, upload, or submission was produced.
+
+## 2026-07-30 - post-E870 source and fallback audit
+
+- Reconstructed the complete recent failure pattern before proposing another
+  branch. E770/E810/E820/E830 each regressed equal-environment log loss by
+  roughly `0.00167-0.00205`, with the largest consistent damage in `V_seen`
+  and `V_style`. E840 then failed real longitudinal external outcome transfer;
+  E850/E860/E870 failed target-free or external gates. Another objective prior,
+  semantic adaptation, published count, behavior cue, speaker fix, ASR
+  transform, misconception model, calibration, or failed-score blend is not
+  independent.
+- Primary-source research identified APTA as the only current high-priority
+  conditional branch because it combines reciprocal solver/tutor roles,
+  ordered algebra problem actions, chat, and real learning analyses. The 2024
+  APTA study says deidentified data pool three study-site datasets in DataShop.
+  The already frozen landing gate remains mandatory; access alone is not
+  evidence that learner/outcome linkage or sample size is sufficient.
+- The remaining outcome-linked reserve is weak. ITSPOKE/WOZ has real spoken
+  dialogue and pre/post testing but is public by request, physics-domain, only
+  about 60 learners in the released pilot, and its likely uncertainty/affect
+  mechanism overlaps closed challenge, behavior, speaker, and ASR families.
+  BEETLE II has a real evaluation but no verified open transcript-plus-outcome
+  package was found. NCTE's acquired public files omit value-added/test
+  outcomes; no institutional ICPSR entitlement may be fabricated. SAGA22,
+  TalkMoves, and NCTE discourse labels lack an independent outcome and overlap
+  E530/E760/E770. The synthetic Education Dialogue outcome overlaps rejected
+  E640.
+- Wrote
+  `POST_E870_FIRST_PLACE_RESEARCH_AND_FALLBACK_PLAN_2026-07-30.md` with a
+  literal APTA source/external/transfer/selection ladder, a narrow
+  ITSPOKE/BEETLE source reserve, and a stop-to-write-up branch if no independent
+  outcome source survives. Its SHA-256 is
+  `873b47259a9bedcf49b8b70f9b3396dff55de92b04d631a201e88f773cb511ec`.
+  No E880 is preregistered.
+- DataShop authentication expired. Reauthentication through the previously
+  authorized GitHub route unexpectedly opened a blank new-account registration
+  instead of the existing account. No account was created, form submitted,
+  terms accepted, or new data disclosed. The browser was left on DataShop
+  login; the existing `k12-apta-access-monitor` remains active but may require
+  participant sign-in at its next check.
+- This was research/documentation only. Runtime, competition log loss, AUROC,
+  Brier, ECE, folds/environments, bootstraps, projected gain, and rank change
+  are not applicable. No competition outcome or prediction was opened;
+  `V_joint` and `V_final` remain sealed. No model, cache, ZIP, upload, or
+  submission was produced. Protected v0.5 remains public `0.6054`; protected
+  ZIP SHA-256 remains
+  `65467003547fb62ec867733c6acf0a63e6f9fb0fed9533b61b9592e143b17186`.
