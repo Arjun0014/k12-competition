@@ -3977,3 +3977,39 @@ The participant supplied the full text of the forum question thread on 2026-07-1
   bootstrap, and public projection are not applicable because
   `competition_outcomes_accessed=false`. `V_joint` and `V_final` remain sealed;
   no model, ZIP, upload, or submission was produced.
+
+## 2026-07-30 - E850 lexical speaker-role denoising frozen
+
+- Post-E840 novelty audit selected the explicit open item from the organizer
+  clarification and prior role-ablation learning: rare student/tutor
+  attribution errors. Earlier hard role prefixing is rejected; E850 instead
+  predicts the observed role from text, neighboring roles, position, length,
+  and question status without exposing the current role as an input, then
+  proposes only high-confidence contradictions.
+- Bound target-free sources: 6,139,854-row/22,821-session utterance cache
+  SHA-256
+  `80a231d18dbb0641989ebb972f08988f0ddd3cb7c4fb769ad2fe90b5a98ba5a4`
+  and style-assignment SHA-256
+  `600664b9ce6c3809ff4b17206397285cfdd905a203a5c5f4d6969b403dfc9b40`.
+  Role counts are 2,697,152 student, 3,196,001 tutor, and 246,701 background;
+  background is never classified or reassigned.
+- Frozen complete-session sampling is one of 24 namespaced SHA-256 buckets;
+  five distinct session-hash folds prevent transcript leakage. Representation
+  is nonnegative L2-normalized `2^18` word unigram/bigram hashing. Estimator is
+  averaged L2 SGD log loss, `alpha=1e-5`, 20 maximum iterations, fixed fold
+  seeds `20260730..20260734`, and final target-free seed `20260830`.
+- A proposed correction requires class confidence at least `0.98` and
+  disagreement with the observed role. Twelve literal target-free gates cover
+  OOF macro-F1/ECE/high-confidence support, deterministic 5% synthetic
+  corruption recovery, correction/affected-session opportunity bounds,
+  direction balance, and every one of 20 target-free style cells. Any failure
+  rejects exact E850 before outcomes without threshold, feature, sample, model,
+  or style rescue.
+- Focused tests passed `3/3`, Ruff was clean, and the complete suite passed
+  `241` tests plus `8` subtests in `40.83` seconds under project `.venv`
+  Python 3.12.8 and scikit-learn 1.8.0. The resource benchmark and target-free
+  role score have not run.
+- Competition log loss, AUROC, Brier, ECE, fold/environment results, outcome
+  bootstraps, projected public loss, and rank are not applicable because no
+  competition outcome was accessed. `V_joint` and `V_final` remain sealed; no
+  model, ZIP, upload, or submission was produced.
