@@ -4046,3 +4046,44 @@ The participant supplied the full text of the forum question thread on 2026-07-1
   bootstrap support, projected public loss, and rank are not applicable:
   `competition_outcomes_accessed=false`. `V_joint` and `V_final` remain sealed;
   no competition cache, model, ZIP, upload, or submission was produced.
+
+## 2026-07-30 - E860 target-free ASR/spoken-math normalization frozen
+
+- Post-E850 repository/log audit excluded another speaker rescue, external
+  outcome head, correctness/state/tutor-move branch, encoder swap, objective
+  prior, calibration, or aggregation. No prior branch canonicalized verbalized
+  mathematics before semantic encoding; character n-grams only tested surface
+  robustness.
+- Aggregate target-free opportunity audit over all 6,139,854 utterances found
+  1,616,389 rows with `[unclear]`, 1,474,469 with a leading disfluency, 611,654
+  with number words, 685,241 with spoken operators, and 125,061 with adjacent
+  repeated words. All 22,821 sessions contain `[unclear]`; 22,782 contain
+  number words and 22,641 spoken operators. Of 35,072 cached objective
+  contexts, 32,485 contain number words and 30,644 spoken operators. These are
+  opportunity counts, not outcome evidence.
+- Froze `E860_target_free_asr_math_normalization_v1`: remove `[unclear]`, strip
+  only turn-initial fillers, collapse adjacent exact repetitions, and map
+  unambiguous explicit numbers/operators to canonical tokens. Ambiguous
+  homophones are untouched. No correctness, mastery, role, state, tutor move,
+  difficulty, or outcome inference exists.
+- Bound target-free sources are NCTE utterances SHA-256
+  `bbfa37ac857991e5d12b1677216896f32d7cf4c2d95b618b67afa7b3bf23b3d7`,
+  competition context SHA-256
+  `218d5b041f78c6803f28078c35b7fa9e37b725f456c4052974e5150b2afa43f6`,
+  and packaged MIT BGE-base model SHA-256
+  `c7c1988aae201f80cf91a5dbbd5866409503b89dcaba877ca6dba7dd0a5167d7`.
+- Frozen samples are 2,048 hashed NCTE utterances and 2,048 hashed competition
+  contexts balanced over four target-free retrieval-coverage quartiles.
+  Thirteen literal gates cover corruption recovery, semantic preservation,
+  transformation opportunity, overall objective alignment, and low-coverage
+  alignment. Any failure rejects exact E860 before competition outcomes with
+  no homophone, token, threshold, perturbation, sample, model, or subgroup
+  rescue.
+- Focused tests passed `3/3`, Ruff was clean, and the full project suite passed
+  `244` tests plus `8` subtests in `41.50` seconds under `.venv` Python 3.12.8
+  and scikit-learn 1.8.0.
+- Resource benchmark, NCTE corruption metrics, competition target-free
+  semantic metrics, competition log loss/AUROC/Brier/ECE, outcome
+  folds/environments, bootstrap, projected public loss, and rank have not run.
+  `V_joint` and `V_final` remain sealed; no model cache, ZIP, upload, or
+  submission was produced.
