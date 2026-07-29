@@ -3755,3 +3755,41 @@ The participant supplied the full text of the forum question thread on 2026-07-1
   observation or submission candidate. `V_joint_accessed=false`;
   `V_final_accessed=false`; no production model, ZIP, upload, or competition
   submission was created.
+
+## 2026-07-30 - E830 official curriculum-progression source gate frozen
+
+- Post-E820 research selected a different causal hypothesis: external
+  pedagogical progression for objective difficulty. The repository/log search
+  found only the rejected BGE k-nearest-objective difficulty prior, E720
+  objective-token crosses, and E730 linear objective alignment; no official
+  curriculum stage, grade progression, or taxonomy representation exists.
+  This branch does not revive or consume any rejected checkpoint/prediction.
+- Downloaded the Department for Education statutory mathematics programme of
+  study from GOV.UK under the Open Government Licence v3.0. The preserved raw
+  HTML is 302,822 bytes with SHA-256
+  `d8499da572edb7f1dbf9c42284dae265e121a8215692cff204c3a5d73cd6c490`.
+  It defines years 1-6 followed by KS3/KS4 and explicitly describes increasing
+  complexity and readiness-based progression.
+- Frozen target-free construction: parse eight stage sections and their
+  domains/statements; joint unsupervised word unigram/bigram and
+  character-within-word 3-5-gram TF-IDF; similarity fixed at 55/45%; maximum
+  statement similarity per stage; posterior temperature `0.08`; emit eight
+  scores/probabilities plus expected/best stage, coverage, margin, entropy,
+  and nearest official standard. Competition input is restricted to
+  `response_id`, `learning_objective_id`, and `learning_objective`; no label
+  file is opened.
+- Frozen evidence includes official-statement leave-one-out sequencing, 24
+  pre-score anchor objectives, all-objective coverage, five-fold
+  objective-level fixed-ridge BGE redundancy (`alpha=100`), and a deterministic
+  synthetic proper-score benchmark. Fourteen literal clauses cover source
+  parsing, external sequencing, objective coverage, anchors, stage diversity,
+  nonredundancy, and synthetic log-loss gain. Any failure closes exact E830
+  before competition outcomes without rescue.
+- Focused tests passed `4/4`, Ruff was clean, and the complete suite passed
+  `232` tests plus `8` subtests in `40.95` seconds under project `.venv`
+  Python 3.12.8 and scikit-learn 1.8.0. The target-free score has not yet run.
+  Competition log loss, AUROC, Brier, ECE, folds/environments, outcome
+  bootstrap, projected public loss, and rank are not applicable because no
+  competition outcome or validation environment was accessed. `V_joint` and
+  `V_final` remain sealed; no model, blend, ZIP, upload, or submission was
+  produced.
