@@ -3793,3 +3793,48 @@ The participant supplied the full text of the forum question thread on 2026-07-1
   competition outcome or validation environment was accessed. `V_joint` and
   `V_final` remain sealed; no model, blend, ZIP, upload, or submission was
   produced.
+
+## 2026-07-30 - E830 target-free source gate passed and competition screen frozen
+
+- Executed the single frozen
+  `E830_curriculum_progression_target_free_v1` source gate from pushed commit
+  `a4b32e44a7c70d6ea9fd825391ae58dfb01ace98`. Runtime was `0.8430311`
+  seconds under project `.venv` Python 3.12.8, scikit-learn 1.8.0, NumPy
+  2.5.1, pandas 2.3.3, and SciPy 1.18.0. No competition outcome or validation
+  environment was opened.
+- Parsed 636 unique official statements across all eight stages and 22
+  domains; the smallest stage has 54 statements. Official leave-one-out
+  expected-stage Spearman was `0.7756216`, mean absolute stage error
+  `1.1815793`, exact best-stage accuracy `0.2688679`, and within-one accuracy
+  `0.7610063`.
+- All 398 objectives were covered. Median and 10th-percentile maximum official
+  similarity were `0.3020224/0.2012611`. Best-stage counts 1-8 were
+  `18/26/36/54/85/77/58/44`. Frozen anchors were `17/24` in range and `20/24`
+  within one, with midpoint/expected-stage Spearman `0.8462139`.
+- The fixed five-fold BGE-base redundancy probe recovered only `0.4739721`
+  R-squared and `0.5910205` MAE, so the curriculum prior is substantially
+  nonredundant with the existing base objective geometry. The deterministic
+  synthetic proper-score control/candidate losses were
+  `0.6532323/0.6378295`, gain `0.0154028`. Every one of 14 frozen
+  target-free clauses passed.
+- Artifact SHA-256 values: objective features
+  `2391a8f5d807323c2802086e8b8f78d126b0115f4ad71531deaac267c453ec19`;
+  standards
+  `e14840cb17bcab37b22842187ecd606e8917cfe53ff0a0dc68ebe97ccd27c2ca`;
+  anchors
+  `35ab2be7cfe9853f270338d726a9b530c50283f1e4e3a5423d47bbcb3e872fde`;
+  report
+  `5b53d3f6fd3d34179c4a2f885d6592538d82d77090a74f1682bdb53d93ca9a2b`.
+- Froze `E830_curriculum_progression_competition_screen_v1` before any
+  outcome: the exact hashes above, immutable 4,096-row component lineage, 20
+  fixed curriculum inputs, fold-local StandardScaler plus logistic regression
+  (`C=0.1`, seed `20260730`), inverse training-objective-frequency weights,
+  raw-v0.5 formula, only 10/20/30% blends, the existing three selection
+  environments and five folds, nine selection clauses, both 5,000-replicate
+  bootstraps, and confirmation-only `V_joint`.
+- Focused verification passed `7/7`, Ruff was clean, and the complete suite
+  passed `235` tests plus `8` subtests in `41.26` seconds. The frozen
+  competition validation has not run. Log loss, AUROC, Brier, ECE, fold
+  deltas, outcome bootstraps, public projection, and rank remain not
+  applicable. `V_joint_accessed=false`; `V_final_accessed=false`; no model,
+  blend, ZIP, upload, or submission was produced.
