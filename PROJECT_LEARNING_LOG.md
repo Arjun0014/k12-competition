@@ -3934,3 +3934,46 @@ The participant supplied the full text of the forum question thread on 2026-07-1
   and rank are not applicable because the frozen external run has not begun
   and no competition outcome was accessed. `V_joint` and `V_final` remain
   sealed; no model, ZIP, upload, or submission was produced.
+
+## 2026-07-30 - E840 longitudinal external gate rejected before competition outcomes
+
+- Executed the single frozen
+  `E840_studychat_longitudinal_assessment_transfer_v1` run from pushed commit
+  `6a78e0eba9d72f1ff7edce42445f9b1ebc880471`. Runtime was `178.9796166`
+  seconds under project `.venv` Python 3.12.8, scikit-learn 1.8.0, NumPy
+  2.5.1, pandas 2.3.3, and SciPy 1.18.0. Source hashes, chronology, 507
+  samples/175 groups, baseline/candidate features, learner-grouped folds,
+  `alpha=10`, seed, cells, bootstrap, and every gate were unchanged.
+- Cross-source support passed: all 20 behaviour features were nonconstant in
+  StudyChat and 22,816 eligible competition sessions; 17/20 (`0.85`) target
+  medians were within `2.5` StudyChat IQR. The mechanism was technically
+  applicable across sources.
+- External outcome evidence failed. Baseline RMSE/MAE/Spearman were
+  `0.1162921/0.0876747/0.4601022`; the dialogue-behaviour candidate produced
+  `0.1182231/0.0890782/0.4382660`, giving gains
+  `-0.0019310/-0.0014035/-0.0218362`. Only `1/6` semester/exam cells improved
+  RMSE; worst-cell gain was `-0.0037764`.
+- The 5,000-learner bootstrap observed/mean RMSE gain was
+  `-0.0019310/-0.0019950`, 95% interval
+  `[-0.0046666,0.0003241]`, positive-gain support `0.0482`. Six external
+  materiality/stability clauses failed; only the worst-cell safety bound and
+  three target-free support/overlap clauses passed.
+- Operational correction: the command wrapper hit its 124-second ceiling,
+  but the one `.venv` worker remained active. A single process check verified
+  the exact worker and absence of a duplicate; one foreground completion wait
+  was attached rather than restarting. The same run then finished normally.
+  This was a wrapper timeout, not a model retry or scientific correction.
+- Artifact SHA-256 values: external OOF predictions
+  `8953499afdca26540e682e250313675ea167deb9527d15f892bc0d054f50c8ad`;
+  cell metrics
+  `817c40b95b996e084756c60964f834d08bf88a0e4d522a9d0f48bc5892828fe8`;
+  competition target-free features
+  `8025f23f513b7bebcb1f2dac20cd3cadfb72c9573feca17a56c38bf666db49cb`;
+  report
+  `d5ae219d293d65ea5c7e4b708125deadf44f0553eb7c83ccfa66050bfefdbafc`.
+- **Decision:** reject exact E840 without generated acts, alternate cues,
+  embeddings, grade target, chronology, baseline, alpha, split, subgroup, or
+  model rescue. Competition log loss, AUROC, Brier, ECE, folds, outcome
+  bootstrap, and public projection are not applicable because
+  `competition_outcomes_accessed=false`. `V_joint` and `V_final` remain sealed;
+  no model, ZIP, upload, or submission was produced.
