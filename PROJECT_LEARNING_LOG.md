@@ -3356,3 +3356,71 @@ The participant supplied the full text of the forum question thread on 2026-07-1
   Full authenticated-access evidence is recorded in
   `NCTE_APTA_AUTHENTICATED_ACCESS_2026-07-29.md`, SHA-256
   `610155d8344b12a05e033f34b2fab7eebe7c9b36f2275fc559c2f96bbaac9d96`.
+
+## 2026-07-29 - scheduler proof finally fired end to end
+
+- Automation `k12-idle-turn-wake-proof-2026-07-29` fired in this exact Codex
+  task at `2026-07-29 15:09:13.819 IST`, after the preceding assistant turn had
+  ended. It injected the exact token
+  `K12_IDLE_WAKE_PROOF_FIRED_20260729`, proving a real task wake rather than
+  merely persisting an ACTIVE definition or rendered card.
+- The proof automation was harmless by construction: it started no training or
+  download, modified no project file, accessed no competition outcome, and made
+  no upload or submission. It was deleted immediately after verification so it
+  cannot recur.
+- **Scheduler decision:** an unattended run over one hour is now allowed only
+  with exactly one calculated completion checkpoint in this same task. If that
+  checkpoint finds the run still active, exactly one telemetry-derived
+  replacement checkpoint is allowed. Runs measured below one hour remain in the
+  foreground with one blocking wait and no polling.
+- Model configuration, data lineage, log loss, AUROC, Brier, ECE,
+  folds/environments, bootstrap evidence, projected public loss, and rank are
+  not applicable because this was orchestration-only. `V_joint` and `V_final`
+  were not accessed.
+
+## 2026-07-29 - E810 productive numeric elaboration target-free discovery
+
+- Located DrivenData's official 2026-07-27 Trace the Ace reference,
+  `https://blog.drivendata.org/blog/productive-math-talk-reference`. The newly
+  published exact contrast separates number-bearing student turns from digit
+  characters embedded in longer student reasoning. Repository and learning-log
+  searches found no prior implementation of `numeric_turns_per_word` or
+  `digit_chars_per_word`; the existing role cache counts numeric tokens instead.
+- Froze and ran target-free protocol
+  `E810_productive_numeric_elaboration_target_free_v1`. The measured benchmark
+  scanned 524,288 of 6,139,854 utterance rows in 1.891 seconds and projected
+  22.145 seconds, so the full run remained in the foreground. The full audit
+  completed in 24.129 seconds.
+- Exact reproduction succeeded: 22,821 sessions; 35,072 responses; 35,062
+  nonmissing responses; 107 sessions and 159 responses below 100 student words.
+  Response-level means were `1003.2145342536`, `0.0447989484050`, and
+  `0.2004111836964`; sample standard deviations were `430.6874933188`,
+  `0.0192311313837`, and `0.0846257311390`. These match all organizer values to
+  six decimals.
+- The new features add three design-rank dimensions, from 31 to 34. Cross-fit
+  R-squared from existing v0.5 dense role/session features was `0.999994` for
+  student words, but only `0.622637` for numeric turns per word and `0.672253`
+  for digit characters per word. Their nearest absolute Spearman correlations
+  were `0.517249` and `0.604735`.
+- A deterministic synthetic residual benchmark improved log loss from
+  `0.69165648` to `0.62412921`, gain `0.06752727`. This is an implementation and
+  nonredundancy check only, not evidence about real competition outcomes.
+- Without reading target columns, the fixed published numeric score had
+  Pearson/Spearman correlations of `0.288527/0.270501` on `V_seen`,
+  `0.405096/0.395153` on `V_objective`, and `0.288866/0.270433` on `V_style`
+  against raw v0.5 predictions. All six frozen target-free clauses passed.
+- Environment was `.venv` Python `3.12.8`, scikit-learn `1.8.0`, NumPy `2.5.1`,
+  and pandas `2.3.3`. Real competition log loss, AUROC, Brier, ECE, fold
+  deltas, bootstraps, projected public loss, and rank are not applicable:
+  `competition_outcomes_accessed=false`, `V_joint_accessed=false`, and
+  `V_final_accessed=false`.
+- The feature cache SHA-256 is
+  `560e82ceb07dc22ef0511da2b92d361f6e52564be997a2364a282e8c6c1eca27`;
+  the full target-free report SHA-256 is
+  `ed202b92697ca7d11c1115378f1b8825761901d9ee60092526ff56c5a445afac`.
+  **Decision:** authorize exactly one E810 outcome validation under
+  `E810_PREREGISTRATION_2026-07-29.md`. No post-hoc feature, weight, estimator,
+  threshold, calibration, or rescue is allowed.
+- The protected v0.5 ZIP remains the mandatory backup and must retain SHA-256
+  `65467003547fb62ec867733c6acf0a63e6f9fb0fed9533b61b9592e143b17186`.
+  No competition upload or submission occurred.
