@@ -3706,3 +3706,52 @@ The participant supplied the full text of the forum question thread on 2026-07-1
   hashes are committed in
   `E820_COMPETITION_CACHE_BINDING_2026-07-30.json`; validation refuses any
   mismatch.
+
+## 2026-07-30 - E820 single competition selection validation rejected
+
+- Executed exactly one frozen
+  `E820_mathdial_contrastive_competition_screen_v1` validation from pushed
+  commit `202bbbd2ce1f335b3e8b365706a65abdfe66c193`. The bound final delta, 4,096
+  pilot rows, caches, query prefix, feature geometry, three environments, 15
+  folds, `C=0.1`, seed `20260730`, raw v0.5 formula, and 10/20/30% weights were
+  unchanged. Runtime was 24.636631 seconds under `.venv` Python 3.12.8,
+  scikit-learn 1.8.0, NumPy 2.5.1, Torch 2.13.0+cpu, and Transformers 5.14.1.
+- The deterministic rule selected 10%, which regressed equal-environment,
+  equal-fold macro log loss by `0.0017891691` versus raw v0.5 and improved
+  `0/3` environments. `V_seen` changed from `0.5490162398` to
+  `0.5514067588` (`+0.0023905190`); `V_objective` from `0.5971626583` to
+  `0.5977481357` (`+0.0005854774`); `V_style` from `0.5494566144` to
+  `0.5518481254` (`+0.0023915110`).
+- Worst fold regression was `0.0033894188`. Mean AUROC/Brier/ECE changes were
+  `-0.0017578160/+0.0006788506/+0.0002905201`. The 20% and 30% blends
+  regressed mean log loss by `0.0038059528` and `0.0060460409`.
+- The 5,000-session bootstrap mean/interval/support were
+  `-0.0017908938/[-0.0020583595,-0.0015275991]/0.0`. The independent
+  5,000-semantic-family values were
+  `-0.0018052660/[-0.0022102725,-0.0014449899]/0.0`. Every one of the nine
+  frozen clauses failed.
+- Standalone pilot diagnostics show the cause: general BGE-base AUROC
+  `0.6662769/0.5694212/0.6665329` on
+  `V_seen/V_objective/V_style` fell to
+  `0.6525506/0.5296959/0.6515603` after MathDial contrastive adaptation.
+  External problem-dialogue retrieval improved dramatically, but it removed
+  correctness-relevant geometry rather than adding outcome signal.
+- Artifact SHA-256 values: predictions
+  `254673e40564849f77176eb714d81a37d5bb9c06e331528b4c20fcd66f6a7d7d`;
+  fold metrics
+  `5638aeae3ec220ea2013ac114c67b95d631ee25de3e0003dd21a55349fc421c7`;
+  environment metrics
+  `189cf05841632efc5619657062acb836710e809cca5697dccecd928b5473e40b`;
+  selection
+  `793e11d15b4237355b0bb536912ac05a0625d95ecc002e3b0159a3bac59182df`;
+  bootstraps
+  `43ccafb5c6798d3244d533a2f8d6de0a432d985c2bdee112d369815b518994dc`;
+  report
+  `4387febecb29473edd58d3e34a34c9372425ffee8b4246ccb835fef39b2184af`.
+- **Decision:** reject exact E820 without smaller weight, unprefixed objective,
+  layer/epoch checkpoint, base/adapted interpolation, hard negative, C,
+  calibration, environment-specific gate, or full-cache rescue. A rough
+  public projection is `0.60719`, worse than v0.5; it is not a leaderboard
+  observation or submission candidate. `V_joint_accessed=false`;
+  `V_final_accessed=false`; no production model, ZIP, upload, or competition
+  submission was created.
