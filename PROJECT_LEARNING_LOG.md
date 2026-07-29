@@ -3503,3 +3503,51 @@ The participant supplied the full text of the forum question thread on 2026-07-1
   competition submission was created.
 - The protected v0.5 ZIP was reverified unchanged at SHA-256
   `65467003547fb62ec867733c6acf0a63e6f9fb0fed9533b61b9592e143b17186`.
+
+## 2026-07-29 - APTA target-free landing gate prepared while access is pending
+
+- Reconciled the acquired StudyChat/NCTE schemas, current primary research,
+  repository code, and all closed families before claiming novelty. StudyChat
+  response style/next-turn continuation maps to E710/E770; answer extraction,
+  learner efficacy/attempt quality, reflection, uncertainty, self-correction,
+  and productive struggle map to E770/E780; NCTE uptake/focusing
+  questions/student reasoning map to E530/E760/E770. The 175 StudyChat dialogue
+  users with matched grades and unstable cross-semester broad dialogue-act
+  associations do not establish an independent plausible robust `0.0016`
+  competition-loss path. **Decision:** no successor experiment is
+  preregistered and no competition outcome is spent.
+- Implemented `APTA_target_free_source_audit_v1` in
+  `src/trace_ace/apta_source_audit.py` with
+  `scripts/audit_apta_source.py` and focused tests. The CLI refuses source roots
+  outside `Datasets/APTA`. The audit deterministically hashes every raw file,
+  rejects unsafe/encrypted/symlink/risky/oversized ZIPs before member parsing,
+  streams delimited sources, and reports only schema concepts and
+  privacy-hashed identity/linkage counts.
+- The frozen discovery-readiness gate requires supported clean tables, safe
+  archives, student identity, session/class grouping, solver/tutor role,
+  experimental condition, transaction structure and correctness, a real
+  pre/post/gain/assessment outcome, and at least 50 learners linked between
+  transactions and learning outcomes. Step-level `Outcome` alone cannot pass.
+  Raw identifiers, chats, correctness values, and learning-outcome values are
+  never emitted. A pass authorizes only external benchmark design, not a
+  competition model or score.
+- Focused verification: `4 passed` in `0.25` seconds. Full project verification:
+  `220 passed, 8 subtests passed` in `68.63` seconds. Environment was project
+  `.venv`, Python `3.12.8`, scikit-learn `1.8.0`, pandas `2.3.3`, NumPy `2.5.1`.
+  Pre-documentation hashes were:
+  `src/trace_ace/apta_source_audit.py`
+  `b6b55b8f6737fba71499fd2ae56946a0aabc43634412b361a041cab37140a9d4`;
+  `scripts/audit_apta_source.py`
+  `90a4533cd85c73ec2458ec3b6aee8e7be92f9b02004f0091658c95d48a0fac51`;
+  `tests/test_apta_source_audit.py`
+  `652dae95b6cfc7d62b188a5bda2fa018cbc6388fba408b76c01a61e79b7e0ee1`.
+- Runtime was sub-hour foreground work; no completion wake or worker was
+  needed. Competition log loss, AUROC, Brier, ECE, folds/environments,
+  bootstrap, and new public projection are not applicable.
+  `V_joint_accessed=false`; `V_final_accessed=false`; no competition cache,
+  prediction, checkpoint, model, blend, ZIP, upload, or submission occurred.
+  v0.5 remains public `0.6054`, last observed approximately `#11`, and the
+  protected ZIP remains
+  `65467003547fb62ec867733c6acf0a63e6f9fb0fed9533b61b9592e143b17186`.
+- Full rationale, primary-source links, gates, and next actions are recorded in
+  `APTA_READINESS_AND_WAITING_PERIOD_AUDIT_2026-07-29.md`.
