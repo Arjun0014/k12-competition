@@ -3882,3 +3882,55 @@ The participant supplied the full text of the forum question thread on 2026-07-1
   Rough public projection is `0.60707`, worse than v0.5 and not a leaderboard
   observation. `V_joint_accessed=false`; `V_final_accessed=false`; no model,
   ZIP, upload, or competition submission was produced.
+
+## 2026-07-30 - E840 StudyChat longitudinal assessment transfer frozen
+
+- Post-E830 search selected an independent real-outcome screen rather than
+  another competition-derived prior. The authorised StudyChat snapshot has
+  chronological dialogues, prior assignments, and three later proctored exams.
+  Earlier work closed direct transfer of its GPT-4.1 dialogue acts; it did not
+  test whether label-free help-seeking behaviour predicts future exams beyond
+  prior grades and usage across unseen learners.
+- Bound CC BY 4.0 revision
+  `24d7987d9fbb30d9da12acc53455a10f1cdd2d7f`. SHA-256 values are
+  `67927f73327639904c417c2f6e6200e11427920a8435b39cb7c87b5c6601e130`
+  (`data.jsonl`),
+  `d16d54c8eaa9f3723755362f0dcb651740d070bdcf5c739c7f9a27a77db5a244`
+  (Fall grades),
+  `06f1a4041e1631a9787c5eac842f04e63dad1480609ac5376fcab351a1fad5ec`
+  (Spring grades),
+  `0caefd1999143ddb9e3eb93dfa802680a8ab924d95d2acc1fee434da6d66d6fc`
+  (licence), and
+  `86a5926deec67d5e848c930363829d53339bb601c7cc5d6064bdf917abd1e5c0`
+  (README).
+- Source/schema/count audit reproduced 16,851 interactions, 203 dialogue
+  users, 2,214 chats, and 65/110 Fall/Spring dialogue-grade matches. Frozen
+  chronology yields 58/65/65 Fall and 99/110/110 Spring pre-exam samples for
+  exams 1/2/3: 507 samples across 175 learners. Artifacts may contain only a
+  deterministic salted learner hash, never the released anonymous ID or
+  directory name.
+- Baseline features are semester/exam, prior-assignment
+  mean/std/min/last, log interactions/chats, and topic coverage. The candidate
+  adds exactly 20 fixed label-free question, explanation, verification,
+  direct-answer, writing, code, confusion, self-explanation, metacognitive,
+  lexical, length, tutor, and multi-turn features. No future chat/assignment,
+  exam text, submission, generated act label, embedding, or outcome-aware cue
+  edit is allowed.
+- Frozen evaluation is five-fold shuffled learner-grouped Ridge at
+  `alpha=10`, seed `20260730`, pooled and six semester/exam cells, and a
+  5,000-learner bootstrap. A separate target-free application of the same
+  extractor to competition sessions must show feature support and distribution
+  overlap. Nine literal gates cover material RMSE/MAE gain, Spearman,
+  cross-cell stability, bootstrap support, and transfer overlap. Any failure
+  rejects exact E840 before competition outcomes.
+- One focused fixture wording correction changed “Why does” to “Can you
+  explain why” so the test actually exercises the already frozen
+  explanation-request category; no cue, feature, split, estimator, source, or
+  score changed. Focused tests then passed `3/3`, Ruff was clean, and the full
+  suite passed `238` tests plus `8` subtests in `40.63` seconds under project
+  `.venv` Python 3.12.8 and scikit-learn 1.8.0.
+- External RMSE/MAE/Spearman, cell evidence, learner bootstrap, competition
+  log loss/AUROC/Brier/ECE, outcome folds/bootstraps, projected public loss,
+  and rank are not applicable because the frozen external run has not begun
+  and no competition outcome was accessed. `V_joint` and `V_final` remain
+  sealed; no model, ZIP, upload, or submission was produced.
