@@ -3257,3 +3257,38 @@ The participant supplied the full text of the forum question thread on 2026-07-1
   no upload or competition submission occurred. Full evidence is in
   `STUDYCHAT_NCTE_APTA_ACCESS_AUDIT_2026-07-29.md`, SHA-256
   `ac201e67bc3b3af0f7a60b3bfe695a7c5b7b176d539756242556ecd77d95a25a`.
+
+## 2026-07-29 - explicit-goal scheduler wake test: failed
+
+- Tested the participant's hypothesis that earlier wakes failed because the
+  task had no active Codex goal and/or emitted a message before the timer. The
+  pre-test goal state was null. Created an explicit narrow goal whose only
+  objective was to prove one harmless heartbeat end to end before authorizing
+  any unattended run.
+- At `13:19:04` IST, created ACTIVE thread heartbeat
+  `k12-goal-wake-proof-2026-07-29`, initially on a three-minute cadence. Its
+  prompt could only emit the fixed token `K12_GOAL_WAKE_OK_20260729` and an IST
+  timestamp; it prohibited code, file/process inspection, research, mutations,
+  and follow-on automation. Kept the turn open without a final response and
+  waited one four-minute completion checkpoint. No wake token or run artifact
+  arrived; only the unchanged ACTIVE definition existed.
+- The first form had `notificationPolicy=failed_runs_only`, which left one
+  ambiguity. Updated the same heartbeat rather than creating a duplicate:
+  one-minute cadence, successful notifications unmuted, unchanged harmless
+  prompt, same active goal and target task. Again kept the turn open and waited
+  one two-minute checkpoint without sending a final response. At `13:26:36`
+  IST there was still no injected token, last-run field, next-run field, or run
+  artifact; only the ACTIVE definition persisted.
+- Deleted the heartbeat after the second bounded failure. No K12 model worker,
+  training job, or automation remains active. The explicit goal alone therefore
+  did not repair scheduler execution in this task/session. A stored ACTIVE card
+  remains non-evidence even with a goal and an open turn.
+- **Decision:** no over-one-hour unattended run is authorized. Work measured
+  below one hour must stay in the foreground with one blocking wait. If a future
+  product-supported completion mechanism is introduced, it must pass another
+  harmless end-to-end test before use; do not launch a long worker merely
+  because a goal exists.
+- Environment, model configuration, data lineage, log loss, AUROC, Brier, ECE,
+  folds/environments, bootstraps, and projected public loss are not applicable
+  because this was orchestration-only. No competition outcome, `V_joint`, or
+  `V_final` evidence was accessed; no ZIP, upload, or submission was produced.
