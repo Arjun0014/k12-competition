@@ -3292,3 +3292,67 @@ The participant supplied the full text of the forum question thread on 2026-07-1
   folds/environments, bootstraps, and projected public loss are not applicable
   because this was orchestration-only. No competition outcome, `V_joint`, or
   `V_final` evidence was accessed; no ZIP, upload, or submission was produced.
+
+## 2026-07-29 - authenticated NCTE acquisition and APTA request
+
+- Ran a third explicit-goal wake proof using a standards-aligned hourly
+  heartbeat due at 13:31 IST. The goal remained active, the turn remained open,
+  and no final response was sent before the deadline. At 13:33 there was still
+  no wake token or run artifact. Deleted the heartbeat and marked the
+  repeated-failure goal blocked. All three goal-backed scheduler variants have
+  now failed end to end; zero persisted automation definitions and zero K12
+  Python/training/Git workers remain. No over-one-hour unattended run is
+  authorized.
+- Truthfully completed the NCTE Google terms form as an independent researcher,
+  with no university affiliation and an explicit non-identification,
+  non-surveillance, non-discrimination, and non-redistribution purpose. Google
+  recorded the response and automatically shared official Drive folder
+  `19LzXF0IRtOGO62ZUnJeX6rBTjynuW6RR`.
+- Downloaded all three official NCTE CSVs to ignored source directory
+  `Datasets/NCTE/release_19LzXF0IRtOGO62ZUnJeX6rBTjynuW6RR`: 580,408-row
+  `ncte_single_utterances.csv` (113,819,937 bytes, SHA-256
+  `bbfa37ac857991e5d12b1677216896f32d7cf4c2d95b618b67afa7b3bf23b3d7`);
+  2,348-row `paired_annotations.csv` (547,485 bytes, SHA-256
+  `acb81f02dfd00e8e5426af74525fb1f629c7f880cdb1646d533a1852bc6e3ae7`);
+  and 2,000-row `student_reasoning.csv` (204,227 bytes, SHA-256
+  `16bc7eb53e1955f9ecf28b8f02d9727659fdd1a138782355243e0754a3633384`).
+  The deterministic source-manifest SHA-256 is
+  `604ec4e80c584c3d96afb54ddf95c31a9acf7c4a0b01cdbad8b8e144c68d814a`.
+- Full NCTE parsing completed in 7.4 seconds under `.venv` Python 3.12.8,
+  scikit-learn 1.8.0, and pandas 2.3.3. All CSVs parse, have no NUL header byte
+  and no duplicate full row. The source covers 1,660 observation IDs and 319
+  video IDs. Positive annotations are high uptake 813/2,348, focusing question
+  359/2,348, and student reasoning 419/1,999 labeled rows.
+- Repository/log novelty audit reconfirmed that NCTE high uptake is E760, while
+  focusing questions/tutor moves and student reasoning are E530/E770. ICPSR V4
+  contains the more independent value-added outcomes but is member-institution
+  data; no affiliation or entitlement was fabricated and no ICPSR account/data
+  was created or downloaded. **Decision:** no E810 preregistration, competition
+  score, or rejected-family rescue is authorized from the released NCTE labels.
+- Created a DataShop account through the participant's GitHub sign-in, reviewed
+  the general research-only/non-commercial/non-identification/non-redistribution
+  terms, and requested only view access to private APTA project `574`. DataShop
+  records PI Vincent Aleven, level `View`, status `Not Reviewed`, and request
+  date 2026-07-29. No private APTA file was downloaded. If approved, IDs
+  `5153`, `5549`, and `5604` will be acquired and audited before any architecture
+  is considered.
+- Public APTA research narrows the only conditionally independent discovery
+  path to learner-role and knowledge-state trajectories: solver/tutor role, BKT
+  mastery, error timing, collaboration transitions, and individual pre/post
+  gain. Another content-only peer-help/talk-move model is closed by
+  E530/E760/E770. The trajectory path cannot be preregistered until approved
+  files prove auditable outcome, identity/group, role, and transaction linkage
+  with enough independent learners; it must first beat a static mastery/count
+  baseline in grouped external validation with stable proper scores and
+  bootstrap support.
+- Environment was `.venv` Python 3.12.8 and scikit-learn 1.8.0. Competition log
+  loss, AUROC, Brier, ECE, folds/environments, bootstraps, and new public
+  projection are not applicable because no competition outcome was accessed.
+  `V_joint_accessed=false`; `V_final_accessed=false`. No competition cache,
+  checkpoint, blend, ZIP, upload, or submission was produced. Public champion
+  remains v0.5 at 0.6054.
+- Protected ZIP SHA-256 remains
+  `65467003547fb62ec867733c6acf0a63e6f9fb0fed9533b61b9592e143b17186`.
+  Full authenticated-access evidence is recorded in
+  `NCTE_APTA_AUTHENTICATED_ACCESS_2026-07-29.md`, SHA-256
+  `610155d8344b12a05e033f34b2fab7eebe7c9b36f2275fc559c2f96bbaac9d96`.
