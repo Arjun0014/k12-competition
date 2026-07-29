@@ -3619,3 +3619,65 @@ The participant supplied the full text of the forum question thread on 2026-07-1
   portfolio are in
   `POST_E810_RESEARCH_AND_E820_SELECTION_2026-07-29.md`; exact freeze is in
   `E820_PREREGISTRATION_2026-07-29.md`.
+
+## 2026-07-30 - E820 external target-free gate passed
+
+- Executed the single frozen
+  `E820_mathdial_contrastive_objective_alignment_v1` run from pushed commit
+  `f647f8608cd0eac2a14723e7fed45032752cd69e`. It completed in one foreground
+  blocking wait; training took `1,208.110946` seconds and total command wall
+  time was approximately 27.6 minutes, close to the measured 25.9-minute
+  projection. No scheduler wake or polling was used.
+- Runtime was project `.venv` Python 3.12.8, scikit-learn 1.8.0, NumPy 2.5.1,
+  Torch 2.13.0+cpu, and Transformers 5.14.1. Peak RSS was 1,327,157,248 bytes.
+  The fit used exactly 717 question IDs per epoch, 90 steps per epoch, the
+  frozen unique-qid batches, upper four BGE-base layers, and no outcome field.
+  Epoch losses decreased from `0.0329653421` to `0.0035182768`.
+- On all 599 question-disjoint official-test dialogues, the held-out
+  teacher-confusion query view improved base/adapted MRR from
+  `0.2882901625` to `0.4040249942` (gain `0.1157348316`) and recall@5 from
+  `0.3372287145` to `0.4624373957` (gain `0.1252086811`). Original-problem MRR
+  improved `0.9811508964` to `0.9927378965`; recall@5 improved
+  `0.9933222037` to `1.0`.
+- The 2,000-question-ID confusion MRR bootstrap observed/mean gain was
+  `0.1214389488/0.1213716071`, 95% interval
+  `[0.0966970774,0.1473972389]`, support `1.0`. Original-problem bootstrap
+  mean/interval/support were
+  `0.0176692246/[0.0075391651,0.0290167953]/1.0`.
+- Adapted document off-diagonal cosine mean/std were
+  `0.1968484074/0.0878590420`, so both no-collapse clauses passed. Every frozen
+  target-free clause passed; E820 is eligible only for the separately frozen
+  competition screen, not production or packaging.
+- Artifact SHA-256 values: delta
+  `c7caf144e91db5aedd427ab27c860cd5ae091cbb1e466621b0b563f88e6b9248`;
+  report
+  `d3f6f8c5bb5ec832c959db91d2777f93b58330b8fd129afe5c49db78b3d02fad`;
+  retrieval scores
+  `6baa01886cd04cf0b994380e45135926ae2e8bbd8d66802d5707066b0ea99563`;
+  training metrics
+  `acccb26c5901783756816cfa522e9003f846355d2104692f9eec2d3c1c813461`.
+- Froze `E820_mathdial_contrastive_competition_screen_v1` before any
+  competition outcome: immutable 4,096 pilot rows, existing compact contexts,
+  exact query prefix, bound final delta, normalized CLS, existing semantic
+  feature geometry, `C=0.1`, five folds in each of `V_seen`, `V_objective`, and
+  `V_style`, only 10/20/30% blends over raw v0.5, equal-environment/equal-fold
+  selection, nine literal selection clauses, and confirmation-only `V_joint`.
+  A cache must be target-free and committed by hash before the one validation.
+- Competition log loss, AUROC, Brier, ECE, fold deltas, outcome bootstraps,
+  public projection, and rank change remain not applicable:
+  `competition_outcomes_accessed=false`; `V_seen_accessed=false`;
+  `V_objective_accessed=false`; `V_style_accessed=false`;
+  `V_joint_accessed=false`; `V_final_accessed=false`. No competition cache,
+  blend, ZIP, upload, or submission existed at this freeze. Full target-free
+  evidence is in `E820_TARGET_FREE_RESULT_2026-07-30.md`; competition freeze is
+  `E820_COMPETITION_PREREGISTRATION_2026-07-30.md`.
+- The target-free competition-cache resource benchmark then verified the raw
+  AutoModel encoder against 32 immutable BGE-base context rows: maximum
+  absolute difference `1.2293458e-7`, minimum cosine `0.9999999404`. The bound
+  adapted encoder took `12.4862565` seconds for 64 context documents and
+  `1.7284089` seconds for 64 objective queries, projecting `805.7099749`
+  seconds (13.4 minutes) for 4,096 contexts plus 244 unique queries. Peak RSS
+  was `965,009,408` bytes; duration and 8-GiB gates pass. Benchmark SHA-256 is
+  `6ba487d36d6208f7e7c1d0b85866c15c45debd85c66a87891cff25e91e1ebcd6`.
+  It accessed no target or component outcome. The cache must run in the
+  foreground and be committed by hash before validation.
