@@ -3551,3 +3551,71 @@ The participant supplied the full text of the forum question thread on 2026-07-1
   `65467003547fb62ec867733c6acf0a63e6f9fb0fed9533b61b9592e143b17186`.
 - Full rationale, primary-source links, gates, and next actions are recorded in
   `APTA_READINESS_AND_WAITING_PERIOD_AUDIT_2026-07-29.md`.
+
+## 2026-07-29 - post-E810 research audit and E820 target-free freeze
+
+- Reconstructed the exact v0.5 architecture and every closed branch before
+  claiming novelty. The remaining actionable gap is short learning-objective
+  text aligned to long tutoring evidence under unseen objectives and low
+  lexical coverage. The organizer's newly published numeric contrast was
+  already tested as E810 and failed; another count, tutor-move, correctness,
+  response-quality, timing, state, calibration, or blend branch is not
+  independent.
+- Primary-source research ruled out advanced-math embedding checkpoints
+  trained on papers/theorems and MMTutorBench-derived quality stages before
+  compute: they lack K-12 learning-outcome transfer evidence or overlap closed
+  quality/tutor-state families. StudyChat's 175 grade-linked dialogue users,
+  undergraduate-AI domain, and unstable cross-semester broad dialogue-act
+  associations retain it as a discovery reserve rather than a defensible
+  immediate competition branch. APTA remains a later learner-role trajectory
+  branch if approved source files pass the frozen landing gate.
+- Froze independent target-free protocol
+  `E820_mathdial_contrastive_objective_alignment_v1`. It uses the untouched
+  packaged BGE-base encoder and only MathDial question-to-dialogue positive
+  pairs. It consumes no self-correction, correctness, ground-truth, typicality,
+  competition target, rejected checkpoint, prediction, or fitted map. This is
+  distinct from E430 outcome classification, E530 tutor-move classification,
+  E720 sparse competition-label conjunctions, and E730 fold-local linear
+  Procrustes.
+- Pinned official CC BY-SA 4.0 MathDial revision
+  `b06c020a0a1f57a87577fec33e657b63e7eb476e`. JSONL hashes are
+  `96980babee081a3da48ed0f1fb3068ab52f23ddc67e63bfd5ec99ad701fd29cc`
+  and
+  `28d1e537d65a6e6ff7b8bde602a2c7e2493b93d6bc785d1848506a650997f122`.
+  The audit reproduced 2,262/599 train/test dialogues and 1,035/394 train/test
+  question IDs. Purging all 318 overlapping IDs leaves 1,677 legal training
+  dialogues across 717 IDs. Canonical privacy-hashed identity SHA-256 is
+  `fdbc30eb04107cf6214bb0b0962270a7018f3ac0130fd0f89b001e40cf9ca060`.
+- Fixed normalized CLS pooling, a single K-12 retrieval query prefix, 96/256
+  query/document tokens, upper-four-layer training, symmetric in-batch
+  InfoNCE at temperature `0.05`, batch 8, two epochs, AdamW `2e-5`, weight
+  decay `0.01`, 10% warmup, gradient cap `1.0`, and seed `20260729`.
+  In-batch question IDs are unique. No hard-negative mining, alternate prompt,
+  checkpoint selection, or sweep is allowed.
+- The frozen external gate evaluates all 599 official-test dialogues with
+  problem and held-out teacher-confusion query views. It requires confusion
+  MRR/recall@5 gains of at least `0.04/0.04`, 2,000 question-ID bootstrap
+  support at least `0.95`, problem-view MRR/recall@5 regressions no worse than
+  `0.005`, two no-collapse clauses, and decreasing epoch loss. Any failure
+  rejects exact E820 before competition outcomes without rescue.
+- Focused verification passed `5` tests in `3.12` seconds and Ruff was clean.
+  The source-only audit used `.venv` Python 3.12.8, scikit-learn 1.8.0, NumPy
+  2.5.1, Torch 2.13.0+cpu, and Transformers 5.14.1.
+- One-batch resource benchmarking measured `7.4838306` seconds per training
+  step and `3.6735134` seconds for 64 evaluation encodings. The fixed 180
+  training steps plus both base/adapted evaluations project `1,553.3802`
+  seconds (25.9 minutes), with peak RSS `998,232,064` bytes. Duration and
+  12-GiB gates pass. Benchmark SHA-256 is
+  `e293d8affa47046319b4e952a2ad49ae8efcc20d006c74ce1e1126ae667a844b`.
+- Scheduler decision: the projected run is below one hour and must remain in
+  the active foreground turn with one blocking wait; no heartbeat is created.
+  The run may begin only after the frozen implementation/preregistration is
+  committed and pushed.
+- Competition log loss, AUROC, Brier, ECE, fold deltas, outcome bootstrap,
+  projected public score, and rank change are not applicable because
+  `competition_outcomes_accessed=false`, `V_joint_accessed=false`, and
+  `V_final_accessed=false`. No competition cache, checkpoint, blend, ZIP,
+  upload, or submission was produced. Full rationale and the fallback
+  portfolio are in
+  `POST_E810_RESEARCH_AND_E820_SELECTION_2026-07-29.md`; exact freeze is in
+  `E820_PREREGISTRATION_2026-07-29.md`.
