@@ -3424,3 +3424,49 @@ The participant supplied the full text of the forum question thread on 2026-07-1
 - The protected v0.5 ZIP remains the mandatory backup and must retain SHA-256
   `65467003547fb62ec867733c6acf0a63e6f9fb0fed9533b61b9592e143b17186`.
   No competition upload or submission occurred.
+
+## 2026-07-29 - E810 single authorized validation: rejected literally
+
+- Executed exactly one frozen
+  `E810_productive_numeric_elaboration_validation_v1` invocation from pushed
+  commit `a765e7b198d081aa7d27d746e33ff101519dc302`. Run
+  `20260729T102615Z_productive_numeric_elaboration` completed in 17.463 seconds
+  under `.venv` Python 3.12.8, scikit-learn 1.8.0, NumPy 2.5.1, and pandas
+  2.3.3. Lineage, three features, 100-word quiet fallback, five environment
+  folds, estimator, seed `20260729`, and 10/20/30% weights were unchanged from
+  preregistration.
+- The selected 10% blend had equal-environment/equal-fold macro log loss
+  `0.5653799145`, a **regression** of `0.0020488191` from raw v0.5. It improved
+  0/3 environments. Worst environment delta was `+0.0030689014`; worst fold
+  delta was `+0.0034981536`.
+- At 10%, `V_seen` regressed from `0.5481992630` to `0.5512681643`
+  (`+0.0030689014`); `V_objective` regressed from `0.5931293909` to
+  `0.5931707967` (`+0.0000414059`); and `V_style` regressed from
+  `0.5486646322` to `0.5517007823` (`+0.0030361502`).
+- Proper scores also failed: mean AUROC delta `-0.0001073301`, mean Brier delta
+  `+0.0007857193`, and mean 10-bin ECE delta `+0.0050436103`. The 20% and 30%
+  blends regressed mean log loss by `0.0046065742` and `0.0076536126`,
+  respectively.
+- The 5,000-replicate paired session bootstrap estimated gain
+  `-0.0020491112`, 95% interval
+  `[-0.0021893088, -0.0019022454]`, support `0.000`. The 5,000-replicate
+  semantic-family bootstrap estimated gain `-0.0020660009`, interval
+  `[-0.0026114729, -0.0015354993]`, support `0.000`.
+- Every frozen selection clause failed. **Decision: reject E810 literally.**
+  No smaller weight, feature subset, residual head, calibration, coefficient
+  constraint, threshold adjustment, or rescue was evaluated or is authorized.
+  The stable organizer-like coefficient directions validate extraction, but
+  the head adds no useful conditional outcome signal over v0.5.
+- A rough public projection obtained by adding the local mean regression to
+  public v0.5 is approximately `0.6074`. Extrapolating only from the visible
+  top-10 density gives an uncertainty bracket around `#15–#30`, worse than the
+  current approximately `#11`; this is not a leaderboard observation. E810 is
+  not submission-worthy.
+- `V_joint_accessed=false`; `V_final_accessed=false`. No production model,
+  submission cache, ZIP, upload, or competition submission was created. Report
+  SHA-256 is
+  `ec25f46fc8839ff22ac1077288631705e1d9fe45ab468635cf5a47575a0bcdc3`.
+  Full metrics and artifact hashes are in
+  `E810_REJECTION_2026-07-29.md`.
+- The protected v0.5 ZIP remains unchanged at SHA-256
+  `65467003547fb62ec867733c6acf0a63e6f9fb0fed9533b61b9592e143b17186`.
