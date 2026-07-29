@@ -3206,3 +3206,54 @@ The participant supplied the full text of the forum question thread on 2026-07-1
   passed`; Ruff and `git diff --check` were clean. The audit document SHA-256 is
   `02a420077cb749fa30d3857777c20473299309daf5899e04595a78d35d83ed04`. The protected ZIP hash was
   reverified unchanged as `65467003547fb62ec867733c6acf0a63e6f9fb0fed9533b61b9592e143b17186`.
+
+## 2026-07-29 - authorized StudyChat acquisition and NCTE/APTA access audit
+
+- The participant personally accepted the official StudyChat Hugging Face gate
+  and authorized source downloads. Downloaded `wmcnicho/StudyChat` at immutable
+  revision `24d7987d9fbb30d9da12acc53455a10f1cdd2d7f` to the ignored external-data
+  tree. The 33,667,862-byte benchmark completed in approximately `8.5` seconds;
+  the full pinned snapshot completed in `73.86` seconds in the active foreground
+  turn with one completion checkpoint.
+- The official snapshot has `78` files and `1,298,050,081` bytes. The
+  deterministic full-source manifest has SHA-256
+  `608462ed21f983d22068c40e168ce4a600b9be94e5689d24df6b7e4717b5d1a3`.
+  A temporary fine-grained read-only credential was used through a short-lived
+  local file, then both the file and token were deleted. Existing participant
+  tokens were not changed.
+- Source audit found `16,851` interactions, `203` dialogue users, and `2,214`
+  chats. Released grade tables have `70` Fall and `111` Spring users; exact
+  dialogue/grade matches are `65` and `110`, respectively, with no missing
+  assessment fields. The submissions ZIP has `4,990` entries and
+  `109,548,596` uncompressed bytes; it was not extracted and contains no unsafe
+  path, symlink, or common serialized-model extension.
+- The LAK 2026 paper reports that dialogue-act features are likely overfit or
+  underpowered, with significant coefficients largely distinct across
+  semesters. The July 2026 response-style paper reports small global next-turn
+  effects but uses the same student-state × response-style construct already
+  closed by E770. Direct-answer/next-turn, directional uptake, and challenge/
+  over-reliance interpretations also overlap rejected E710, E760, and E780.
+  **Decision:** StudyChat is now legally and technically available, but no
+  independent E810 with a plausible robust `0.0016` loss path is established.
+  No grade model, competition outcome, blend, or ZIP was produced.
+- Downloaded the public NCTE repository
+  `ddemszky/classroom-transcript-analysis` at clean detached revision
+  `ff63e9787350d39f4fbc3083732d66d8ebe4402a`. Its MIT `LICENSE` and `README`
+  SHA-256 values are
+  `f7e7258ef05d5f9a6e227c9e0b315a288923280b42d443e7aca91e93cf382aa8`
+  and `dfc596a345d0eefb4ae0a3f7e48da9469a53cbbfb116ae8d289c29184f9de71e`.
+  The data CSVs remain gated behind the per-user Google form; the form is open
+  and blocked on participant Google sign-in.
+- Verified APTA DataShop IDs `5153`, `5549`, and `5604` as private project `574`
+  datasets. The LearnSphere GitHub sign-in page is open and blocked on
+  participant GitHub credentials. No identity, affiliation, IRB status, access
+  request, upload, or submission was fabricated or transmitted.
+- Environment was `.venv` Python `3.12.8` and scikit-learn `1.8.0`. Competition
+  log loss, AUROC, Brier, ECE, folds/environments, bootstraps, and public
+  projection are not applicable because no competition outcome was accessed.
+  `V_joint` and `V_final` remain sealed. The protected v0.5 ZIP was reverified at
+  SHA-256
+  `65467003547fb62ec867733c6acf0a63e6f9fb0fed9533b61b9592e143b17186`;
+  no upload or competition submission occurred. Full evidence is in
+  `STUDYCHAT_NCTE_APTA_ACCESS_AUDIT_2026-07-29.md`, SHA-256
+  `ac201e67bc3b3af0f7a60b3bfe695a7c5b7b176d539756242556ecd77d95a25a`.
