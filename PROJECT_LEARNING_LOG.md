@@ -3838,3 +3838,47 @@ The participant supplied the full text of the forum question thread on 2026-07-1
   deltas, outcome bootstraps, public projection, and rank remain not
   applicable. `V_joint_accessed=false`; `V_final_accessed=false`; no model,
   blend, ZIP, upload, or submission was produced.
+
+## 2026-07-30 - E830 single competition selection validation rejected
+
+- Executed exactly one frozen
+  `E830_curriculum_progression_competition_screen_v1` validation from pushed
+  commit `d8bc8669800010c3a72b6b88819ed28223076de8`. Runtime was `15.0823877`
+  seconds under project `.venv` Python 3.12.8, scikit-learn 1.8.0, NumPy
+  2.5.1, and pandas 2.3.3. Exact target-free hashes, component lineage, 20
+  features, fold-local estimator, equal-objective weights, seed, folds,
+  environments, blends, metrics, and bootstrap rules were unchanged.
+- The deterministic rule selected 10%, which regressed equal-environment,
+  equal-fold macro log loss by `0.0016701085` and improved only `1/3`
+  environments. `V_objective` improved by `0.0000793102`; `V_seen` regressed
+  by `0.0025644101`; `V_style` regressed by `0.0025252256`. The 20% and 30%
+  blends regressed mean loss by `0.0042819458/0.0077647061`.
+- Worst-fold regression was `0.0087283423`. Macro AUROC improved
+  `0.0010419680`, but Brier and ECE regressed
+  `0.0005940278/0.0045617399`. Only AUROC non-regression passed; the other
+  eight selection clauses failed.
+- The 5,000-session bootstrap observed/mean gain was
+  `-0.0016708139/-0.0016715442`, 95% interval
+  `[-0.0018658865,-0.0014793761]`, support `0.0`. The independent
+  semantic-family values were
+  `-0.0016708139/-0.0016925205`,
+  `[-0.0030848019,-0.0005122778]`, support `0.0022`.
+- Artifact SHA-256 values: predictions
+  `1f506c09d51f63cc062f5f7d64fd8e50313252ae32af5f7e4b3fd09d1b648d9c`;
+  fold metrics
+  `7500faed96b2fec23d580bc9e11a2a4e32940ae48c1b41bf8ef2ac980d209e5e`;
+  environment metrics
+  `9f4b16d9d283f2fd99925fcc24988680cf11564751b5b7e0a6ec43a8644060bc`;
+  selection
+  `381cfc729f4e3d9f7ce132e3916aa807d5c396dd9b661bbf80c8d96f78bd2065`;
+  bootstraps
+  `9b6664b357e1fbb73ac41b2bfc8a5060a5fcc03a531a391100c0083435cf1d38`;
+  report
+  `620511404572b7d01c0668f31b933b47d8df393656f94cb7faa7cf5a939dc6ec`.
+- **Decision:** reject exact E830 without smaller weight, alternate C,
+  row-frequency weights, stage-only/monotonic/residual calibration, different
+  standards, or fold rescue. Curriculum stage carries some ranking
+  information but is not a robust probability prior for session correctness.
+  Rough public projection is `0.60707`, worse than v0.5 and not a leaderboard
+  observation. `V_joint_accessed=false`; `V_final_accessed=false`; no model,
+  ZIP, upload, or competition submission was produced.
