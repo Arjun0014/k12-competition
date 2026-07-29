@@ -4013,3 +4013,36 @@ The participant supplied the full text of the forum question thread on 2026-07-1
   bootstraps, projected public loss, and rank are not applicable because no
   competition outcome was accessed. `V_joint` and `V_final` remain sealed; no
   model, ZIP, upload, or submission was produced.
+
+## 2026-07-30 - E850 rejected at the target-free speaker-recovery gate
+
+- The resource benchmark measured `17.8726` seconds and projected `614.3934`
+  seconds including a 25% margin, so the exact run remained in the active
+  foreground turn. Bound run
+  `20260729T201140Z_speaker_role_denoising` then completed in `220.8722`
+  seconds without a scheduler, duplicate worker, or restart.
+- Grouped OOF target-free evidence covered 242,004 student/tutor utterances in
+  938 complete sessions: accuracy `0.8933282`, macro-F1 `0.8925152`, log loss
+  `0.2747211`, top-label ECE-10 `0.0120217`, high-confidence coverage
+  `0.2644667`, high-confidence agreement `0.9842192`, and deterministic
+  synthetic-corruption recovery `0.9837672`.
+- The 5,893,153-row/22,821-session full audit proposed 24,045 corrections:
+  rate `0.00408016`, 11,102 affected sessions (`0.486482`), direction counts
+  8,760 student-to-tutor and 15,285 tutor-to-student (ratio `0.573111`).
+  Every target-free style cell had at least 84 corrections and at least
+  `0.254125` affected sessions.
+- Ten frozen clauses passed. Two failed literally: macro-F1 was below `0.95`
+  and high-confidence coverage was below `0.50`. E850 is rejected without
+  lowering the threshold, changing the features/model/iterations/sample, or
+  relaxing a gate. Fixed-iteration convergence warnings are recorded but do
+  not authorise rescue.
+- Artifact SHA-256 values: report
+  `0305afc81071fe060bc40c9ada15f662004c75db74c2f8551a85211d6cf322f7`;
+  proposed corrections
+  `7cb35b5e03852c5454822cb78c7d7ac8b74ae1b985b5794aa56de0c904a8f29c`;
+  OOF probabilities
+  `51d8bf70604502783fe976175a75870d6bbcb38160f02e50e6469bf1f5966169`.
+- Competition log loss, AUROC, Brier, ECE, outcome folds/environments,
+  bootstrap support, projected public loss, and rank are not applicable:
+  `competition_outcomes_accessed=false`. `V_joint` and `V_final` remain sealed;
+  no competition cache, model, ZIP, upload, or submission was produced.
