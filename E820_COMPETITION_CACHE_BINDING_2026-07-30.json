@@ -1,0 +1,13 @@
+{
+  "V_final_accessed": false,
+  "V_joint_accessed": false,
+  "competition_outcomes_accessed": false,
+  "context_cache_sha256": "9066033cf59cc1b0cf6cf893e67b4de7a712a1bb57ed13ed99362df8f15d3a0c",
+  "external_delta_sha256": "c7caf144e91db5aedd427ab27c860cd5ae091cbb1e466621b0b563f88e6b9248",
+  "external_report_sha256": "d3f6f8c5bb5ec832c959db91d2777f93b58330b8fd129afe5c49db78b3d02fad",
+  "metadata_sha256": "ec282940039a7d45dab9e838da95c5ef73ed61e83d97ba6f874dce7da0f3b5ff",
+  "objective_cache_sha256": "3fd9dbdb94a9955a8d0c24f3d7791ae5b231c6dbabd3c7164ab20d8ce052eab8",
+  "pilot_indices_sha256": "4e62045be2bd473ef41e8aaf5f4b351b7432760ed6c1bbd7ccd88ca112d1efba",
+  "protocol_id": "E820_mathdial_contrastive_competition_screen_v1",
+  "target_free_report_sha256": "b925062dd87ec692ae4d97befa737632193d5522fc8f6045c87b099bef1c5558"
+}

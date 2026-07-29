@@ -8,14 +8,17 @@ from trace_ace.mathdial_contrastive_competition import (
     _metric_tables,
     _prediction_rows,
     load_target_free_inputs,
+    verify_committed_binding,
     verify_external_gate,
 )
 
 
 def test_e820_external_gate_and_target_free_lineage() -> None:
     report = verify_external_gate(".")
+    binding = verify_committed_binding(".")
     frame, indices = load_target_free_inputs(".")
     assert report["passes_target_free_gate"] is True
+    assert binding["competition_outcomes_accessed"] is False
     assert len(frame) == PILOT_ROWS
     assert len(indices) == PILOT_ROWS
     assert not frame["response_id"].duplicated().any()

@@ -59,6 +59,29 @@ Benchmark SHA-256 is
 `6ba487d36d6208f7e7c1d0b85866c15c45debd85c66a87891cff25e91e1ebcd6`.
 This is a sub-hour foreground cache build; no scheduler wake is appropriate.
 
+The build completed before outcomes in `818.9381020` model seconds with peak
+RSS `1,244,778,496` bytes. The build path initially repeated the harmless
+timing benchmark, so its second timing-only JSON SHA-256 is
+`8c53ca0d999d8b806910c170bbf8a500a179c7e41136e592cb38639e60126543`.
+This changed no source, model, prompt, cache, or validation parameter. Before
+validation, benchmark and completed-cache reuse were made idempotent and this
+correction was committed with the cache binding.
+
+Bound target-free artifacts:
+
+- context cache: 4,096 x 768 float32, SHA-256
+  `9066033cf59cc1b0cf6cf893e67b4de7a712a1bb57ed13ed99362df8f15d3a0c`;
+- objective cache: 4,096 x 768 float32, SHA-256
+  `3fd9dbdb94a9955a8d0c24f3d7791ae5b231c6dbabd3c7164ab20d8ce052eab8`;
+- metadata SHA-256
+  `ec282940039a7d45dab9e838da95c5ef73ed61e83d97ba6f874dce7da0f3b5ff`;
+- target-free report SHA-256
+  `b925062dd87ec692ae4d97befa737632193d5522fc8f6045c87b099bef1c5558`.
+
+These values are frozen in
+`E820_COMPETITION_CACHE_BINDING_2026-07-30.json`. Any mismatch prohibits
+validation.
+
 ## Frozen selection validation
 
 Selection environments are exactly `V_seen`, `V_objective`, and `V_style`.

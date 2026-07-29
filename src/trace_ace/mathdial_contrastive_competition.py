@@ -262,6 +262,24 @@ def base_parity(
 
 
 def benchmark(project_root: str | Path) -> dict[str, object]:
+    output = _paths(project_root)["benchmark"]
+    if output.is_file():
+        saved = json.loads(output.read_text(encoding="utf-8"))
+        required = {
+            "protocol_id": PROTOCOL_ID,
+            "external_report_sha256": EXTERNAL_REPORT_SHA256,
+            "external_delta_sha256": EXTERNAL_DELTA_SHA256,
+            "proceed": True,
+            "competition_outcomes_accessed": False,
+            "V_joint_accessed": False,
+            "V_final_accessed": False,
+        }
+        observed = {name: saved.get(name) for name in required}
+        if observed != required:
+            raise ValueError(f"E820 saved benchmark changed: {observed}")
+        saved["benchmark_path"] = str(output)
+        saved["benchmark_sha256"] = _sha256(output)
+        return saved
     runtime = assert_runtime()
     external = verify_external_gate(project_root)
     frame, _ = load_target_free_inputs(project_root)
@@ -328,13 +346,12 @@ def benchmark(project_root: str | Path) -> dict[str, object]:
         "V_joint_accessed": False,
         "V_final_accessed": False,
     }
-    path = _paths(project_root)["benchmark"]
-    path.write_text(
+    output.write_text(
         json.dumps(result, indent=2, sort_keys=True) + "\n",
         encoding="utf-8",
     )
-    result["benchmark_path"] = str(path)
-    result["benchmark_sha256"] = _sha256(path)
+    result["benchmark_path"] = str(output)
+    result["benchmark_sha256"] = _sha256(output)
     return result
 
 
@@ -343,6 +360,38 @@ def build_cache(
     flush_every: int = 256,
 ) -> dict[str, object]:
     paths = _paths(project_root)
+    completed_paths = (
+        paths["context_cache"],
+        paths["objective_cache"],
+        paths["metadata"],
+        paths["target_free_report"],
+    )
+    if all(path.is_file() for path in completed_paths):
+        report = json.loads(
+            paths["target_free_report"].read_text(encoding="utf-8")
+        )
+        metadata = json.loads(paths["metadata"].read_text(encoding="utf-8"))
+        if (
+            report.get("protocol_id") != PROTOCOL_ID
+            or report.get("passes_target_free_cache_gate") is not True
+            or report.get("competition_outcomes_accessed") is not False
+            or metadata.get("external_delta_sha256")
+            != EXTERNAL_DELTA_SHA256
+            or metadata.get("cache_hashes", {}).get("context")
+            != _sha256(paths["context_cache"])
+            or metadata.get("cache_hashes", {}).get("objective")
+            != _sha256(paths["objective_cache"])
+        ):
+            raise ValueError("Completed E820 target-free cache changed.")
+        return {
+            "metadata": metadata,
+            "target_free_report": report,
+            "metadata_sha256": _sha256(paths["metadata"]),
+            "target_free_report_sha256": _sha256(
+                paths["target_free_report"]
+            ),
+            "reused": True,
+        }
     runtime = assert_runtime()
     external = verify_external_gate(project_root)
     benchmark_report = benchmark(project_root)

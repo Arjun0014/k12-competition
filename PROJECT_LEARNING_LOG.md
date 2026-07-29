@@ -3681,3 +3681,28 @@ The participant supplied the full text of the forum question thread on 2026-07-1
   `6ba487d36d6208f7e7c1d0b85866c15c45debd85c66a87891cff25e91e1ebcd6`.
   It accessed no target or component outcome. The cache must run in the
   foreground and be committed by hash before validation.
+- The bound target-free cache completed in `818.9381020` model seconds
+  (approximately 14.3 minutes command wall time), peak RSS 1,244,778,496
+  bytes. Context/objective caches are each 4,096 x 768 float32 and 12,583,040
+  bytes, with SHA-256 values
+  `9066033cf59cc1b0cf6cf893e67b4de7a712a1bb57ed13ed99362df8f15d3a0c`
+  and
+  `3fd9dbdb94a9955a8d0c24f3d7791ae5b231c6dbabd3c7164ab20d8ce052eab8`.
+  Metadata/target-free-report SHA-256 values are
+  `ec282940039a7d45dab9e838da95c5ef73ed61e83d97ba6f874dce7da0f3b5ff`
+  and
+  `b925062dd87ec692ae4d97befa737632193d5522fc8f6045c87b099bef1c5558`.
+  The report confirms external gate pass and
+  `competition_outcomes_accessed=false`, with every selection environment,
+  `V_joint`, and `V_final` untouched.
+- A pre-validation orchestration audit caught that cache construction called
+  the harmless resource benchmark a second time, overwriting only its timing
+  JSON. The initial/second benchmark hashes are
+  `6ba487d36d6208f7e7c1d0b85866c15c45debd85c66a87891cff25e91e1ebcd6`
+  and
+  `8c53ca0d999d8b806910c170bbf8a500a179c7e41136e592cb38639e60126543`.
+  No model, source, prompt, cache, gate, or outcome changed. Benchmark and
+  completed-cache reuse were made idempotent before validation. Exact cache
+  hashes are committed in
+  `E820_COMPETITION_CACHE_BINDING_2026-07-30.json`; validation refuses any
+  mismatch.
