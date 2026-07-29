@@ -4087,3 +4087,36 @@ The participant supplied the full text of the forum question thread on 2026-07-1
   folds/environments, bootstrap, projected public loss, and rank have not run.
   `V_joint` and `V_final` remain sealed; no model cache, ZIP, upload, or
   submission was produced.
+
+## 2026-07-30 - E860 rejected at the target-free semantic gate
+
+- The resource benchmark took `46.0599` seconds and projected `1842.3962`
+  seconds with its 25% margin. The exact full run
+  `20260729T204454Z_asr_math_normalization` stayed in one foreground turn and
+  completed in `1174.1638` seconds without a scheduler, duplicate, or restart.
+- The 2,048-row NCTE screen covered 298 videos. Normalization improved
+  deterministic corruption token Jaccard by `0.2558189` and BGE clean/corrupt
+  cosine by `0.0477206`; normalized cosine was `0.9950613`, with positive gain
+  on `0.9755859` of rows. Exact normalized equality was only `0.8295898`,
+  failing its `0.90` clause.
+- The decisive 2,048-row competition target-free screen went in the wrong
+  direction. Raw transcript/objective cosine was `0.7209262`; normalized was
+  `0.7125375`, a mean gain of `-0.00838865`. Only `0.3476563` of rows
+  improved, and the lowest retrieval-coverage quartile regressed
+  `-0.00765740`. Objective/context semantic preservation was
+  `0.9478115/0.9477497`; the objective value also missed its `0.95` bound.
+- Eight frozen clauses passed and five failed. Reject exact E860 without
+  retaining extra surface words, adding homophones, changing canonical tokens,
+  perturbations, sample/model/pooling, thresholds, or subgroups. Its synthetic
+  invariance does not justify overriding the real target-free alignment
+  failure.
+- Artifact SHA-256 values: report
+  `f6d2af190a5cd28aca13e4a1b749affed4ddc16da2cfd60b474de516fdac82a7`;
+  NCTE scores
+  `f14faf2387d17231c5734ee8240dd16474ca543b96626fab87212a8936e905ab`;
+  competition target-free scores
+  `232964914a720fc02abb4e97e8a2eb0a3e8b2ab3048489ace8a1ee5d32c54d10`.
+- Competition log loss, AUROC, Brier, ECE, outcome folds/environments,
+  bootstraps, projected public loss, and rank are not applicable because
+  `competition_outcomes_accessed=false`. `V_joint` and `V_final` remain sealed;
+  no competition cache, estimator, ZIP, upload, or submission was produced.
