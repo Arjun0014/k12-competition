@@ -4606,3 +4606,35 @@ The participant supplied the full text of the forum question thread on 2026-07-1
   `competition_text_accessed=false`; `competition_outcomes_accessed=false`;
   V_seen, V_objective, V_style, V_joint, and V_final were untouched. No
   competition cache, estimator, ZIP, upload, or submission was produced.
+
+## 2026-07-30 - E900 full external gate rejection
+
+- Executed the single frozen all-599 MathDial target-free screen from pushed
+  commit `af5f6b435b9280eef866be0d2daafca542b40ce8`. Run
+  `20260730T082449Z_colbert_late_interaction` used the exact released
+  32/180-token query/document contracts, 128-dimensional normalized token
+  matrices, MaxSim operator, and untouched BGE comparator.
+- ColBERT strongly passed the teacher-confusion side: MRR improved
+  `0.2882901625 -> 0.4818514739` (gain `0.1935613114`) and recall@5 improved
+  `0.3372287145 -> 0.5358931553` (gain `0.1986644407`). The 2,000-question-ID
+  bootstrap mean MRR gain was `0.1881911836`, interval
+  `[0.1554318096,0.2234734013]`, positive support `1.0`.
+- Both original-problem non-regression clauses failed. MRR changed
+  `0.9811508964 -> 0.9695139517` (`-0.0116369447`) and recall@5 changed
+  `0.9933222037 -> 0.9816360601` (`-0.0116861436`), beyond the frozen
+  `0.005` limits. Its bootstrap mean MRR gain was `-0.0154370647`, interval
+  `[-0.0315878155,0.0004479201]`, support `0.03`.
+- **Decision:** reject exact E900 without fusion, query, length, prompt,
+  punctuation, projection, checkpoint, model, threshold, or downstream
+  competition rescue. The result establishes a real confusion-retrieval
+  mechanism but not a uniformly safe learning-outcome representation.
+- Runtime was `339.8206309` seconds and peak RSS `1,552,486,400` bytes. Report
+  and retrieval-score SHA-256 values are
+  `e578d209e49af0726b9a8693f68ef4996c181fa302fb3a192153505de81ab344`
+  and
+  `46da50184c9f6fb73375d0738dac9b74776a4d60cbfc5d981c6d1b6baee3c8dc`.
+  Competition log loss, AUROC, Brier, ECE, folds/environments, outcome
+  bootstrap, projected public loss, and rank are not applicable.
+  `competition_text_accessed=false`; `competition_outcomes_accessed=false`;
+  V_seen, V_objective, V_style, V_joint, and V_final were untouched. No
+  competition cache, model, ZIP, upload, or submission was produced.
