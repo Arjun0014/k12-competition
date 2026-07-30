@@ -4330,3 +4330,65 @@ The participant supplied the full text of the forum question thread on 2026-07-1
 - Full repository verification then passed Ruff plus `251` tests and `8`
   subtests in `57.84` seconds. The two SWIG deprecation warnings are unchanged
   environment warnings, not test failures.
+
+## 2026-07-30 - P880/P881 LLM tutor-move portfolio and target-free resource gate
+
+- Reopened the technical search after the participant correctly rejected a
+  passive top-15 strategy with four weeks remaining. A repository/log audit
+  distinguished the untested representation from closed branches: E530 was a
+  TF-IDF MathDial move classifier, E770 used hand-written tutor-move/student-
+  state rules, E490/E500 were direct frozen yes/no outcome probes, and E710 was
+  hashed next-turn coherence. None used a locally executed instruction model to
+  infer a chronological tutor-move sequence and then test that sequence as a
+  complement to raw v0.5.
+- Primary-source research found direct support in Ikram, Scarlatos, and Lan,
+  BEA 2025 (`https://aclanthology.org/2025.bea-1.55/`): their LSTM over tutor
+  moves was competitive for dialogue-success prediction, and explicit move
+  labels improved Llama on real AlgebraNation dialogues. The July 2026
+  difficulty-aware dialogue-KT paper supports separating student ability from
+  task demand, but E780 already tested a hand-derived ability/demand construct;
+  it does not independently reopen that exact parser/model.
+- A task-specific StanfordSCALE tutor-move model family was found but excluded
+  before download or testing. Its live model cards state
+  `License: [More Information Needed]` and do not declare the training-data
+  license, so it is not currently prize-safe under the competition's commercial
+  use and verification rules.
+- Wrote `LLM_TUTOR_MOVE_PORTFOLIO_2026-07-30.md` and froze two sequential
+  external probes before any external label score: P880 uses the already local
+  Apache-2.0 `Qwen/Qwen3-0.6B` revision
+  `c1899de289a04d12100db370d81485cdf75e47ca`; P881 may run only after an exact
+  P880 rejection and uses local Apache-2.0
+  `Qwen/Qwen2.5-1.5B-Instruct` revision
+  `989aa7980e4cf806f80c7fef2b1adb7bc71aa306`. A failed model/prompt cannot
+  trigger prompt, demonstration, temperature, label, threshold, calibration, or
+  sample rescue.
+- Frozen prompt SHA-256 is
+  `4af1b019d6e371f2287b54efbee53359eadb8a646d242501404824222688f9bb`.
+  It classifies one preceding-student/current-tutor exchange into exactly
+  `focus/generic/probing/telling`, with maximum 256 tokens, final 48 student
+  tokens, first 64 tutor tokens, float32 inference, six CPU threads, batch 16,
+  and immutable single-token label IDs. The Stage-1 external screen is exactly
+  128 stable-hash-selected official-test rows per class and must reach macro-F1
+  `>=0.55`, gain `>=0.03` over E530 on identical rows, every-class F1 `>=0.40`,
+  and paired 2,000-`qid`-bootstrap support `>=0.95`. Only a full confirmation
+  pass can authorize a separately frozen competition E880.
+- Focused verification passed Ruff and `7/7` P880/E530 tests. Both model
+  checkpoints, tokenizers, configs, Apache licenses, the MathDial cache, and E530
+  predictions matched their frozen SHA-256 values. The environment was project
+  `.venv` Python `3.12.8`, scikit-learn `1.8.0`, Torch `2.13.0+cpu`, and
+  Transformers `5.14.1`.
+- The P880 target-free 32-row text-only resource benchmark took
+  `43.5555298` model seconds, `1.3611103` seconds per row, and peaked at
+  `2,895,564,800` RSS bytes. It projects `1.3853078` hours for all 3,664 held-out
+  MathDial turns and `138.0528813` hours for 22,821 sessions x 16 windows. All
+  frozen two-hour external, seven-day local-cache, and 8-GiB gates pass.
+  Benchmark SHA-256 is
+  `aaab20537503f5d8bcc64ebc8ef42e8b582b68bbf01d03a2a10449fea1a2d5f2`.
+- No external move label was read by the resource benchmark. Competition log
+  loss, AUROC, Brier, ECE, validation folds/environments, outcome bootstrap,
+  projected public loss, and rank change are not applicable.
+  `competition_outcomes_accessed=false`; `V_seen`, `V_objective`, `V_style`,
+  `V_joint`, and `V_final` were not accessed. No competition cache, model, ZIP,
+  upload, or submission was produced. The next authorized action is commit/push
+  of the frozen implementation and preregistration, then exactly one foreground
+  P880 held-out external screen.
