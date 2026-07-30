@@ -579,7 +579,7 @@ def validate_external(project_root: str | Path) -> dict[str, object]:
             metrics["average_precision"] >= 3 * metrics["prevalence"]
             for metrics in label_metrics.values()
         ),
-        "macro_ap_gain_at_least_0_08": (
+        "macro_ap_gain_at_least_0_08": bool(
             macro["average_precision"]
             - np.mean([metrics["prevalence"] for metrics in label_metrics.values()])
             >= 0.08

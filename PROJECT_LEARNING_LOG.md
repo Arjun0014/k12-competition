@@ -4689,6 +4689,16 @@ The participant supplied the full text of the forum question thread on 2026-07-1
   default `True`. No data, estimator, feature, split, gate, or score changed.
 - Final pre-score verification passed `269` tests plus `8` subtests in
   `48.68` seconds; repository-wide Ruff and `git diff --check` were clean.
+- Post-push execution correction: the fixed five-fold models completed once
+  and wrote a complete 8,573-row OOF artifact, but report serialization failed
+  because one already-evaluated clause was a NumPy boolean rather than Python
+  `bool`. The OOF is hash-bound as
+  `a956a7a9d9e37f0c17502d25c3bb1ae64b3e401ebf017f599b4d238c73b36fe2`;
+  it has all six prediction/prior columns finite, all five exact fold counts,
+  and no missing prediction. The correction casts that clause and reconstructs
+  the frozen metrics from this OOF only. It must not refit a vectorizer or
+  classifier or regenerate a prediction. Original scoring wall time was
+  approximately `10.7` seconds.
 - Environment was only project `.venv`: Python `3.12.8`, NumPy `2.5.1`,
   pandas `2.3.3`, and scikit-learn `1.8.0`. Predictive log loss, AUROC, Brier,
   ECE, fold gains, bootstrap outcome evidence, projected public loss, and rank
@@ -4696,3 +4706,37 @@ The participant supplied the full text of the forum question thread on 2026-07-1
   `competition_outcomes_accessed=false`; V_seen, V_objective, V_style, V_joint,
   and V_final were untouched. No competition feature cache, model, ZIP, upload,
   or submission was produced.
+
+## 2026-07-30 - E910 external gate rejection
+
+- Frozen implementation commit
+  `b98a34e7c4450af1f09a5a5be2f68922045851d0` was pushed before the
+  predictive label score. The fixed five-fold estimators completed once in
+  approximately `10.7` wall seconds and wrote a complete 8,573-row OOF.
+  Report serialization failed afterward on a NumPy boolean. The hash-bound OOF
+  was scored into the report without any model refit or prediction rerun.
+- Per-label AUROC was `0.9008261/0.8017776/0.7789443`; average precision was
+  `0.2270721/0.1802820/0.1267320`; log-loss gain over legal fold priors was
+  `0.0316275/0.0305483/0.0108181`; ECE-10 was
+  `0.0030037/0.0037740/0.0020441`.
+- Macro candidate/comparator log loss was `0.1190712/0.1434025`, gain
+  `0.0243313`; macro AUROC/AP/ECE were
+  `0.8271827/0.1780287/0.0029406`. All 15 label-fold gains were positive and
+  worst gain was `0.0082384`. The 5,000-session bootstrap observed/mean gain
+  was `0.0243313/0.0243338`, interval `[0.0215451,0.0273204]`, support `1.0`.
+- Eleven of twelve clauses passed. Macro Brier gain was `0.0024125`, below the
+  frozen `0.003` minimum. **Decision:** reject exact E910 without class weight,
+  calibration, C, label, threshold, text, feature, phase, or competition
+  rescue. No all-source model or competition cache/probe was built.
+- OOF/report SHA-256 values are
+  `a956a7a9d9e37f0c17502d25c3bb1ae64b3e401ebf017f599b4d238c73b36fe2`
+  and
+  `a1fd6677c017d16e9e32b643779c6640d74b683f391e29eb0d790520699bcfd1`.
+  Report recovery took `0.3514948` seconds. Environment remained project
+  `.venv` Python `3.12.8`, NumPy `2.5.1`, pandas `2.3.3`, and scikit-learn
+  `1.8.0`.
+- Competition log loss, AUROC, Brier, ECE, folds/environments, bootstrap,
+  projected public loss, and rank remain not applicable.
+  `competition_text_accessed=false`; `competition_outcomes_accessed=false`;
+  V_seen, V_objective, V_style, V_joint, and V_final were untouched. No ZIP,
+  upload, or submission occurred; protected v0.5 remains unchanged.
