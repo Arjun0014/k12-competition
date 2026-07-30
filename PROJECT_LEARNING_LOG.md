@@ -4392,3 +4392,57 @@ The participant supplied the full text of the forum question thread on 2026-07-1
   upload, or submission was produced. The next authorized action is commit/push
   of the frozen implementation and preregistration, then exactly one foreground
   P880 held-out external screen.
+
+## 2026-07-30 - P880 external rejection and P881 resource rejection
+
+- After frozen implementation commit
+  `96d45cfacb2c494c38ad7168b5611f414ec879c2` was pushed, executed exactly one
+  authorized P880 held-out external screen:
+  `20260730T065458Z_llm_tutor_move_qwen3_0_6b_external_screen`. The immutable
+  sample was 512 official MathDial test turns, selected as 128 stable-hash rows
+  per class. The model was Apache-2.0 `Qwen/Qwen3-0.6B` revision
+  `c1899de289a04d12100db370d81485cdf75e47ca`, using the frozen prompt
+  SHA-256
+  `4af1b019d6e371f2287b54efbee53359eadb8a646d242501404824222688f9bb`,
+  maximum 256 tokens, final 48 student tokens, first 64 tutor tokens, float32
+  inference, six CPU threads, batch 16, and seed `20260730`.
+- P880 failed every proper preregistered gate. Candidate accuracy was
+  `0.2734375`, multiclass log loss `3.1095298487`, and macro-F1
+  `0.2194223151`, versus same-row frozen E530 accuracy `0.5078125`, log loss
+  `1.0564958726`, and macro-F1 `0.4791393301`. Candidate class F1 was focus
+  `0.3440860215`, generic `0.2105263158`, probing `0.3230769231`, and telling
+  `0.0`; prediction counts were `337/43/132/0`. Macro-F1 gain versus E530 was
+  `-0.2597170150`, below both the absolute `>=0.55` and relative `>=0.03`
+  gates, and every-class F1 `>=0.40` also failed.
+- The frozen paired 2,000-replicate `qid` bootstrap used 250 groups and found
+  mean macro-F1 gain `-0.2591648713`, 95% interval
+  `[-0.3154903301, -0.2054927685]`, and positive-gain support `0.0`, failing
+  the `>=0.95` support gate. The exact Qwen3 model/prompt branch is rejected
+  literally; no prompt, demonstration, decoding, label, threshold, calibration,
+  or sample rescue is authorized.
+- P880 runtime was `694.491164` seconds and peak RSS was `2,605,498,368`
+  bytes. Report, bootstrap, and prediction SHA-256 values are respectively
+  `ae038434d01f08ef367cf9d31cf1bc52824a5b3b0ee0689199c75e62202ca7ac`,
+  `e5e669009ed66ff6f849ca9a04e964940176c6e4bb6a685491f94e152401aa7f`,
+  and
+  `f618230749524027938423eb22c46a691bb3be410919261fcf046cf4df088867`.
+- Because P880 was rejected, executed the separately frozen P881 target-free
+  resource benchmark for Apache-2.0
+  `Qwen/Qwen2.5-1.5B-Instruct` revision
+  `989aa7980e4cf806f80c7fef2b1adb7bc71aa306`. Its exact 32-row benchmark
+  took `118.3178485` seconds (`3.6974328` seconds/row) and peaked at
+  `2,977,771,520` RSS bytes. It projected `3.7631649` hours for the external
+  confirmation and `375.0182806` hours for a 22,821-session x 16-window local
+  cache. The RSS gate passed, but the frozen two-hour external and seven-day
+  cache gates both failed. Benchmark SHA-256 is
+  `5d0781b08bf8cf114d3252645f8df1d5426416b17270b2f61623b43b91408500`.
+  P881 is rejected at the target-free resource gate; no external label screen
+  and no competition run are authorized.
+- Both runs used only project `.venv` Python `3.12.8`, scikit-learn `1.8.0`,
+  Torch `2.13.0+cpu`, and Transformers `5.14.1`. P880 was a four-class external
+  representation screen, so AUROC, Brier, ECE, competition folds/environments,
+  competition outcome bootstrap, projected public loss, and rank bracket are
+  not applicable. P881 read no label at all.
+  `competition_outcomes_accessed=false`; `V_seen`, `V_objective`, `V_style`,
+  `V_joint`, and `V_final` were not accessed. No competition cache, checkpoint,
+  ZIP, upload, or submission was produced. Protected v0.5 remains unchanged.
