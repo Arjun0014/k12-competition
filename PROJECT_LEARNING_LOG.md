@@ -4638,3 +4638,61 @@ The participant supplied the full text of the forum question thread on 2026-07-1
   `competition_text_accessed=false`; `competition_outcomes_accessed=false`;
   V_seen, V_objective, V_style, V_joint, and V_final were untouched. No
   competition cache, model, ZIP, upload, or submission was produced.
+
+## 2026-07-30 - E910 ALTER-Math learner knowledge-state pre-score freeze
+
+- After closing E900, the unused ALTER-Math utterance-level human annotations
+  were audited as a distinct candidate. Knowledge annotations occur only on
+  student (`u*`) turns. Raw student positive counts are 271 computational
+  skill, 541 conceptual knowledge, 134 strategic knowledge, 21 linguistic
+  knowledge, and 93 affective control across 11,094 student rows.
+- E910 freezes only computational/conceptual/strategic knowledge. Linguistic
+  knowledge is too sparse; affective control is sparse and overlaps the closed
+  uncertainty/affect family. E910 consumes no E680, E770, or E880 checkpoint,
+  probability, feature, rule, or score. It never uses the source `Success`
+  column as a model input or target. The representation risk is recorded
+  honestly: E770 had broad expressed-reasoning/math-evidence rules, whereas
+  E910 must prove the finer external human taxonomy through proper scores.
+- A pre-freeze exploratory source audit observed marginal annotation-to-source-
+  `Success` correlations of `0.1394/0.2104/0.0815` for the three selected
+  labels. This was not a predictive model score and no competition outcome was
+  read, but it is disclosed because it contributed mechanistic plausibility.
+  The frozen E910 implementation subsequently excludes `Success` at CSV
+  `usecols` and reports `success_column_read=false`.
+- To prevent phrase leakage, every student utterance whose normalized current
+  text appears in more than one source session is removed. This removes 2,521
+  rows covering 329 repeated texts and leaves 8,573 rows in 2,304 sessions,
+  with 252/486/130 positives. Every session is locked to
+  `SHA256("E910|" + id) mod 5`; all five folds retain at least 17 positives per
+  label and no retained normalized text crosses sessions.
+- Ordered-input/canonical/audit SHA-256 values are
+  `02da071a600d751e10644eb0ae9048a89cc855ad899ddd8dafb0c91d417d2c0a`,
+  `72cc15248e0446593e2419b848a722cd6d2764f901f6af205447b12962ed06d1`,
+  and
+  `ee871ac8cff5809e00639a926af7b8cce335ace207b96c6eedd205800cf4dbcf`.
+- Frozen external representation is a fold-local equal-weight word `(1,2)` and
+  `char_wb (3,5)` TF-IDF union with three independent unweighted
+  `C=1.0` liblinear logistic heads. Per-label AUROC/AP/log-loss/Brier/ECE,
+  15 label-fold bounds, and a 5,000-session bootstrap are conjunctive. A failed
+  clause rejects exact E910 without label, C, calibration, threshold, text,
+  feature, or blend rescue.
+- Five focused tests and Ruff passed before any predictive source score. The
+  512-row deterministic synthetic-label benchmark took `0.0659548` seconds,
+  produced a `512 x 5,526` sparse matrix with 41,445 nonzeros and finite
+  `512 x 3` probabilities, projected `5.5217822` seconds for the external
+  five-fold run, and observed 188,792,832 RSS bytes. Benchmark SHA-256 is
+  `a5cb8209d355351aa50e97205bb3ec2ab95af75c4308472371581187cda7caf1`.
+- Pre-commit full-suite correction: after binding the real ordered-input hash,
+  the synthetic duplicate-purge unit fixture failed because it deliberately
+  used different content. The helper gained an explicit test-only
+  `verify_frozen_hash=False` path; production source preparation retains the
+  default `True`. No data, estimator, feature, split, gate, or score changed.
+- Final pre-score verification passed `269` tests plus `8` subtests in
+  `48.68` seconds; repository-wide Ruff and `git diff --check` were clean.
+- Environment was only project `.venv`: Python `3.12.8`, NumPy `2.5.1`,
+  pandas `2.3.3`, and scikit-learn `1.8.0`. Predictive log loss, AUROC, Brier,
+  ECE, fold gains, bootstrap outcome evidence, projected public loss, and rank
+  are not yet applicable. `competition_text_accessed=false`;
+  `competition_outcomes_accessed=false`; V_seen, V_objective, V_style, V_joint,
+  and V_final were untouched. No competition feature cache, model, ZIP, upload,
+  or submission was produced.

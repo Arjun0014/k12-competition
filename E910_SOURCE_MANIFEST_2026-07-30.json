@@ -1,0 +1,17 @@
+{
+  "dataset": "ALTER-Math/annotated-math-tutoring-dataset",
+  "downloaded_file": "Datasets/ALTER_Math/LEVI_tutoring_dataset_round1.csv",
+  "file_bytes": 23995917,
+  "file_sha256": "50370bde7e0bb4ed691ca3a1bcf7533f7494966b63f3d6086224c66136d7d63b",
+  "hugging_face_revision": "efaaa64e2dd08c67d9ebef3ab3141d7de28c5d40",
+  "license": "Apache-2.0",
+  "source_created_utc": "2026-07-27T01:30:01Z",
+  "source_modified_utc": "2026-07-27T01:32:40Z",
+  "source_url": "https://huggingface.co/datasets/ALTER-Math/annotated-math-tutoring-dataset",
+  "success_column_authorized_as_input": false,
+  "targets": [
+    "computational skill",
+    "conceptual knowledge",
+    "strategic knowledge"
+  ]
+}
