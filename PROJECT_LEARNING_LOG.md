@@ -4446,3 +4446,56 @@ The participant supplied the full text of the forum question thread on 2026-07-1
   `competition_outcomes_accessed=false`; `V_seen`, `V_objective`, `V_style`,
   `V_joint`, and `V_final` were not accessed. No competition cache, checkpoint,
   ZIP, upload, or submission was produced. Protected v0.5 remains unchanged.
+
+## 2026-07-30 - E880 ALTER-Math source discovery and pre-outcome freeze
+
+- A fresh source audit found
+  `ALTER-Math/annotated-math-tutoring-dataset`, created on 2026-07-27 after the
+  previous repository-wide source audit. The public dataset card declares
+  Apache-2.0. The official source paper reports 2,318 real mathematics
+  tutor-student discussion threads annotated for problem-solving success,
+  student knowledge representation, and tutoring strategies. This exact source
+  and the LEVI filename had zero prior mentions in the repository or learning
+  log, so it was not available to the earlier external-transfer ladder.
+- Preserved the raw
+  `Datasets/ALTER_Math/LEVI_tutoring_dataset_round1.csv` unchanged: 23,995,917
+  bytes, SHA-256
+  `50370bde7e0bb4ed691ca3a1bcf7533f7494966b63f3d6086224c66136d7d63b`,
+  Hugging Face revision
+  `efaaa64e2dd08c67d9ebef3ab3141d7de28c5d40`. The deterministic audit verified
+  24,116 rows x 26 columns, 2,318 unique session IDs, unique `(id,id2)` pairs,
+  zero duplicate normalized session documents, and a binary `Success` label
+  constant within every session. There are 905 successful and 1,413
+  unsuccessful discussions.
+- Frozen folds are
+  negative/positive `262/166`, `305/191`, `299/167`, `283/192`, and `264/189`.
+  Session turns have minimum/median/maximum `6/9/116`; transcript word counts
+  have minimum/median/mean/maximum `18/92/118.8817947/1417`. The prepared
+  2,318-row source cache SHA-256 is
+  `1bdd0d195dcdc55cbeec017d364db48a1d8aef0479f807b09e6fdc91fde4fd49`;
+  the target-free audit JSON SHA-256 is
+  `55b0144d4ebf0987fbab631a264d1a0d6bb4d0f01b79e54fb3b65e7a9fe7384c`.
+- Preregistered E880 before any predictive outcome score. It is a fixed
+  BGE-base linear direction learned from external whole-discussion success and
+  transferred as neutral, externally centered evidence in raw v0.5 log-odds
+  space. It is independent of the rejected utterance-move, hand-coded uptake,
+  longitudinal behavior, SRA, and process-correctness branches. Estimator,
+  source hash, exact five folds, compaction, seed, three gamma strengths,
+  proper-score gates, fold bound, session/family bootstrap rules, V_joint
+  restriction, failure shield, and sealed V_final rule are literal in
+  `E880_PREREGISTRATION_2026-07-30.md`.
+- Focused verification passed Ruff and `5/5` E880 unit tests. The 32-document
+  synthetic, target-free encoder benchmark passed shape, finite,
+  unit-normalization, runtime, and memory gates. It took `14.2155793` seconds,
+  projected `1029.7410255` seconds (`17.1624` minutes) for all 2,318 source
+  sessions, and observed `872,296,448` RSS bytes. The projected cache run is
+  below one hour and therefore must run in the foreground without a scheduler.
+- Environment was only project `.venv`: Python `3.12.8`, NumPy `2.5.1`,
+  pandas `2.3.3`, scikit-learn `1.8.0`, PyTorch `2.13.0+cpu`, and Transformers
+  `5.14.1`. No predictive log loss, AUROC, Brier, ECE, macro-F1, outcome fold,
+  outcome bootstrap, projected public loss, or rank bracket exists yet.
+  `competition_outcomes_accessed=false`; `V_seen`, `V_objective`, `V_style`,
+  `V_joint`, and `V_final` were not accessed. No model, competition evidence,
+  ZIP, upload, or submission was produced. The next authorized action is
+  commit/push of this frozen implementation, then the foreground external cache
+  build and exactly one five-fold external gate.
