@@ -4242,3 +4242,91 @@ The participant supplied the full text of the forum question thread on 2026-07-1
   submission was produced. Protected v0.5 remains public `0.6054`; protected
   ZIP SHA-256 remains
   `65467003547fb62ec867733c6acf0a63e6f9fb0fed9533b61b9592e143b17186`.
+
+## 2026-07-30 - reopened first-place research, DKT/reward-model no-go, and write-up track
+
+- The participant reported that v0.5 had fallen to rank `#12`; this audit did
+  not independently read the authenticated leaderboard. The last supplied
+  board had first/fifth/tenth at `0.6008/0.6040/0.6053`, so the gaps from
+  public v0.5 `0.6054` were `0.0046/0.0014/0.0001`. Rank movement in this
+  compressed range does not reveal another team's method.
+- Official competition materials now make the prize objective explicit: final
+  top-15 teams may submit a four-page report, and first through third are
+  selected using leaderboard position plus report quality. The published
+  rubric is relevance `35%`, generalizability `35%`, communication `15%`, and
+  rigor `15%`. A parallel write-up workstream is therefore part of the
+  first-place strategy, not a substitute for an available score candidate.
+- Audited the public CC BY 4.0
+  `eth-nlped/Qwen2.5-1.5B-pedagogical-rewardmodel`, immutable model revision
+  `b1cf3e323398713e10ed88a4dbfa27f4a8f3b8dc`, and its CC BY 4.0 preference
+  data revision `d9dc0c40bf26f417e5eb1ab87d997d48364d1f78`.
+  The float32 checkpoint is approximately 6.19 GB and the model card describes
+  roughly two billion parameters. MathTutorBench reports Bridge held-out
+  expert-versus-novice ranking accuracy `0.84`.
+- Rejected that reward model before download. E670 already tested the same
+  Bridge remediation construct, reached about `0.824/0.821` accuracy under
+  session/lesson-disjoint evaluation and strong AUROC, then failed its frozen
+  calibration gate. The new model also expects a problem and reference
+  solution absent from Trace the Ace and supplies no real learning outcome.
+  It is not independent and has no plausible robust `0.0016` path.
+- Audited the already preserved MIT `umass-ml4ed/dialogue-kt` repository at
+  revision `c61f335f89005161b6ef439872cc1735bee26745`; local license SHA-256 is
+  `d51d440899b6671ff0d71fc859fa74ec3a3f095c9a8aa74da5adcc194cbba1f2`.
+  The paper reports MathDial accuracy/AUC/F1 `62.17/66.18/59.30` for DKT-Sem
+  and `68.41/76.71/62.21` for LLMKT.
+- DKT-Sem is not deployable as published: its source maps the true current-turn
+  correctness label through `correctness_encoder` and feeds it into the LSTM
+  state used to predict the next turn. Competition transcripts do not contain
+  those per-turn labels. Constant or predicted labels would be an unvalidated
+  architecture change. LLMKT does not use explicit prior labels, but its
+  official work fine-tunes Llama-3.1-8B with LoRA on A6000 GPUs and releases no
+  trained checkpoint; that training is not feasible in the current CPU-only
+  environment.
+- Searched the repository and log for literal masked-language domain-adaptive
+  pretraining. No implementation exists, but it was not selected: adjacent
+  supervised encoder adaptation, external contrastive adaptation, multi-view
+  semantics, and next-turn coherence already failed, and the post-E870
+  novelty audit closes another semantic-adaptation relabeling without
+  independent learning-outcome evidence.
+- Compared the July 27 DrivenData reference solution's suggested next steps
+  against the full log. Tutor features, number words, timing/dynamics, and
+  LLM-derived turn labels are covered more strongly by E220/E510/E530,
+  E580-E700, E760/E770, E810, and E860. The reference does not reopen them.
+- Wrote `FIRST_PLACE_STRATEGY_REOPENED_2026-07-30.md` and
+  `WRITEUP_EVIDENCE_SPEC_2026-07-30.md`. The plan runs top-15 defense, a
+  conditional APTA score ladder, a narrow source reserve, and a judge-ready
+  evidence track in parallel. No E880 is preregistered.
+- The participant asked to leave APTA for later, so the
+  `k12-apta-access-monitor` automation was deleted. No further automated access
+  check will occur; APTA resumes only after the participant reports access.
+- Research/documentation runtime was interactive and no training workload was
+  launched. Competition log loss, AUROC, Brier, ECE, validation folds,
+  bootstraps, projected public gain, and rank change are not applicable. No
+  competition prediction/outcome was opened; `V_joint` remains
+  confirmation-only and `V_final` sealed. No model, cache, ZIP, upload, or
+  submission was produced.
+- Environment remained project `.venv` Python 3.12.8, scikit-learn 1.8.0,
+  Torch 2.13.0 CPU, and Transformers 5.14.1. The scheduler wake is proven end
+  to end, but no qualified long run exists, so no timer was created. Protected
+  v0.5 ZIP SHA-256 remains
+  `65467003547fb62ec867733c6acf0a63e6f9fb0fed9533b61b9592e143b17186`.
+- Implemented a deterministic write-up evidence builder in
+  `src/trace_ace/writeup_evidence.py` with a CLI and focused tests. It binds 16
+  quantitative claims to ten already authorized immutable reports, records
+  each live report hash, rejects any report that declares `V_final` access,
+  and refuses to run if the protected ZIP hash changes.
+- The generated local evidence index contains 16 claims and hashes to
+  `e4af0bd2291d088bb257fc3631c5e41432d98f4fb6d5b7e928e490e71d607b17`;
+  its manifest hashes to
+  `12af1cfcf4e2db31ab898484373c0a0899954c7806350ef38286404434ceccb9`.
+  Both live under ignored `reports/generated/` and are reproducible from the
+  committed builder. The reopened strategy/specification hashes are
+  `5f04457d38d3ad5fd1df20df62db7a24f9fe5259025d3817189fcd9ebc0c5aa0`
+  and
+  `c9a1954d9b11b3f3f69f9c39861d022c527befa2c8092f72b8febdf81592ca05`.
+- Focused write-up evidence checks passed `4/4`; Ruff passed. This builder read
+  only existing reports and the protected ZIP, produced no new model score,
+  and did not alter any competition cache or prediction.
+- Full repository verification then passed Ruff plus `251` tests and `8`
+  subtests in `57.84` seconds. The two SWIG deprecation warnings are unchanged
+  environment warnings, not test failures.
