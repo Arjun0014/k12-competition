@@ -4540,3 +4540,69 @@ The participant supplied the full text of the forum question thread on 2026-07-1
   `competition_outcomes_accessed=false`; V_seen, V_objective, V_style, V_joint,
   and V_final were not accessed. No checkpoint, competition evidence, ZIP,
   upload, or submission was produced. Protected v0.5 remains unchanged.
+
+## 2026-07-30 - E890 target-free rejection and E900 late-interaction freeze
+
+- Audited public, ungated MIT `uf-aice-lab/math-roberta` at exact revision
+  `52a12ddb55609e6dc8614928d1b8f6499fd32bab`. Its model card describes a
+  24-layer, 355-million-parameter RoBERTa trained on 3,000,000 real Algebra
+  Nation mathematics-discussion posts. Downloaded only inference files; the
+  2.84 GB optimizer and other unnecessary training-state pickles were excluded.
+  The 1,421,785,643-byte weight SHA-256 is
+  `bb47d3db0273971683b36b5c442921e06b97554947da801cc10608b1308bb287`.
+  The repository omits a tokenizer, so the matching MIT
+  `FacebookAI/roberta-large` tokenizer was pinned at revision
+  `722cf37b1afa9454edce342e7895e588b6ff1d59`.
+- A deterministic target-free pre-screen used 64 evenly spaced official
+  MathDial test rows and no correctness or competition outcome. BGE-base
+  teacher-confusion retrieval MRR/recall@5 were
+  `0.3294654452/0.453125`. MathRoBERTa CLS produced
+  `0.0582673525/0.09375`; masked mean produced
+  `0.1242144521/0.171875`. Their document off-diagonal cosine mean/std were
+  `0.9893799/0.0080975` and `0.9985400/0.0005154`, respectively, showing
+  severe anisotropy. Fixed 25% fusions changed BGE MRR only to
+  `0.3309711201/0.3297789438` and did not improve recall@5.
+- **Decision:** reject exact E890 CLS/mean semantic replacement and fixed 25%
+  BGE fusion before competition text or outcomes. Do not rescue it by
+  centering, whitening, layer/pooling search, ALTER-Math label reuse, or
+  competition fine-tuning. Its poor target-free geometry does not support a
+  plausible robust `0.0016` competition log-loss gain.
+- The next source/log audit found no prior ColBERT, MaxSim, or token-level late
+  interaction implementation. This is materially different from E420/E450/
+  E470/E890 single-vector replacement, E540 scalar segment attention, E550
+  pooled readout, E720 lexical conjunctions, and E820 sentence-encoder
+  contrastive adaptation.
+- Downloaded only inference files for public MIT
+  `colbert-ir/colbertv2.0` at revision
+  `c1e84128e85ef755c096a95bdb06b47793b13acf`. The 438,349,816-byte
+  safetensors SHA-256 is
+  `3f58890b1dfdfec066ef12ba431fa9d56992da9e30a53489242c4156e37e9017`.
+  Official implementation reference is
+  `stanford-futuredata/ColBERT@cc4f3dc91c0b45d2d08c251d9d95178285c65f1c`;
+  its MIT license SHA-256 is
+  `4e19aae8ed1a14290a67c3cb32f1da34df5ffcd713841f8f508270aa0fadeefe`.
+- A 64-row target-free discovery screen reproduced the released marker,
+  projection, punctuation-mask, normalization, and MaxSim mechanics. ColBERT
+  teacher-confusion MRR/recall@1/recall@5/recall@10 were
+  `0.5342763897/0.453125/0.609375/0.6875`, materially above the identical-row
+  BGE comparator MRR/recall@5 `0.3294654452/0.453125`. This is mechanism
+  plausibility evidence only, not a competition outcome score.
+- Froze `E900_colbert_late_interaction_external_v1` before its full external
+  score: all 599 official MathDial test rows, raw problem and teacher-confusion
+  queries, released 32/180 query/document lengths, 128-dimensional normalized
+  token matrices, exact MaxSim, untouched BGE comparator, five conjunctive
+  retrieval/bootstrap clauses, and no model/prompt/token/fusion rescue.
+- Focused verification passed Ruff and `5/5` E900 tests. The 32-row target-free
+  benchmark took `1.1372753` seconds for ColBERT queries, `4.7337609` seconds
+  for documents, `0.0273112` seconds for the score matrix, and `8.3511233`
+  seconds for BGE comparator encodes. It projects `306.6486504` seconds for the
+  complete gate, with peak RSS `1,448,837,120` bytes. Benchmark SHA-256 is
+  `eadf85c06e8ae2d26dbba4eea0daa43d5310f19cbc9b57964f024f9f595c3edf`.
+  The run is below one hour and must stay in the foreground without a wake.
+- Environment remained only project `.venv` Python `3.12.8`, NumPy `2.5.1`,
+  pandas `2.3.3`, scikit-learn `1.8.0`, PyTorch `2.13.0+cpu`, and Transformers
+  `5.14.1`. Competition log loss, AUROC, Brier, ECE, folds/environments,
+  outcome bootstrap, projected public loss, and rank are not applicable.
+  `competition_text_accessed=false`; `competition_outcomes_accessed=false`;
+  V_seen, V_objective, V_style, V_joint, and V_final were untouched. No
+  competition cache, estimator, ZIP, upload, or submission was produced.

@@ -1,0 +1,34 @@
+{
+  "candidate": "E900_colbert_late_interaction_external_v1",
+  "competition_text_accessed": false,
+  "competition_outcomes_accessed": false,
+  "mathdial": {
+    "canonical_identity_sha256": "fdbc30eb04107cf6214bb0b0962270a7018f3ac0130fd0f89b001e40cf9ca060",
+    "license": "CC BY-SA 4.0",
+    "revision": "b06c020a0a1f57a87577fec33e657b63e7eb476e",
+    "test_rows": 599,
+    "test_sha256": "28d1e537d65a6e6ff7b8bde602a2c7e2493b93d6bc785d1848506a650997f122"
+  },
+  "model": {
+    "declared_license": "MIT",
+    "files": {
+      "README.md": "44e68292037d4fac7db91b9b24ae36535ae5807eef2b323adcc83a615b91751d",
+      "artifact.metadata": "0ddc5a54234cff6d13bc9411250a5479d9d96f3ffbace76d8a1884144377e434",
+      "config.json": "cbdcc01dc7772fd0e5e1d85d5de695faf8c4935ae3c7ea3fdb6c24397b284f3c",
+      "model.safetensors": "3f58890b1dfdfec066ef12ba431fa9d56992da9e30a53489242c4156e37e9017",
+      "special_tokens_map.json": "303df45a03609e4ead04bc3dc1536d0ab19b5358db685b6f3da123d05ec200e3",
+      "tokenizer.json": "5fd1c882abbd30517dced455a2c9768945ec726b96727927e4959348d9de550b",
+      "tokenizer_config.json": "a16a31c8d474339d7a46afe7eb8583b24f8b74806af6e25294506523f9d0acfb",
+      "vocab.txt": "07eced375cec144d27c900241f3e339478dec958f92fddbc551f295c992038a3"
+    },
+    "name": "colbert-ir/colbertv2.0",
+    "revision": "c1e84128e85ef755c096a95bdb06b47793b13acf"
+  },
+  "official_code": {
+    "license_sha256": "4e19aae8ed1a14290a67c3cb32f1da34df5ffcd713841f8f508270aa0fadeefe",
+    "repository": "https://github.com/stanford-futuredata/ColBERT",
+    "revision": "cc4f3dc91c0b45d2d08c251d9d95178285c65f1c"
+  },
+  "v_final_accessed": false,
+  "v_joint_accessed": false
+}
