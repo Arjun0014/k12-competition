@@ -4499,3 +4499,44 @@ The participant supplied the full text of the forum question thread on 2026-07-1
   ZIP, upload, or submission was produced. The next authorized action is
   commit/push of this frozen implementation, then the foreground external cache
   build and exactly one five-fold external gate.
+
+## 2026-07-30 - E880 external gate rejection
+
+- Frozen implementation/preregistration commit
+  `71c97cf` was pushed before any predictive outcome score. The full
+  2,318-session x 768 BGE-base cache then completed in `370.8555659` seconds,
+  well below its conservative 17.2-minute benchmark projection. Cache SHA-256
+  is `727bfa4beb04c0de58588ba039be6556899d8e5896d4817690ebfbff8261e553`;
+  metadata SHA-256 is
+  `9cc079a2d8ba0cd19e2027d6f078ef5f31acf52f4c337c738d04b0a7ce96ab1f`.
+- Executed exactly one authorized five-fold external outcome gate:
+  `20260730T074724Z_e880_alter_math`. Candidate log loss was
+  `0.5813550476` versus fold-prior `0.6693998004`, a gain of
+  `0.0880447528`. Candidate AUROC was `0.8110677099`; Brier was
+  `0.1974902468` versus `0.2382133600`, a gain of `0.0407231133`.
+  Fold log-loss gains were `0.0975802307/0.0839372487/0.0840325716/`
+  `0.0897738581/0.0858471566`, so all five folds and the frozen worst-fold
+  clause passed.
+- The 5,000-session paired bootstrap observed/mean gain was
+  `0.0880447528/0.0880124471`, 95% interval
+  `[0.0810899327,0.0947824975]`, support `1.0`. This is strong evidence that
+  ALTER-Math transcript semantics predict its source outcome rather than an
+  unstable fold accident.
+- E880 nevertheless failed two literal proper-score/classification clauses.
+  Candidate ECE-10 was `0.1456681742`, exceeding the frozen `<=0.08` maximum,
+  and macro-F1 at the fixed 0.5 threshold was `0.5840564147`, below `>=0.65`.
+  Eight other external clauses passed. The exact branch is rejected without
+  source calibration, threshold, class-weight, `C`, text-view, or blend rescue.
+- External validation runtime was `4.5055097` seconds. External OOF and report
+  SHA-256 values are
+  `1acb584d64e7b1b5f87db2d12615be171726c0b9896fd44b42e0556e8274bf31`
+  and
+  `ed206da6fa861052d9dd4287cb6ee2cad54254bd93d02d83ff74c1be8dff2015`.
+  Environment remained project `.venv` Python `3.12.8`, NumPy `2.5.1`, pandas
+  `2.3.3`, scikit-learn `1.8.0`, PyTorch `2.13.0+cpu`, and Transformers
+  `5.14.1`.
+- Competition log loss, AUROC, Brier, ECE, folds/environments, outcome
+  bootstraps, projected public loss, and rank bracket are not applicable.
+  `competition_outcomes_accessed=false`; V_seen, V_objective, V_style, V_joint,
+  and V_final were not accessed. No checkpoint, competition evidence, ZIP,
+  upload, or submission was produced. Protected v0.5 remains unchanged.
